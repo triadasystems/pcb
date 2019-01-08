@@ -48,6 +48,7 @@ class terceros extends Model
         $consultas = DB::select(DB::raw($sql));
         return $consultas;
     }
+    
 
 
 }

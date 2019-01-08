@@ -44,21 +44,7 @@
 @push('scripts')
 <script>
     $(document).ready(function()
-    {
-        /*$(document).on("click","#delact", function()
-        {
-            var id = $(this).attr("data-id");
-            var tipo = $(this).attr("data-tipo");
-            swal({
-                title: '¿Esta seguro?',
-                text: "¡Siempre podrá revertir la acción!",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor
-            });
-        });*/
-                            
+    {                                   
         $('#altaTerceros').click(function()
         {
             var url = '{!!route('terceros.alta')!!}';

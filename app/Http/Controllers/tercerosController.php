@@ -38,13 +38,38 @@ class tercerosController extends Controller
         $data['empresa']    =   $emp;
         $data['mesa']       =   $mesa;
         $data['app']        =   $app;
-        //print_r($data);
-        //die();
-        return view("terceros.create")->with('empresa',$emp);
-        //return view("terceros.create");
+        return view("terceros.create")->with('data',$data);
     }
-    public function insertar()
+    public function autocomplete(Request $request)
     {
-
+        $term= $request->get('term', '');
+        //print_r($term);
+        //die();
+        if ($request->type=='num_auto' || $request->type=='num_res' ) {
+            $and=" AND `employee_number`  LIKE '%".$term."%'";
+        }
+        if ($request->type=='nom_auto' || $request->type=='nom_res') {
+            $and=" AND `name` LIKE '%".$term."%'";
+        }
+        $sql="SELECT *FROM interface_labora ai
+                WHERE consecutive =(SELECT max(consecutive) FROM interface_labora) $and";
+        $consultas = DB::select(DB::raw($sql));        
+        $data=array();
+        foreach ($consultas as $val) {
+            $data[]= array('numero'=>$val->employee_number, 'nombre'=>$val->name);
+        }
+        if (count($data))
+        {
+            return $data;
+        }
+        else
+        {
+            return ['numero'=>'','nombre' => ''];
+        }
+        
+    }
+    public function insertar(Request $request)
+    {
+        print_r($request->post());
     }
 }
