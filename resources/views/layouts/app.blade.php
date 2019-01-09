@@ -146,6 +146,16 @@
         @auth
             <script>
                 sessionStorage.desactivaLogout = 1;
+
+                // En caso de form con ajax y sweetalert2
+                function mostrarError(id = null) {
+                    $("#"+id).addClass("error-msj-activo");
+                    $("#"+id).removeClass("error-msj-inactivo");
+                }
+                function ocultarError(id = null) {
+                    $("#"+id).removeClass("error-msj-activo");
+                    $("#"+id).addClass("error-msj-inactivo");
+                } // En caso de form con ajax y sweetalert2
                 
                 function logout() {
                     if(sessionStorage.desactivaLogout == 1) {

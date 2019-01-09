@@ -17,6 +17,27 @@ Route::get('/', function () {
 
 Auth::routes();
 
+// Terceros EVP
+Route::group(['prefix' =>'motivosbajas', 'middleware' => 'userProfileInactivo'], function() {
+    Route::get('/lista', 'MotivosbajasController@index')->name('motivosbajas')->middleware('reading');
+    Route::get('/catmotivosbajas','MotivosbajasController@data')->name('motivosbajas.data');
+
+    Route::post('/store', 'MotivosbajasController@store')->name('altamotivobaja')->middleware('writing');
+    Route::put('/update', 'MotivosbajasController@update')->name('editarmotivobaja');
+
+    Route::get('/permisosmotivosbajas','MotivosbajasController@permisosMotivosBajas')->name('permisosMotivosBajas');
+});
+Route::group(['prefix' =>'catproveedores', 'middleware' => 'userProfileInactivo'], function() {
+    Route::get('/lista', 'ProveedoresController@index')->name('motivosbajas')->middleware('reading');
+    Route::get('/catproveedores','ProveedoresController@data')->name('motivosbajas.data');
+
+    Route::post('/store', 'ProveedoresController@store')->name('altamotivobaja')->middleware('writing');
+    Route::put('/update', 'ProveedoresController@update')->name('editarmotivobaja');
+
+    // Route::get('/permisosprovvedores','ProveedoresController@permisosMotivosBajas')->name('permisosMotivosBajas');
+});
+// Fin de Terceros EVP
+
 Route::resource('mails', "MailController", ['middleware' => ['userProfileInactivo']]);
 Route::get('consultatodomails', 'consultasController@consulta_todo_mails')->name('consultatodomails.data');
 
