@@ -28,11 +28,13 @@ class Proveedores extends Model
     }
 
     public function altaProveedores($data) {
-        $motivos = new Proveedores;
-        $motivos->code = $data["code"];
-        $motivos->type = strtoupper($data["type"]);
+        $proveedor = new Proveedores;
+        $proveedor->name = mb_strtoupper($data["name"]);
+        $proveedor->alias = mb_strtoupper($data["alias"]);
+        $proveedor->description = $data["description"];
+        $proveedor->high_date = date("Y-m-d H:m:i");
 
-        if($motivos->save()) {
+        if($proveedor->save()) {
             return true;
         }
 
@@ -40,12 +42,24 @@ class Proveedores extends Model
     }
 
     public function editarProveedores($data) {
-        $motivos = Proveedores::find($data["id"]);
-        $motivos->code = $data["code"];
-        $motivos->type = strtoupper($data["type"]);
-        $motivos->updated_at = strtoupper($data["type"]);
+        $proveedor = Proveedores::find($data["id"]);
+        $proveedor->name = mb_strtoupper($data["name"]);
+        $proveedor->alias = mb_strtoupper($data["alias"]);
+        $proveedor->description = $data["description"];
+        $proveedor->updated_at = date("Y-m-d H:m:i");
 
-        if($motivos->save()) {
+        if($proveedor->save()) {
+            return true;
+        }
+        
+        return false;
+    }
+
+    public function editarStatusProveedores($data) {
+        $proveedor = Proveedores::find($data["id"]);
+        $proveedor->status = $data["status"];
+
+        if($proveedor->save()) {
             return true;
         }
         

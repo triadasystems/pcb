@@ -35,6 +35,7 @@ Route::group(['prefix' =>'proveedores', 'middleware' => 'userProfileInactivo'], 
     Route::put('/update', 'ProveedoresController@update')->name('editarproveedores');
 
     Route::get('/permisosprovvedores','ProveedoresController@permisosMotivosBajas')->name('permisosproveedores');
+    Route::put('/cambiostatusproveedor','ProveedoresController@cambioStatus')->name('editarstatusproveedores');
 });
 // Fin de Terceros EVP
 

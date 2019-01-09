@@ -226,7 +226,6 @@
                             )
                         }
                     }).fail(function(response) {
-                        console.log(response);
                         if (response.responseText !== undefined && response.responseText == "middleUpgrade") {
                             window.location.href = "{{ route('homeajax') }}";
                         }

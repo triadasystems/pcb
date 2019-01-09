@@ -25,7 +25,7 @@ class MotivosBajas extends Model
     public function altaMotivosBajas($data) {
         $motivos = new MotivosBajas;
         $motivos->code = $data["code"];
-        $motivos->type = strtoupper($data["type"]);
+        $motivos->type = mb_strtoupper($data["type"]);
 
         if($motivos->save()) {
             return true;
@@ -37,8 +37,8 @@ class MotivosBajas extends Model
     public function editarMotivosBajas($data) {
         $motivos = MotivosBajas::find($data["id"]);
         $motivos->code = $data["code"];
-        $motivos->type = strtoupper($data["type"]);
-        $motivos->updated_at = strtoupper($data["type"]);
+        $motivos->type = mb_strtoupper($data["type"]);
+        $motivos->updated_at = date("Y-m-d H:m:i");
 
         if($motivos->save()) {
             return true;
