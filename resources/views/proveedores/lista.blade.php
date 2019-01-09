@@ -13,7 +13,7 @@
         font-weight:bold;
     }
 </style>
-<input type="hidden" id="modulo" value="tcsmotivosbajas" />
+<input type="hidden" id="modulo" value="tcsproveedores" />
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
