@@ -27,14 +27,14 @@ Route::group(['prefix' =>'motivosbajas', 'middleware' => 'userProfileInactivo'],
 
     Route::get('/permisosmotivosbajas','MotivosbajasController@permisosMotivosBajas')->name('permisosMotivosBajas');
 });
-Route::group(['prefix' =>'catproveedores', 'middleware' => 'userProfileInactivo'], function() {
-    Route::get('/lista', 'ProveedoresController@index')->name('motivosbajas')->middleware('reading');
-    Route::get('/catproveedores','ProveedoresController@data')->name('motivosbajas.data');
+Route::group(['prefix' =>'proveedores', 'middleware' => 'userProfileInactivo'], function() {
+    Route::get('/lista', 'ProveedoresController@index')->name('proveedores')->middleware('reading');
+    Route::get('/catproveedores','ProveedoresController@data')->name('proveedores.data');
 
-    Route::post('/store', 'ProveedoresController@store')->name('altamotivobaja')->middleware('writing');
-    Route::put('/update', 'ProveedoresController@update')->name('editarmotivobaja');
+    Route::post('/store', 'ProveedoresController@store')->name('altaproveedores')->middleware('writing');
+    Route::put('/update', 'ProveedoresController@update')->name('editarproveedores');
 
-    // Route::get('/permisosprovvedores','ProveedoresController@permisosMotivosBajas')->name('permisosMotivosBajas');
+    Route::get('/permisosprovvedores','ProveedoresController@permisosMotivosBajas')->name('permisosproveedores');
 });
 // Fin de Terceros EVP
 
