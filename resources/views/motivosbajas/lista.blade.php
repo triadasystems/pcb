@@ -38,8 +38,10 @@
                                 <thead>
                                     <tr>
                                         <th scope="col">Código</th>
+                                        <th scope="col">Estado</th>
                                         <th scope="col">Descripción</th>
-                                        <th scope="col">Editar</th>
+                                        <th scope="col">Edición</th>
+                                        <th scope="col">Modificación de Estado</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -54,9 +56,81 @@
 @push('scripts')
     <script>
         $(document).ready(function(){
+            $(document).on("change", "#code",function() {
+                let x = $(this).val();
+
+                if(!isNaN(x)) {
+                    if(x.toString().length > 10) {
+                        x = x.toString().slice(0, 10);
+                    }
+
+                    let result = Math.abs(x);
+
+
+                    $(this).val(parseInt(result));
+                } else {
+                    $(this).val("");
+                }
+            });
+
             $("#altaMotivoBaja").click(function(){
                 formAltaEditar();
             });
+
+            $(document).on("click", "#cambioStatus", function(){
+                swal({
+                    title: '¿Esta seguro?',
+                    text: "¡Siempre podrá revertir la acción!",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Aceptar'
+                }).then((result) => {
+                    if (result.value) {
+                        var id = $(this).attr("data-id");
+                        var statusNuevo = $(this).attr("data-status-nuevo");
+
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+
+                        $.ajax({
+                            type: 'PUT',
+                            data: { id: id, status: statusNuevo },
+                            dataType: 'JSON',
+                            url: '{{ route("editarstatusmotivobaja") }}',
+                            async: false,
+                            beforeSend: function(){
+                                console.log("Cargando");
+                            },
+                            complete: function(){
+                                console.log("Listo");
+                            }
+                        }).done(function(response){
+                            if(response === true) {
+                                table.ajax.reload();
+                                swal(
+                                    'Motivos de Bajas',
+                                    'La operación se ha realizado con éxito',
+                                    'success'
+                                )
+                            } else if(response === false) {
+                                swal(
+                                    'Error',
+                                    'La operación no pudo ser realizada',
+                                    'error'
+                                )
+                            }
+                        }).fail(function(response) {
+                                                
+                        });
+                    }
+                });
+            });
+
             $(document).on("click", "#editarMotivoBaja", function(){
                 var id = $(this).attr("data-id");
                 var codigo = $(this).attr("data-codigo");
@@ -83,16 +157,31 @@
                 ajax: '{!! route("motivosbajas.data") !!}',
                 columns: [
                     { data: 'code', name: 'code' },
+                    { data: 'status', name: 'status' },
                     { data: 'type', name: 'type' },
                     {
-                        targets: - 1,
-                            render: function (data, type, row) {
+                        render: function (data, type, row) {
                             return '<div class="row"><div class="col-lg-5 text-center"><button class="btn btn-primary" id="editarMotivoBaja" data-id="'+row.id+'" data-codigo="'+row.code+'" data-descripcion="'+row.type+'">Editar <i class="fas fa-edit"></i></button></div></div>';
+                        }
+                    },
+                    {
+                        render: function (data, type, row) {
+                            var html = '';
+                            switch (row.status) {
+                                case "Activo":
+                                    html += '<div class="row"><div class="col-lg-5 text-center"><button class="btn btn-danger" id="cambioStatus" data-status-nuevo="Inactivo" data-id="'+row.id+'">Desactivar <i class="fas fa-ban"></i></button></div></div>';
+                                    break;
+                                case "Inactivo":
+                                    html += '<div class="row"><div class="col-lg-5 text-center"><button class="btn btn-primary" id="cambioStatus" data-status-nuevo="Activo" data-id="'+row.id+'">Activar <i class="fas fa-check"></i></button></div></div>';
+                                    break;
+                            }
+
+                            return html;
                         }
                     }
                 ]
             });
-        
+            
             function formAltaEditar(tipo = "alta", id = "", codigo = "", descripcion = "") {
                 var idBotonGuardar = "guardarMotBaja"
 
@@ -110,7 +199,7 @@
                             '<div class="form-group row">'+
                                 '<div class="col-md-6">'+
                                     '<label for="code" class="col-lg-12 col-form-label text-left txt-bold">Código</label>'+
-                                    '<input id="code" type="number" class="form-control" name="code" required autofocus value="'+codigo+'">'+
+                                    '<input id="code" type="number" class="form-control" name="code" required autofocus value="'+codigo+'" min="1" step="1">'+
 
                                     '<span id="errmsj_codigo" class="error-msj" role="alert">'+
                                         '<strong>El campo Código es obligatorio</strong>'+

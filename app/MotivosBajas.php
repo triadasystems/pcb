@@ -46,4 +46,15 @@ class MotivosBajas extends Model
         
         return false;
     }
+
+    public function editarStatusMotivoBaja($data) {
+        $motivoBaja = MotivosBajas::find($data["id"]);
+        $motivoBaja->status = $data["status"];
+
+        if($motivoBaja->save()) {
+            return true;
+        }
+        
+        return false;
+    }
 }

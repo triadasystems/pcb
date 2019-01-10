@@ -45,8 +45,8 @@ class MotivosbajasController extends Controller
 
     public function store(Request $request) {
         $request->validate([
-            "code" => "required|integer|unique:tcs_type_low",
-            "type" => "required|regex:/^[A-Za-z0-9[:space:]\s\S]+$/|unique:tcs_type_low"
+            "code" => "required|min:1|max:2147483647|digits_between:1,10|numeric|unique:tcs_type_low",
+            "type" => "required|string|min:3|max:150|regex:/^[A-Za-z0-9[:space:]\s\S]+$/|unique:tcs_type_low"
         ]);
         
         $motivos = new MotivosBajas;
@@ -76,8 +76,8 @@ class MotivosbajasController extends Controller
 
     public function update(Request $request) {
         $request->validate([
-            "code" => "required|integer|unique:tcs_type_low",
-            "type" => "required|regex:/^[A-Za-z0-9[:space:]\s\S]+$/|unique:tcs_type_low"
+            "code" => "required|min:1|max:2147483647|digits_between:1,10|numeric|unique:tcs_type_low",
+            "type" => "required|string|min:3|max:150|regex:/^[A-Za-z0-9[:space:]\s\S]+$/|unique:tcs_type_low"
         ]);
         
         $motivos = new MotivosBajas;
@@ -86,6 +86,31 @@ class MotivosbajasController extends Controller
             $data = array(
                 'ip_address' => $this->ip_address_client, 
                 'description' => 'Se ha realizado la modificación del motivo de baja con códgio '.$request->post("code"),
+                'tipo' => 'modificacion',
+                'id_user' => Auth::user()->id
+            );
+            
+            $bitacora = new LogBookMovements;
+            $bitacora->guardarBitacora($data);
+
+            return Response::json(true);
+        }
+
+        return Response::json(false);
+    }
+
+    public function cambioStatus(Request $request) {
+        $request->validate([
+            "id" => "required",
+            "status" => "required"
+        ]);
+
+        $MotivosBajas = new MotivosBajas;
+
+        if($MotivosBajas->editarStatusMotivoBaja($request->post()) === true) {
+            $data = array(
+                'ip_address' => $this->ip_address_client, 
+                'description' => 'Se ha realizado el cambio de status del tipo de baja '.$request->post("type"),
                 'tipo' => 'modificacion',
                 'id_user' => Auth::user()->id
             );

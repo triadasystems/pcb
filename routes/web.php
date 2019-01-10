@@ -26,6 +26,7 @@ Route::group(['prefix' =>'motivosbajas', 'middleware' => 'userProfileInactivo'],
     Route::put('/update', 'MotivosbajasController@update')->name('editarmotivobaja');
 
     Route::get('/permisosmotivosbajas','MotivosbajasController@permisosMotivosBajas')->name('permisosMotivosBajas');
+    Route::put('/cambiostatusmotivobaja','MotivosbajasController@cambioStatus')->name('editarstatusmotivobaja');
 });
 Route::group(['prefix' =>'proveedores', 'middleware' => 'userProfileInactivo'], function() {
     Route::get('/lista', 'ProveedoresController@index')->name('proveedores')->middleware('reading');

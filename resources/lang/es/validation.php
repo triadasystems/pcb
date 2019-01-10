@@ -33,7 +33,7 @@ return [
     'date'                 => ':attribute no es una fecha válida.',
     'date_format'          => ':attribute no corresponde al formato :format.',
     'different'            => ':attribute y :other deben ser diferentes.',
-    'digits'               => ':attribute debe tener :digits dígitos.',
+    'digits'               => 'El campo debe tener máximo :digits dígitos.',
     'digits_between'       => ':attribute debe tener entre :min y :max dígitos.',
     'dimensions'           => 'Las dimensiones de la imagen :attribute no son válidas.',
     'distinct'             => 'El campo :attribute contiene un valor duplicado.',
@@ -74,7 +74,7 @@ return [
         'array'   => 'El campo :attribute debe tener como máximo :value elementos.',
     ],
     'max'                  => [
-        'numeric' => ':attribute no debe ser mayor a :max.',
+        'numeric' => 'El campo no debe superar la cantidad de :max.',
         'file'    => ':attribute no debe ser mayor que :max kilobytes.',
         'string'  => ':attribute no debe ser mayor que :max caracteres.',
         'array'   => ':attribute no debe tener más de :max elementos.',
@@ -82,7 +82,7 @@ return [
     'mimes'                => ':attribute debe ser un archivo con formato: :values.',
     'mimetypes'            => ':attribute debe ser un archivo con formato: :values.',
     'min'                  => [
-        'numeric' => 'El tamaño de :attribute debe ser de al menos :min.',
+        'numeric' => 'El campo debe ser de al menos :min.',
         'file'    => 'El tamaño de :attribute debe ser de al menos :min kilobytes.',
         'string'  => ':attribute debe contener al menos :min caracteres.',
         'array'   => ':attribute debe tener al menos :min elementos.',

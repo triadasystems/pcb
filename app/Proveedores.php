@@ -59,6 +59,12 @@ class Proveedores extends Model
         $proveedor = Proveedores::find($data["id"]);
         $proveedor->status = $data["status"];
 
+        if($data["status"] == "Inactivo") {
+            $proveedor->low_date = date("Y-m-d H:m:i");
+        } else {
+            $proveedor->low_date = null;
+        }
+
         if($proveedor->save()) {
             return true;
         }
