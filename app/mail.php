@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class mail extends Model
 {
     protected $fillable=[
-        "correo", "automatizacion", "bajas"
+        "correo", "automatizacion", "bajas", "tcs_terceros_baja"
         ];
 }
