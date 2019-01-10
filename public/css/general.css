@@ -1,3 +1,9 @@
+#bnv-home {
+    color:white;
+    padding: 6px;
+    font-weight: bold;
+    font-size: 15px;
+}
 .panel-pbc {
     background-color:#FFF;
     border-radius: 5px;
@@ -40,8 +46,9 @@
     background-color:#3490dc; 
     color: #FFF; 
     width:80%;
-    padding:41px 17px;
+    padding:30px 5px;
     cursor: pointer;
+    font-size: 13px;
 }
 #regresar {
     color: #FFFFFF;

@@ -2,11 +2,23 @@
 
 @section('content')
 <!-- <input type="hidden" id="modulo" value="home" /> -->
+<!-- <div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12" style="margin-bottom:15px; color:white;">
+            <p class="bg-info">Bienvenido {{ Auth::user()->name }}!</p>
+        </div>
+    </div>
+</div> -->
 <div class="container">
+    <div class="row">
+        <div class="col-lg-12" style="margin-bottom:15px;">
+            <p class="bg-info" id="bnv-home">Bienvenido {{ Auth::user()->name }}!</p>
+        </div>
+    </div>
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-6">
             <div class="card">
-                <div class="card-header">Home</div>
+                <div class="card-header">Módulos PCB</div>
                 <div class="card-body">
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
@@ -15,9 +27,6 @@
                     @endif
                     <div class="container">
                         <div class="row">
-                            <div class="col-lg-12" style="margin-bottom:15px;">
-                                Bienvenido {{ Auth::user()->name }}!
-                            </div>
                             <div class="col-lg-4 cuadros-mnu">
                                 <div class="text-center action-mnu" data-url="{{ route('conciliacion') }}">
                                     Conciliación / Bajas
@@ -77,6 +86,32 @@
                                     Permisos
                                 </div>
                             </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">Módulos Terceros</div>
+                <div class="card-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-4 cuadros-mnu">
+                                <div class="text-center action-mnu" data-url="{{ route('conciliacion') }}">
+                                    Terceros
+                                </div>
+                            </div>
+                            <div class="col-lg-4 cuadros-mnu">
+                                <div class="text-center action-mnu" data-url="{{ route('motivosbajas') }}">
+                                    Motivos de Bajas
+                                </div>
+                            </div>
+                            <div class="col-lg-4 cuadros-mnu">
+                                <div class="text-center action-mnu" data-url="{{ route('proveedores') }}">
+                                    Proveedores
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
