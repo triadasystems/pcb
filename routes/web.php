@@ -144,3 +144,15 @@ Route::group(['prefix' =>'mailsend', 'middleware' => 'userProfileInactivo'], fun
 
 Route::get('/encrypt/viewEncrypt', 'EncryptController@viewEncrypt')->name('viewEncrypt');
 Route::get('/encrypt/desEncrypt', 'EncryptController@desEncrypt')->name('desEncrypt');
+
+//terceros
+Route::group(['prefix' => 'terceros','middleware' => 'userProfileInactivo'], function(){
+    Route::get('/listar', 'tercerosController@index')->name('listar');
+    Route::get('/alta', 'tercerosController@create')->name('terceros.alta');
+    Route::post('/insertar', 'tercerosController@insertar')->name('insertar');
+    Route::get('/anyData','tercerosController@anyData')->name('terceros.data');
+    Route::get('/consecutivo', 'tercerosController@generar_consecutivo')->name('terceros.consecutivo');
+    //Route::post('/autocomplete', 'tercerosController@autocomplete')->name('terceros.autocomplete');
+    Route::get('autocomplete', ['uses'=>'tercerosController@autocomplete'])->name('terceros.autocomplete');
+});
+

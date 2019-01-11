@@ -12,6 +12,9 @@
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}"></script>
         <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
+        <!-- jquery-ui -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+       
         
         <!-- Adicionales datatables -->
         <script src="{{ asset('js/dataTables.buttons.min.js') }}"></script>
@@ -33,6 +36,8 @@
         <link href="{{ asset('css/jquery.dataTables.min.css') }}" rel="stylesheet">
         <!-- Adicionales datatables -->
         <link href="{{ asset('css/buttons.dataTables.min.css') }}" rel="stylesheet">
+        <!-- css jquery ui -->
+        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
 
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
         <link rel="stylesheet" href="{{ asset('js/sweetalert2/dist/sweetalert2.min.css') }}">
