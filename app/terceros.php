@@ -19,6 +19,7 @@ class terceros extends Model
     ];
     public static function listar_terceros($dat=0)
     {
+        $and="";
         if ($dat!=0)
         {
             $and = " AND a.id_external=$dat";
