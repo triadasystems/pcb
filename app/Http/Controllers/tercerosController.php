@@ -7,9 +7,11 @@ use Illuminate\Http\Request;
 use App\User;
 use App\terceros;
 use App\Profileusers;
+use App\subfijo;
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+
 class tercerosController extends Controller
 {
     public $ip_address_client;
@@ -33,13 +35,24 @@ class tercerosController extends Controller
     }
     public function create()
     {
-        
+        // Cálculo
+        $dat = new terceros;
+        // echo '<pre>';print_r($dat->recuperar_idTercero());echo '</pre>';
+        // die();
+        $calculo = $dat->recuperar_idTercero();
+        $limite = 99999999;
+        // Fin Cálculo
+        if($calculo[0]["id_external"] == $limite) {
+            return redirect()->route('listar')->with('validacionCalculo', 'Cálculo');
+        }
+
         $emp    = terceros::empresas();
         $mesa   = terceros::mesa();
         $app    = terceros::aplicacion();
         $data['empresa']    =   $emp;
         $data['mesa']       =   $mesa;
         $data['app']        =   $app;
+
         return view("terceros.create")->with('data',$data);
     }
     public function autocomplete(Request $request)
@@ -64,7 +77,7 @@ class tercerosController extends Controller
         }
         else if($data==null)
         {
-            return $data[] = array('response'=>'No se encontro el registro');
+            return $data[] = array('response'=>'No se encontró el registro');
         }    
     }
     public function insertar(Request $request)//'email' => 'sometimes|required|'regex:/^.+@.+$/i' a_paterno
@@ -138,13 +151,12 @@ class tercerosController extends Controller
             }
             $fus["tcs_external_employees_id"]           = $id;
             terceros::new_row_fus($fus);
-            
+            return redirect()->route('listar')->with('confirmacion', 'registrado');
         } 
         catch (Exception $e) 
         {
             report($e);
         }
-        echo "por fin   quedo";
     }
     public function generar_consecutivo()
     {
