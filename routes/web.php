@@ -35,8 +35,18 @@ Route::group(['prefix' =>'proveedores', 'middleware' => 'userProfileInactivo'], 
     Route::post('/store', 'ProveedoresController@store')->name('altaproveedores')->middleware('writing');
     Route::put('/update', 'ProveedoresController@update')->name('editarproveedores');
 
-    Route::get('/permisosprovvedores','ProveedoresController@permisosMotivosBajas')->name('permisosproveedores');
+    Route::get('/permisosproveedores','ProveedoresController@permisosMotivosBajas')->name('permisosproveedores');
     Route::put('/cambiostatusproveedor','ProveedoresController@cambioStatus')->name('editarstatusproveedores');
+});
+Route::group(['prefix' =>'mesascontrol', 'middleware' => 'userProfileInactivo'], function() {
+    Route::get('/lista', 'MesacontrolController@index')->name('mesacontrol')->middleware('reading');
+    Route::get('/catmesascontrol','MesacontrolController@data')->name('mesacontrol.data');
+
+    Route::post('/store', 'MesacontrolController@store')->name('altamesacontrol')->middleware('writing');
+    Route::put('/update', 'MesacontrolController@update')->name('editarmesacontrol');
+
+    Route::get('/permisosmesascontrol','MesacontrolController@permisosMotivosBajas')->name('permisosmesacontrol');
+    Route::put('/cambiostatusmesacontrol','MesacontrolController@cambioStatus')->name('editarstatusmesacontrol');
 });
 // Fin de Terceros EVP
 
