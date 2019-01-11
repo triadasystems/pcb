@@ -4,7 +4,7 @@
 <input type="hidden" id="modulo" value="emails" />
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-10">
             <div class="card">
                 <div class="card-header">Correos</div>
 
@@ -29,10 +29,10 @@
                                         <th scope="col">Correo</th>
                                         <th scope="col">Conciliación</th>
                                         <th scope="col">Bajas</th>
+                                        <th scope="col">Baja de Terceros</th>
                                         <th></th>
                                     </tr>
                                 </thead>
-
                             </table>
                         </div>
                     </div>
@@ -87,8 +87,8 @@
                 { data: 'correo', name: 'correo' },
                 { data: 'automatizacion', name: 'automatizacion' },
                 { data: 'bajas', name: 'bajas' },
+                { data: 'tcs_terceros_baja', name: 'tcs_terceros_baja' },
                 {
-                    targets: - 1,
                     render: function (data, type, row) {
                         return '<div class="row"><div class="col-lg-5 text-center"><a class="btn btn-primary" href="mails/' + row.id + '/edit">Editar <i class="fas fa-edit"></i></a></div></div>';
                     }
