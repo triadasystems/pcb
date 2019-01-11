@@ -98,7 +98,7 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-lg-4 cuadros-mnu">
-                                <div class="text-center action-mnu" data-url="{{ route('conciliacion') }}">
+                                <div class="text-center action-mnu" data-url="{{ route('listar') }}">
                                     Terceros
                                 </div>
                             </div>

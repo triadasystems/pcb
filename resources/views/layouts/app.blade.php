@@ -109,7 +109,7 @@
                                         {{ __('Herramienta de encriptación') }}
                                     </a>
                                     <hr>
-                                    <a class="dropdown-item" href="{{ route('relacionpm.index') }}">
+                                    <a class="dropdown-item" href="{{ route('listar') }}">
                                         {{ __('Terceros') }}
                                     </a>
                                     <a class="dropdown-item" href="{{ route('motivosbajas') }}">
