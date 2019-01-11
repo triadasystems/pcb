@@ -32,16 +32,97 @@ class MesacontrolController extends Controller
             'id_user' => Auth::user()->id
         );
         
-        $bitacora = new LogBookMovements;
-        $bitacora->guardarBitacora($data);
+        // $bitacora = new LogBookMovements;
+        // $bitacora->guardarBitacora($data);
         
-        return view("mesacontrol.lista");
+        return view("mesasdecontrol.lista");
     }
     
     public function data() {
-        $proveedores = new MesaControl;
-        return Datatables::of($proveedores->proveedores())->make(true);
+        $mesascontrol = new MesaControl;
+        return Datatables::of($mesascontrol->mesascontrol())->make(true);
     }
 
+    public function store(Request $request) {
+        $request->validate([
+            "name" => "required|string|min:3|max:100|regex:/^[A-Za-z0-9[:space:]\s\S]+$/|unique:tcs_cat_suppliers",
+            "alias" => "required|string|min:2|max:45|regex:/^[A-Za-z0-9[:space:]\s\S]+$/|unique:tcs_cat_suppliers",
+            "description" => "required|string|min:5|max:255|regex:/^[A-Za-z0-9[:space:]\s\S]+$/"
+        ]);
+        
+        $proveedor = new Proveedores;
 
+        if($proveedor->altaProveedores($request->post()) === true) {
+            $data = array(
+                'ip_address' => $this->ip_address_client, 
+                'description' => 'Se ha realizado la alta del proveedor '.$request->post("name"),
+                'tipo' => 'alta',
+                'id_user' => Auth::user()->id
+            );
+            
+            $bitacora = new LogBookMovements;
+            $bitacora->guardarBitacora($data);
+
+            return Response::json(true);
+        }
+
+        return Response::json(false);
+    }
+
+    public function permisosProveedores() {
+        if (session("msjError") === true) {
+            return "middleUpgrade";
+        }
+    }
+
+    public function update(Request $request) {
+        $request->validate([
+            "name" => "required|string|min:3|max:100|regex:/^[A-Za-z0-9[:space:]\s\S]+$/|unique:tcs_cat_suppliers",
+            "alias" => "required|string|min:2|max:45|regex:/^[A-Za-z0-9[:space:]\s\S]+$/|unique:tcs_cat_suppliers",
+            "description" => "required|string|min:5|max:255|regex:/^[A-Za-z0-9[:space:]\s\S]+$/"
+        ]);
+        
+        $proveedor = new Proveedores;
+
+        if($proveedor->editarProveedores($request->post()) === true) {
+            $data = array(
+                'ip_address' => $this->ip_address_client, 
+                'description' => 'Se ha realizado la modificación del proveedor '.$request->post("name"),
+                'tipo' => 'modificacion',
+                'id_user' => Auth::user()->id
+            );
+            
+            $bitacora = new LogBookMovements;
+            $bitacora->guardarBitacora($data);
+
+            return Response::json(true);
+        }
+
+        return Response::json(false);
+    }
+
+    public function cambioStatus(Request $request) {
+        $request->validate([
+            "id" => "required",
+            "status" => "required"
+        ]);
+
+        $proveedor = new Proveedores;
+
+        if($proveedor->editarStatusProveedores($request->post()) === true) {
+            $data = array(
+                'ip_address' => $this->ip_address_client, 
+                'description' => 'Se ha realizado el cambio de status del proveedor '.$request->post("name"),
+                'tipo' => 'modificacion',
+                'id_user' => Auth::user()->id
+            );
+            
+            $bitacora = new LogBookMovements;
+            $bitacora->guardarBitacora($data);
+
+            return Response::json(true);
+        }
+
+        return Response::json(false);
+    }
 }
