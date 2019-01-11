@@ -118,7 +118,7 @@ Route::group(['prefix' => 'terceros','middleware' => 'userProfileInactivo'], fun
     Route::get('/alta', 'tercerosController@create')->name('terceros.alta');
     Route::post('/insertar', 'tercerosController@insertar')->name('insertar');
     Route::get('/anyData','tercerosController@anyData')->name('terceros.data');
-    //Route::get('/autocomplete', 'tercerosController@autocomplete')->name('terceros.autocomplete');
+    Route::get('/consecutivo', 'tercerosController@generar_consecutivo')->name('terceros.consecutivo');
     //Route::post('/autocomplete', 'tercerosController@autocomplete')->name('terceros.autocomplete');
     Route::get('autocomplete', ['uses'=>'tercerosController@autocomplete'])->name('terceros.autocomplete');
 });
