@@ -50,9 +50,9 @@ class MesacontrolController extends Controller
             "description" => "required|string|min:5|max:255|regex:/^[A-Za-z0-9[:space:]\s\S]+$/"
         ]);
         
-        $proveedor = new Proveedores;
+        $proveedor = new MesaControl;
 
-        if($proveedor->altaProveedores($request->post()) === true) {
+        if($proveedor->altaMesaControl($request->post()) === true) {
             $data = array(
                 'ip_address' => $this->ip_address_client, 
                 'description' => 'Se ha realizado la alta del proveedor '.$request->post("name"),
@@ -60,8 +60,8 @@ class MesacontrolController extends Controller
                 'id_user' => Auth::user()->id
             );
             
-            $bitacora = new LogBookMovements;
-            $bitacora->guardarBitacora($data);
+            // $bitacora = new LogBookMovements;
+            // $bitacora->guardarBitacora($data);
 
             return Response::json(true);
         }
@@ -69,7 +69,7 @@ class MesacontrolController extends Controller
         return Response::json(false);
     }
 
-    public function permisosProveedores() {
+    public function permisosMesasControl() {
         if (session("msjError") === true) {
             return "middleUpgrade";
         }

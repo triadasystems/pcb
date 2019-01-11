@@ -45,7 +45,7 @@ Route::group(['prefix' =>'mesascontrol', 'middleware' => 'userProfileInactivo'],
     Route::post('/store', 'MesacontrolController@store')->name('altamesacontrol')->middleware('writing');
     Route::put('/update', 'MesacontrolController@update')->name('editarmesacontrol');
 
-    Route::get('/permisosmesascontrol','MesacontrolController@permisosMotivosBajas')->name('permisosmesacontrol');
+    Route::get('/permisosmesascontrol','MesacontrolController@permisosMesasControl')->name('permisosmesacontrol');
     Route::put('/cambiostatusmesacontrol','MesacontrolController@cambioStatus')->name('editarstatusmesacontrol');
 });
 // Fin de Terceros EVP
