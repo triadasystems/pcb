@@ -29,6 +29,7 @@
                                         <th scope="col">Correo</th>
                                         <th scope="col">Conciliación</th>
                                         <th scope="col">Bajas</th>
+                                        <th scope="col">Terceros</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -86,6 +87,7 @@
                 { data: 'id', name: 'id' },
                 { data: 'correo', name: 'correo' },
                 { data: 'automatizacion', name: 'automatizacion' },
+                { data: 'bajas', name: 'bajas' },
                 { data: 'bajas', name: 'bajas' },
                 {
                     targets: - 1,

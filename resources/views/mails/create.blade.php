@@ -23,6 +23,7 @@
                                             <th scope="col">Correo</th>
                                             <th scope="col">Conciliación</th>
                                             <th scope="col">Bajas</th>
+                                            <th scope="col">Terceros</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -67,8 +68,23 @@
                                                     </label>
                                                 </div>
                                             </td>
+                                            <td>
+                                                <div class="form-check">
+                                                    <input name="bajas" class="form-check-input" type="radio" value=1 checked>
+                                                    <label class="form-check-label" for="gridRadios1">
+                                                        Permitido
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input name="bajas" class="form-check-input" type="radio" value=0 checked>
+                                                    <label class="form-check-label" for="gridRadios1">
+                                                        No Permitido
+                                                    </label>
+                                                </div>
+                                            </td>
                                         </tr>
                                         <tr>
+                                            <td></td>
                                             <td></td>
                                             <td><a href="{{route('mails.index')}}" id="regresar" class="btn btn-warning">Regresar</a></td>
                                             <td><input class="btn btn-primary" type="submit" value="Registrar"></td>
