@@ -103,7 +103,8 @@ class MailController extends Controller {
         $request->validate([
             "correo" => ["required","email"]           
         ]);
-        $mail->update($request->all());
+
+        $mail->updateMail($request->all());
         
         DB::table('logbook_movements')->insert([
             [

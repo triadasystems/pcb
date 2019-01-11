@@ -69,6 +69,11 @@ class consultasController extends Controller {
             } else {
                 $mail[$aux]->bajas = "Activo";
             }
+            if ((int) $mail[$aux]->tcs_terceros_baja == 0) {
+                $mail[$aux]->tcs_terceros_baja = "Inactivo";
+            } else {
+                $mail[$aux]->tcs_terceros_baja = "Activo";
+            }
         }
         return Datatables::of($mail)->make(true);
     }
