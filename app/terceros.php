@@ -8,17 +8,34 @@ use Illuminate\Support\Facades\Config;
 
 class terceros extends Model
 {
-    protected $table = 'rdbms_qrys';
-    protected $primaryKey = 'id';
-    
+    protected $table="tcs_external_employees";
+
     protected $fillable = [
-        'application_id'
-        ,'rdbms_id'
-        ,'qry_read'
-        ,'select_in'
+        'id',
+        'id_external',
+        'name',
+        'lastname1',
+        'lastname2',
+        'initial_date',
+        'low_date',
+        'badge_number',
+        'email',
+        'authorizing_name',
+        'authorizing_number',
+        'responsible_name',
+        'responsible_number',
+        'created_at',
+        'status',
     ];
+
+    protected $hidden = [
+        'tcs_subfijo_id', 'tcs_externo_proveedor',
+    ];
+
+    public $timestamps = false;
     public static function listar_terceros($dat=0)
     {
+        $and="";
         if ($dat!=0)
         {
             $and = " AND a.id_external=$dat";
@@ -94,5 +111,14 @@ class terceros extends Model
     {
         DB::table('tcs_request_fus')->insert($fus);
     }
+    public static function recuperar_idTercero()
+    {
+        $consultas = terceros::where("id_external", function($subquery){
+            $subquery->selectRaw('max(id_external)')->from('tcs_external_employees');
+        })
+        ->get()
+        ->toArray();
 
+        return $consultas;
+    }
 }

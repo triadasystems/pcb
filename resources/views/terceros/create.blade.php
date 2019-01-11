@@ -21,17 +21,17 @@
                 <form method="POST" action="{{ route('insertar')}}">
                     @csrf
                     <div class="form-group row">
-                        <div class="col-md-4">
+                        <<!--div class="col-md-4">
                             <label>{{ __('Tipo de solicitud')}}</label><br>
                             <select id="t_solicitud" class="form-control">
                                 <option>{{ __('Tipo de solicitud')}}</option>
                             </select>
-                        </div>
-                        <div class="col-md-4">
+                        </div>-->
+                        <div class="col-md-6">
                             <label>{{ __('No. de FUS/RFC')}}</label><br>
                             <input type="text" id="fus" name="fus" class="form-control">
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <label>{{'Mesa de control'}}</label><br>
                             <select id="mesa" name ="mesa" class="form-control{{ $errors->has('mesa') ? ' is-invalid' : '' }}" value="{{ old('mesa') }}" required>
                                 <option value="">{{ __('Mesa de control')}}</option>
