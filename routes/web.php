@@ -17,6 +17,39 @@ Route::get('/', function () {
 
 Auth::routes();
 
+// Terceros EVP
+Route::group(['prefix' =>'motivosbajas', 'middleware' => 'userProfileInactivo'], function() {
+    Route::get('/lista', 'MotivosbajasController@index')->name('motivosbajas')->middleware('reading');
+    Route::get('/catmotivosbajas','MotivosbajasController@data')->name('motivosbajas.data');
+
+    Route::post('/store', 'MotivosbajasController@store')->name('altamotivobaja')->middleware('writing');
+    Route::put('/update', 'MotivosbajasController@update')->name('editarmotivobaja');
+
+    Route::get('/permisosmotivosbajas','MotivosbajasController@permisosMotivosBajas')->name('permisosMotivosBajas');
+    Route::put('/cambiostatusmotivobaja','MotivosbajasController@cambioStatus')->name('editarstatusmotivobaja');
+});
+Route::group(['prefix' =>'proveedores', 'middleware' => 'userProfileInactivo'], function() {
+    Route::get('/lista', 'ProveedoresController@index')->name('proveedores')->middleware('reading');
+    Route::get('/catproveedores','ProveedoresController@data')->name('proveedores.data');
+
+    Route::post('/store', 'ProveedoresController@store')->name('altaproveedores')->middleware('writing');
+    Route::put('/update', 'ProveedoresController@update')->name('editarproveedores');
+
+    Route::get('/permisosproveedores','ProveedoresController@permisosMotivosBajas')->name('permisosproveedores');
+    Route::put('/cambiostatusproveedor','ProveedoresController@cambioStatus')->name('editarstatusproveedores');
+});
+Route::group(['prefix' =>'mesascontrol', 'middleware' => 'userProfileInactivo'], function() {
+    Route::get('/lista', 'MesacontrolController@index')->name('mesacontrol')->middleware('reading');
+    Route::get('/catmesascontrol','MesacontrolController@data')->name('mesacontrol.data');
+
+    Route::post('/store', 'MesacontrolController@store')->name('altamesacontrol')->middleware('writing');
+    Route::put('/update', 'MesacontrolController@update')->name('editarmesacontrol');
+
+    Route::get('/permisosmesascontrol','MesacontrolController@permisosMotivosBajas')->name('permisosmesacontrol');
+    Route::put('/cambiostatusmesacontrol','MesacontrolController@cambioStatus')->name('editarstatusmesacontrol');
+});
+// Fin de Terceros EVP
+
 Route::resource('mails', "MailController", ['middleware' => ['userProfileInactivo']]);
 Route::get('consultatodomails', 'consultasController@consulta_todo_mails')->name('consultatodomails.data');
 
