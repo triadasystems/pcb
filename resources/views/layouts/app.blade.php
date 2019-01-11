@@ -75,6 +75,7 @@
                                     <a class="dropdown-item" href="{{ route('home') }}">
                                         {{ __('Home') }}
                                     </a>
+                                    <hr>
                                     <a class="dropdown-item" href="{{ route('conciliacion') }}">
                                         {{ __('Conciliación / Bajas') }}
                                     </a>
@@ -102,7 +103,17 @@
                                     <a class="dropdown-item" href="{{ route('viewEncrypt') }}">
                                         {{ __('Herramienta de encriptación') }}
                                     </a>
-                                    
+                                    <hr>
+                                    <a class="dropdown-item" href="{{ route('relacionpm.index') }}">
+                                        {{ __('Terceros') }}
+                                    </a>
+                                    <a class="dropdown-item" href="{{ route('motivosbajas') }}">
+                                        {{ __('Motivos de Bajas') }}
+                                    </a>
+                                    <a class="dropdown-item" href="{{ route('proveedores') }}">
+                                        {{ __('Proveedores') }}
+                                    </a>
+                                    <hr>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                         onclick="event.preventDefault();
                                         document.getElementById('logout-form').submit();">
