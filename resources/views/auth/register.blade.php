@@ -88,7 +88,7 @@
                                 <select id="tipo" class="form-control{{ $errors->has('tipo') ? ' is-invalid' : '' }}" name="tipo" required>
                                     <option value="">Seleccione...</option>
                                     <option value="sysadmin">sysadmin</option>
-                                    <option value="wintel">wintel</option>
+                                    <option value="tercerosadmin">tercerosadmin</option>
                                 </select>
 
                                 @if ($errors->has('tipo'))

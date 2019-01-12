@@ -82,9 +82,9 @@ class MesacontrolController extends Controller
             "description" => "required|string|min:5|max:255|regex:/^[A-Za-z0-9[:space:]\s\S]+$/"
         ]);
         
-        $proveedor = new Proveedores;
+        $mesacontrol = new MesaControl;
 
-        if($proveedor->editarProveedores($request->post()) === true) {
+        if($mesacontrol->editarMesaControl($request->post()) === true) {
             $data = array(
                 'ip_address' => $this->ip_address_client, 
                 'description' => 'Se ha realizado la modificación del proveedor '.$request->post("name"),
@@ -107,9 +107,9 @@ class MesacontrolController extends Controller
             "status" => "required"
         ]);
 
-        $proveedor = new Proveedores;
+        $mesacontrol = new MesaControl;
 
-        if($proveedor->editarStatusProveedores($request->post()) === true) {
+        if($mesacontrol->editarStatusMesaControl($request->post()) === true) {
             $data = array(
                 'ip_address' => $this->ip_address_client, 
                 'description' => 'Se ha realizado el cambio de status del proveedor '.$request->post("name"),
