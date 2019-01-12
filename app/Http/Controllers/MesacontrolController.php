@@ -32,8 +32,8 @@ class MesacontrolController extends Controller
             'id_user' => Auth::user()->id
         );
         
-        // $bitacora = new LogBookMovements;
-        // $bitacora->guardarBitacora($data);
+        $bitacora = new LogBookMovements;
+        $bitacora->guardarBitacora($data);
         
         return view("mesasdecontrol.lista");
     }
@@ -60,8 +60,8 @@ class MesacontrolController extends Controller
                 'id_user' => Auth::user()->id
             );
             
-            // $bitacora = new LogBookMovements;
-            // $bitacora->guardarBitacora($data);
+            $bitacora = new LogBookMovements;
+            $bitacora->guardarBitacora($data);
 
             return Response::json(true);
         }
