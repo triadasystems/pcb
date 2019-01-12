@@ -21,7 +21,7 @@
                 <form method="POST" action="{{ route('insertar')}}">
                     @csrf
                     <div class="form-group row">
-                        <<!--div class="col-md-4">
+                        <!--<div class="col-md-4">
                             <label>{{ __('Tipo de solicitud')}}</label><br>
                             <select id="t_solicitud" class="form-control">
                                 <option>{{ __('Tipo de solicitud')}}</option>
