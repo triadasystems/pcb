@@ -30,4 +30,8 @@ class subfijo extends Model
 
         return $consultas;
     }
+    public static function nuevo($dato)
+    {
+        DB::table('tcs_subfijo')->insert($dato);
+    }
 }

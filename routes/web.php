@@ -146,7 +146,9 @@ Route::get('/encrypt/viewEncrypt', 'EncryptController@viewEncrypt')->name('viewE
 Route::get('/encrypt/desEncrypt', 'EncryptController@desEncrypt')->name('desEncrypt');
 
 //terceros
-Route::group(['prefix' => 'terceros','middleware' => 'userProfileInactivo'], function(){
+//Route::group(['prefix' => 'terceros','middleware' => 'userProfileInactivo'], function()
+Route::group(['prefix' => 'terceros'], function()
+{
     Route::get('/listar', 'tercerosController@index')->name('listar');
     Route::get('/alta', 'tercerosController@create')->name('terceros.alta');
     Route::post('/insertar', 'tercerosController@insertar')->name('insertar');
@@ -154,5 +156,13 @@ Route::group(['prefix' => 'terceros','middleware' => 'userProfileInactivo'], fun
     Route::get('/consecutivo', 'tercerosController@generar_consecutivo')->name('terceros.consecutivo');
     //Route::post('/autocomplete', 'tercerosController@autocomplete')->name('terceros.autocomplete');
     Route::get('autocomplete', ['uses'=>'tercerosController@autocomplete'])->name('terceros.autocomplete');
+});
+// configuraciones
+
+//Route::group(['prefix'=>'configuracion','middleware'=> 'userProfileInactivo'], function()
+Route::group(['prefix'=>'configuracion'], function()
+{
+    Route::get('/index','settingsController@index')->name('settings');
+    Route::post('/upsub','settingsController@updatesub')->name('actualizaSub');
 });
 
