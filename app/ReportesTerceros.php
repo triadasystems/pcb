@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\tercerosHistorico;
 
 class ReportesTerceros extends Model
 {
@@ -87,9 +88,13 @@ class ReportesTerceros extends Model
         ->toArray();
     }
 
-    public function Trazabilidad() {
-        return $bajasDiarias = ReportesTerceros::join('tcs_request_fus', 'tcs_request_fus.tcs_external_employees_id', '=', 'tcs_external_employees.id')
-        ->join('tcs_type_low', 'tcs_type_low.id', '=', 'tcs_request_fus.tcs_type_low_id')
+    public function trazabilidad() {
+        $trazabilidadAlta = ReportesTerceros::join(
+            'tcs_request_fus', 
+            'tcs_request_fus.tcs_external_employees_id', 
+            '=', 
+            'tcs_external_employees.id'
+        )
         ->select(
             'tcs_external_employees.badge_number', 
             'tcs_external_employees.email',
@@ -101,15 +106,15 @@ class ReportesTerceros extends Model
             'tcs_external_employees.authorizing_name',
             'tcs_external_employees.authorizing_number',
             'tcs_external_employees.status AS tcs_status',
-            'tcs_type_low.type AS typelow',
+            'tcs_request_fus.tcs_type_low_id AS typelow',
             'tcs_request_fus.created_at AS low_date_fus',
             'tcs_request_fus.real_low_date'
-        )
-        ->where("tcs_external_employees.status", "=", 2)
-        ->where("tcs_request_fus.type", "=", 3)
-        // ->whereNotNull("tcs_request_fus.created_at")
-        // ->whereRaw("tcs_request_fus.created_at = CURDATE()")
-        ->get()
-        ->toArray();
+        );
+
+        $trazabilidad = new tercerosHistorico;
+        
+        return $trazabilidad->trazabilidad($trazabilidadAlta);
     }
+
+    
 }

@@ -3,16 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\ReportesTerceros;
-
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 use Yajra\Datatables\Datatables;
 
 class TcsreportesController extends Controller
 {
-    public function reporteBajasDiarias() {
-        $bajasDiarias = new ReportesTerceros;
-        
+    public $ip_address_client;
+
+    public function __construct()
+    {
+        $this->ip_address_client = getIpAddress();// EVP ip para bitacora
+        $this->middleware('auth');
+    }
+
+    public function reporteBajasDiarias() {      
         return view('tcsreportes.bajasdiarias');
     }
 
@@ -23,8 +29,6 @@ class TcsreportesController extends Controller
     }
 
     public function reporteActivos() {
-        $bajasDiarias = new ReportesTerceros;
-        
         return view('tcsreportes.usuariosactivos');
     }
 
@@ -35,15 +39,13 @@ class TcsreportesController extends Controller
     }
 
     public function reporteTrazabilidad() {
-        $bajasDiarias = new ReportesTerceros;
-        
-        return view('tcsreportes.usuariosactivos');
+        return view('tcsreportes.trazabilidad');
     }
 
     public function reporteTrazabilidadData() {
-        $activos = new ReportesTerceros;
+        $trazabilidad = new ReportesTerceros;
         
-        return Datatables::of($activos->activos())->make(true);
+        return Datatables::of($trazabilidad->trazabilidad())->make(true);
     }
 // Sin terminar aun
     public function reporteResponsables() {
