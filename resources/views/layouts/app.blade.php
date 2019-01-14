@@ -118,6 +118,9 @@
                                     <a class="dropdown-item" href="{{ route('proveedores') }}">
                                         {{ __('Proveedores') }}
                                     </a>
+                                    <a class="dropdown-item" href="{{ route('settings') }}">
+                                        {{ __('Configuraciones') }}
+                                    </a>
                                     <hr>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                         onclick="event.preventDefault();
