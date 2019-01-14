@@ -69,6 +69,20 @@
                                     <label for="tcs_terceros_baja" class="col-lg-10 col-form-label">{{ __('Baja de Terceros') }}</label>
                                 </div>
                             </div>
+                            <div class="form-group row">
+                                <div class="col-md-8">
+                                    @php
+                                        $checkedTcsBAR = '';
+                                    @endphp
+                                    @if(old('tcs_terceros_baja_auth_resp') == 1)
+                                        @php
+                                            $checkedTcsBAR = 'checked';
+                                        @endphp
+                                    @endif
+                                    <input id="tcs_terceros_baja_auth_resp" type="checkbox" class="form-control{{ $errors->has('tcs_terceros_baja_auth_resp') ? ' is-invalid' : '' }}" name="tcs_terceros_baja_auth_resp" value="1" {{$checkedTcsBAR}} autofocus>
+                                    <label for="tcs_terceros_baja_auth_resp" class="col-lg-10 col-form-label">{{ __('Baja Autorizador/Respons.') }}</label>
+                                </div>
+                            </div>
                             <div class="col-md-12 text-right">
                                 <a href="{{route('mails.index')}}" id="regresar" class="btn btn-warning">Regresar</a>
                                 <input disabled="disabled" class="btn btn-primary" id="registrar" type="submit" value="Registrar">
@@ -88,6 +102,28 @@
             var bajas = "";
             var tcs_terceros_baja = "";
             var contadorChecks = 0;
+
+            if($("#automatizacion").is(':checked')) {
+                contadorChecks = contadorChecks+1;
+            }
+            if($("#bajas").is(':checked')) {
+                contadorChecks = contadorChecks+1;
+            }
+            if($("#tcs_terceros_baja").is(':checked')) {
+                contadorChecks = contadorChecks+1;
+            }
+            if($("#tcs_terceros_baja_auth_resp").is(':checked')) {
+                contadorChecks = contadorChecks+1;
+            }
+            
+            if(
+                $("#automatizacion").is(':checked') || 
+                $("#bajas").is(':checked') || 
+                $("#tcs_terceros_baja").is(':checked') ||
+                $("#tcs_terceros_baja_auth_resp").is(':checked')
+            ) {
+                $("#registrar").prop("disabled", false);
+            }
             
             $("#automatizacion").change(function(){
                 if($(this).is(':checked')){
@@ -116,6 +152,19 @@
                 }
             });
             $("#tcs_terceros_baja").change(function(){
+                if($(this).is(':checked')){
+                    contadorChecks = contadorChecks+1;
+                    if($("#registrar").attr("disabled")) {
+                        $("#registrar").prop("disabled", false);
+                    }
+                } else {
+                    contadorChecks = contadorChecks-1;
+                    if(contadorChecks == 0) {
+                        $("#registrar").prop("disabled", true);
+                    }
+                }
+            });
+            $("#tcs_terceros_baja_auth_resp").change(function(){
                 if($(this).is(':checked')){
                     contadorChecks = contadorChecks+1;
                     if($("#registrar").attr("disabled")) {

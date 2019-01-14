@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class mail extends Model
 {
     protected $fillable=[
-        "correo", "automatizacion", "bajas", "tcs_terceros_baja"
+        "correo", "automatizacion", "bajas", "tcs_terceros_baja", "tcs_terceros_baja_auth_resp"
     ];
 
     public function updateMail($data) {
@@ -30,6 +30,12 @@ class mail extends Model
             $mail->tcs_terceros_baja = $data["tcs_terceros_baja"];
         } else {
             $mail->tcs_terceros_baja = 0;
+        }
+
+        if(isset($data["tcs_terceros_baja_auth_resp"])) {
+            $mail->tcs_terceros_baja_auth_resp = $data["tcs_terceros_baja_auth_resp"];
+        } else {
+            $mail->tcs_terceros_baja_auth_resp = 0;
         }
 
         if($mail->save()) {
