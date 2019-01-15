@@ -183,4 +183,7 @@ Route::group(['prefix' =>'reportes', 'middleware' => 'userProfileInactivo'], fun
 
     Route::get('/trazabilidad','TcsreportesController@reporteTrazabilidad')->name('trazabilidad')->middleware('writing');
     Route::get('/trazabilidaddata','TcsreportesController@reporteTrazabilidadData')->name('trazabilidad.data');
+
+    Route::get('/responsables','TcsreportesController@reporteResponsables')->name('responsables')->middleware('writing');
+    Route::get('/responsablesdata','TcsreportesController@reporteResponsablesData')->name('responsables.data');
 });

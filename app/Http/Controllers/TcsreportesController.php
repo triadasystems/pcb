@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\ReportesTerceros;
+use App\ReporteResponsable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
@@ -49,14 +50,14 @@ class TcsreportesController extends Controller
     }
 // Sin terminar aun
     public function reporteResponsables() {
-        $bajasDiarias = new ReportesTerceros;
+        $responsables = new ReporteResponsable;
         
         return view('tcsreportes.responsables');
     }
 
     public function reporteResponsablesData() {
-        $activos = new ReportesTerceros;
+        $responsables = new ReporteResponsable;
         
-        return Datatables::of($activos->responsables())->make(true);
+        return Datatables::of($responsables->reporteResponsables())->make(true);
     }
 }

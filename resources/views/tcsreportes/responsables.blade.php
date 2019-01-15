@@ -3,23 +3,19 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-lg-12">
+        <div class="col-lg-10">
             <div class="card">
                 <div class="card-header">
-                    Reporte de Trazabilidad de Terceros
+                    Reporte de Bajas Diarias
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-bordered" id="bajasdiarias-table">
+                        <table class="table table-bordered" id="responsables-table">
                             <thead>
                                 <tr>
-                                    <th># Gafete del Tercero</th>
-                                    <th>Usuario del Tercero</th>
-                                    <th>Fecha de Alta</th>
-                                    <th>Autorizador #</th>
-                                    <th>Fecha Captura de Baja</th>
-                                    <th>Motivo Baja</th>
-                                    <th>Fecha Efectiva de Baja</th>
+                                    <th># de Empleado</th>
+                                    <th>Nombre del Autorizador/Responsable</th>
+                                    <th>Tipo</th>
                                 </tr>
                             </thead>
                         </table>  
@@ -34,7 +30,7 @@
 <script>
     $(document).ready(function(){
 
-        var table = $('#bajasdiarias-table').DataTable({
+        var table = $('#responsables-table').DataTable({
             language: {
                 url: "{{ asset('json/Spanish.json') }}",
                 buttons: {
@@ -49,20 +45,29 @@
             processing: true,
             serverSide: true,
             
-            ajax: '{!! route("trazabilidad.data") !!}',
+            ajax: '{!! route("responsables.data") !!}',
             columns: [
-                { data: 'badge_number', name: 'badge_number' },
-                { data: 'email', name: 'email' },
-                { data: 'initial_date', name: 'initial_date' },
+                { data: 'numero', name: 'numero' },
+                { data: 'nombre', name: 'nombre' },
                 {
                     render: function (data, type, row) {
-                        var autorizador = row.authorizing_name+' | '+row.authorizing_number;
-                        return autorizador;
+                        var tipo = row.tipo;
+                        var cargo = '';
+
+                        switch (tipo) {
+                            case '1':
+                                cargo = 'Autorizador';
+                                break;
+                            case '2':
+                                cargo = 'Responsable';
+                                break;
+                            case '3':
+                                cargo = 'Autorizador/Responsabñe';
+                                break;
+                        }
+                        return cargo;
                     }
-                },
-                { data: 'low_date', name: 'low_date' },
-                { data: 'typelow', name: 'typelow' },
-                { data: 'real_low_date', name: 'real_low_date' }
+                }
             ],
             dom: 'Blfrtip',
             lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todo"]],

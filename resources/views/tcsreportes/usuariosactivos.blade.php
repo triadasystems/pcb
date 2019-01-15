@@ -1,29 +1,27 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container-fluid">
-    <div class="row">
+<div class="container">
+    <div class="row justify-content-center">
         <div class="col-lg-12">
-            <div class="panel-pbc">
-                <div class="panel-pbc-head">
+            <div class="card">
+                <div class="card-header">
                     Reporte de Usuarios Activos
                 </div>
-                <div class="panel-pbc-body">
-                    <div class="row table-responsive">
-                        <div class="col-lg-12 table-responsive">
-                            <table class="table table-bordered" id="tcsactivos-table">
-                                <thead>
-                                    <tr>
-                                        <th># Gafete del Tercero</th>
-                                        <th>Nombre del Empleado</th>
-                                        <th>Fecha Inicial</th>
-                                        <th>Fecha de Baja</th>
-                                        <th>Autorizador #</th>
-                                        <th>Responsable #</th>
-                                    </tr>
-                                </thead>
-                            </table>  
-                        </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="tcsactivos-table">
+                            <thead>
+                                <tr>
+                                    <th># Gafete del Tercero</th>
+                                    <th>Nombre del Empleado</th>
+                                    <th>Fecha Inicial</th>
+                                    <th>Fecha de Baja</th>
+                                    <th>Autorizador #</th>
+                                    <th>Responsable #</th>
+                                </tr>
+                            </thead>
+                        </table>  
                     </div>
                 </div>
             </div>
