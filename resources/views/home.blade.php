@@ -115,15 +115,15 @@
                         </div>
                         <div class="row">
                             <div class="col-lg-4 cuadros-mnu">
+                                <div class="text-center action-mnu" data-url="{{ route('mesacontrol') }}">
+                                    Mesa de Control
+                                </div>
+                            </div>
+                            <div class="col-lg-4 cuadros-mnu">
                                 <div class="text-center action-mnu" data-url="{{ route('settings') }}">
                                     Configuraciones
                                 </div>
                             </div>
-                            <!-- <div class="col-lg-4 cuadros-mnu">
-                                <div class="text-center action-mnu" data-url="{{ route('motivosbajas') }}">
-                                    Motivos de Bajas
-                                </div>
-                            </div> -->
                             <!-- <div class="col-lg-4 cuadros-mnu">
                                 <div class="text-center action-mnu" data-url="{{ route('proveedores') }}">
                                     Proveedores

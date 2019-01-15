@@ -30,12 +30,6 @@ class setting extends model
         $consultas = setting::get()->toArray();
         return $consultas;
     }
-    public static function updsettings($data,$id)
-    {
-        DB::table('tcs_settings')
-            ->where('id', $id)
-            ->update($data);
-    }
 }
 
 ?>

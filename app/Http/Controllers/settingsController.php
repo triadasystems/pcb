@@ -58,52 +58,38 @@ class settingsController extends Controller
                 }
             }
         } else if ($tipo == 2) {
-            // echo '<pre>';print_r($datos);echo '</pre>';
-            // die();
             $validations = array();
-            
+            $count = 1;
             foreach ($datos["config"] as $index => $value) {
+                $validation = '';
 
-                // foreach ($value as $row) {
-                    $validation = '';
-
-                    switch ($value["type_input_html"]) {
-                        case 'text':
+                switch ($value["type_input_html"]) {
+                    case 'text':
                         $validation = 'required';
                         break;
-                        case 'number':
+                    case 'number':
                         $validation = 'required|numeric';
                         break;
-                    }
+                    default:
+                        $validation = '';
+                        break;
+                }
 
-                    $validations['config.*.'.$value["name"]] = $validation;
-                // }
+                // $validations["config"][$count] = array($value["name"] => $validation);
+                $validations["config.".$count.".".$value["name"]] = $validation;
+                $count = $count+1;
             }
-            // echo '<pre>';print_r($request->post());echo '</pre>';
-            // echo '<pre>';print_r($validations);echo '</pre>';
-            // die();
+            
             $this->validate($request, $validations);
-            // $request->validate($validations);
-            
-            // $id = $request->post('id_dias');
-            // $dias_new = $request->post('dias');
-            // $set = setting::settings($id);
-            // $dias_old = $set[0]->settings;
-            // $data["updated_at"] = $fecha= date('Y-m-d');
-            // $data["description"]        = (utf8_encode($request->post("descripcion")) !='') ? utf8_encode(strtoupper($request->post("descripcion"))) : NULL;
-            // $data["settings"]           = ($request->post("dias") !='') ? strtoupper($request->post("dias")) : NULL;
-            
-            // if ($dias_new != $dias_old) {
-            //     try {
-            //         $set=setting::updsettings($data,$id);
-            //         return redirect()->route('settings')->with('confirmacion', 'actualizado');
-            //     } catch (Exception $e) {
-            //         report($e);
-            //     }
-    
-            // } else if ($dias_new == $dias_old) {
-            //     return redirect()->route('settings')->with('igual', 'igual');
-            // }
+
+            foreach ($datos["config"] as $index => $value) {
+                $setting = setting::find($value["id"]);
+                $setting->settings = $value[$value["name"]];
+
+                $setting->save();
+            }
+
+            return redirect()->route('settings')->with('confirmacion', 'actualizado');
         }
     }
 }
