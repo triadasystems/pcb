@@ -59,13 +59,20 @@
                         @foreach($data['sett'] as $row)
                             @php
                                 $errorEVP = "config.".$count.".".$row["name"];
+                                $minTypeNumber = '';
                             @endphp
+
+                            @if($row['type_input_html'] == "number")
+                                @php
+                                    $minTypeNumber = 'min=1 step=1';
+                                @endphp
+                            @endif
                             @if($count % 2 != 0)
                                 <div class="form-group row">
                             @endif
                                     <div class="col-md-6">
                                         <label>{{ $row["name_large"] }}</label>
-                                        <input type ="{{ $row['type_input_html'] }}" data-ejemplo="{{ $errors->has($errorEVP) }}" class="form-control{{ $errors->has($errorEVP) ? ' is-invalid' : '' }}" value="{{ $row['settings'] }}" name="config[{{ $count }}][{{ $row['name'] }}]" id="{{ $row['name'] }}"/>
+                                        <input {{ $minTypeNumber }} type ="{{ $row['type_input_html'] }}" data-ejemplo="{{ $errors->has($errorEVP) }}" class="form-control{{ $errors->has($errorEVP) ? ' is-invalid' : '' }}" value="{{ $row['settings'] }}" name="config[{{ $count }}][{{ $row['name'] }}]" id="{{ $row['name'] }}"/>
                                         <input type ="hidden" value="{{ $row['id'] }}" name="config[{{ $count }}][id]" id="id_{{ $row['name'] }}"/>
                                         <input type ="hidden" value="{{ $row['name'] }}" name="config[{{ $count }}][name]" id="name_{{ $row['name'] }}"/>
                                         <input type ="hidden" value="{{ $row['type_input_html'] }}" name="config[{{ $count }}][type_input_html]" id="input_html_{{ $row['name'] }}"/>
