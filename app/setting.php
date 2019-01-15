@@ -2,20 +2,32 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Config;
 
 class setting extends model
 {
-    //protected $table="tcs_external_employees";
-    public static function settings($id="0")
+
+    protected $table="tcs_settings";
+
+    protected $fillable = [
+        'id', 
+        'settings', 
+        'description',
+        'status',
+        'name',
+        'name_large',
+        'type_input_html',
+        'created_at',
+        'update_at'
+    ];
+
+    protected $hidden = [];
+
+    public $timestamps = false;
+
+    public static function settings()
     {
-        $and="";
-        if ($id!=0) {
-            $and=" AND id=$id";
-        }
-        $sql="SELECT `id`, `settings`, `description`, `status`, `created_at`, `updated_at`, `extra` FROM `tcs_settings` WHERE 1=1 $and";
-        $consultas = DB::select(DB::raw($sql));
+        $consultas = setting::get()->toArray();
         return $consultas;
     }
     public static function updsettings($data,$id)

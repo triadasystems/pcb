@@ -74,22 +74,40 @@ return [
         //     'engine' => null,
         // ],
         
+        // 'mysql' => [
+        //     'driver' => 'mysql',
+        //     'host' => env('DB_HOST', '10.7.6.177'),
+        //     'port' => env('DB_PORT', '3306'),
+        //     'database' => env('DB_DATABASE', 'pes2018_prod'),
+        //     'username' => env('DB_USERNAME', 'triada'), // triada
+        //     'password' => 'eyJpdiI6Imx3YkNoWFAyMFpHUnNaNzdHbWcrOHc9PSIsInZhbHVlIjoiWVhhalwvaGxMbmVzcE5LWXRnY0xuY1E9PSIsIm1hYyI6IjcxNTUzN2M5ZTc5ZDJiNTdmODRmOGUxODIwNWVkN2ZkZDZlZDRmOGQzYzc0NzZhM2Q4Y2I2M2E0ZTUwNzM5YmIifQ==',
+        //     'charset' => 'latin1',
+        //     'collation' => 'latin1_bin',
+        //     'unix_socket' => env('DB_SOCKET', ''),
+        //     // 'charset' => 'utf8mb4',
+        //     // 'collation' => 'utf8mb4_unicode_ci',
+        //     'prefix' => '',
+        //     'strict' => true,
+        //     'engine' => null,
+        //     'encriptado' => true,
+        // ],
+
         'mysql' => [
             'driver' => 'mysql',
-            'host' => env('DB_HOST', '10.7.6.177'),
-            'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_DATABASE', 'pes2018_prod'),
-            'username' => env('DB_USERNAME', 'triada'), // triada
-            'password' => 'eyJpdiI6Imx3YkNoWFAyMFpHUnNaNzdHbWcrOHc9PSIsInZhbHVlIjoiWVhhalwvaGxMbmVzcE5LWXRnY0xuY1E9PSIsIm1hYyI6IjcxNTUzN2M5ZTc5ZDJiNTdmODRmOGUxODIwNWVkN2ZkZDZlZDRmOGQzYzc0NzZhM2Q4Y2I2M2E0ZTUwNzM5YmIifQ==',
+            'host' => 'localhost',
+            'port' => '3306',
+            'database' => 'pes2018_prod',
+            'username' => 'root',
+            'password' => '',
             'charset' => 'latin1',
             'collation' => 'latin1_bin',
-            'unix_socket' => env('DB_SOCKET', ''),
+            'unix_socket' => '',
             // 'charset' => 'utf8mb4',
             // 'collation' => 'utf8mb4_unicode_ci',
             'prefix' => '',
             'strict' => true,
             'engine' => null,
-            'encriptado' => true,
+            'encriptado' => false,
         ],
 
         'pgsql' => [
