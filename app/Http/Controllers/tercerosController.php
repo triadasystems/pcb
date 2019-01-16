@@ -77,8 +77,8 @@ class tercerosController extends Controller
         if ($request->type=='nom_auto' || $request->type=='nom_res') {
             $and=" AND `name` LIKE '%".$term."%'";
         }
-        $sql="SELECT *FROM interface_labora ai
-                WHERE consecutive =(SELECT max(consecutive) FROM interface_labora) $and";
+        $sql="SELECT * FROM interface_labora ai
+                WHERE consecutive = (SELECT max(consecutive) FROM interface_labora) AND origen_id <> 999 $and";
         $consultas = DB::select(DB::raw($sql));        
         $data=array();
         foreach ($consultas as $val) {
@@ -169,7 +169,7 @@ class tercerosController extends Controller
             $data = array(
                 'ip_address' => $this->ip_address_client, 
                 'description' => 'Se ha realizado la alta del tercero con ID: '.$data["id_external"],
-                'tipo' => 'vista',
+                'tipo' => 'alta',
                 'id_user' => Auth::user()->id
             );
     

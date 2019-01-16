@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\ReportesTerceros;
 use App\ReporteResponsable;
+use App\LogBookMovements;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
@@ -20,6 +21,16 @@ class TcsreportesController extends Controller
     }
 
     public function reporteBajasDiarias() {      
+        $data = array(
+            'ip_address' => $this->ip_address_client, 
+            'description' => 'Visualización del reporte de bajas diarias',
+            'tipo' => 'vista',
+            'id_user' => Auth::user()->id
+        );
+
+        $bitacora = new LogBookMovements;
+        $bitacora->guardarBitacora($data);
+
         return view('tcsreportes.bajasdiarias');
     }
 
@@ -30,6 +41,16 @@ class TcsreportesController extends Controller
     }
 
     public function reporteActivos() {
+        $data = array(
+            'ip_address' => $this->ip_address_client, 
+            'description' => 'Visualización del reporte de Usuarios Activos',
+            'tipo' => 'vista',
+            'id_user' => Auth::user()->id
+        );
+
+        $bitacora = new LogBookMovements;
+        $bitacora->guardarBitacora($data);
+
         return view('tcsreportes.usuariosactivos');
     }
 
@@ -40,6 +61,16 @@ class TcsreportesController extends Controller
     }
 
     public function reporteTrazabilidad() {
+        $data = array(
+            'ip_address' => $this->ip_address_client, 
+            'description' => 'Visualización del reporte de trazabilidad',
+            'tipo' => 'vista',
+            'id_user' => Auth::user()->id
+        );
+
+        $bitacora = new LogBookMovements;
+        $bitacora->guardarBitacora($data);
+
         return view('tcsreportes.trazabilidad');
     }
 
@@ -50,7 +81,15 @@ class TcsreportesController extends Controller
     }
 // Sin terminar aun
     public function reporteResponsables() {
-        $responsables = new ReporteResponsable;
+        $data = array(
+            'ip_address' => $this->ip_address_client, 
+            'description' => 'Visualización del reporte de Autorizador/Responsable',
+            'tipo' => 'vista',
+            'id_user' => Auth::user()->id
+        );
+
+        $bitacora = new LogBookMovements;
+        $bitacora->guardarBitacora($data);
         
         return view('tcsreportes.responsables');
     }

@@ -9,6 +9,11 @@
                     Reporte de Trazabilidad de Terceros
                 </div>
                 <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-12 text-right" style="margin-bottom:15px;">
+                            <a href="{{route('home')}}" id="regresar" class="btn btn-warning">Regresar</a>
+                        </div>
+                    </div>
                     <div class="table-responsive">
                         <table class="table table-bordered" id="bajasdiarias-table">
                             <thead>
