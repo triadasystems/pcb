@@ -24,12 +24,14 @@ class MotivosbajasController extends Controller
     }
 
     public function index() {
+        
         $data = array(
             'ip_address' => $this->ip_address_client, 
             'description' => 'Visualización de la lista de motivos de bajas',
             'tipo' => 'vista',
             'id_user' => Auth::user()->id
         );
+
         $bitacora = new LogBookMovements;
         $bitacora->guardarBitacora($data);
 
