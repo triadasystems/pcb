@@ -84,7 +84,7 @@ class MesacontrolController extends Controller
         
         $mesacontrol = new MesaControl;
 
-        if($mesacontrol->editarProveedores($request->post()) === true) {
+        if($mesacontrol->editarMesaControl($request->post()) === true) {
             $data = array(
                 'ip_address' => $this->ip_address_client, 
                 'description' => 'Se ha realizado la modificación del proveedor '.$request->post("name"),
@@ -107,9 +107,9 @@ class MesacontrolController extends Controller
             "status" => "required"
         ]);
 
-        $proveedor = new Proveedores;
+        $mesacontrol = new MesaControl;
 
-        if($proveedor->editarStatusProveedores($request->post()) === true) {
+        if($mesacontrol->editarStatusMesaControl($request->post()) === true) {
             $data = array(
                 'ip_address' => $this->ip_address_client, 
                 'description' => 'Se ha realizado el cambio de status del proveedor '.$request->post("name"),
