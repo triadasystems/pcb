@@ -124,11 +124,28 @@
                                     Configuraciones
                                 </div>
                             </div>
-                            <!-- <div class="col-lg-4 cuadros-mnu">
-                                <div class="text-center action-mnu" data-url="{{ route('proveedores') }}">
-                                    Proveedores
+                            <div class="col-lg-4 cuadros-mnu">
+                                <div class="text-center action-mnu" data-url="{{ route('bajasdiarias') }}">
+                                    Rep. Bajas Diarias
                                 </div>
-                            </div> -->
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4 cuadros-mnu">
+                                <div class="text-center action-mnu" data-url="{{ route('tercerosactivos') }}">
+                                    Rep. Usuarios Activos
+                                </div>
+                            </div>
+                            <div class="col-lg-4 cuadros-mnu">
+                                <div class="text-center action-mnu" data-url="{{ route('responsables') }}">
+                                    Rep. Responsables
+                                </div>
+                            </div>
+                            <div class="col-lg-4 cuadros-mnu">
+                                <div class="text-center action-mnu" data-url="{{ route('trazabilidad') }}">
+                                    Rep. Trazabilidad
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
