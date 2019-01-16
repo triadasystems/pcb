@@ -163,17 +163,6 @@ Route::group(['prefix'=>'configuracion','middleware'=> 'userProfileInactivo'], f
     Route::post('/upsub','settingsController@updatesub')->name('actualizaSub');
 });
 
-Route::group(['prefix' =>'motivosbajas', 'middleware' => 'userProfileInactivo'], function() {
-    Route::get('/lista', 'MotivosbajasController@index')->name('motivosbajas')->middleware('reading');
-    Route::get('/catmotivosbajas','MotivosbajasController@data')->name('motivosbajas.data');
-
-    Route::post('/store', 'MotivosbajasController@store')->name('altamotivobaja')->middleware('writing');
-    Route::put('/update', 'MotivosbajasController@update')->name('editarmotivobaja');
-
-    Route::get('/permisosmotivosbajas','MotivosbajasController@permisosMotivosBajas')->name('permisosMotivosBajas');
-    Route::put('/cambiostatusmotivobaja','MotivosbajasController@cambioStatus')->name('editarstatusmotivobaja');
-});
-
 Route::group(['prefix' =>'reportes', 'middleware' => 'userProfileInactivo'], function() {
     Route::get('/bajasdiarias', 'TcsreportesController@reporteBajasDiarias')->name('bajasdiarias')->middleware('reading');
     Route::get('/bajasdiariasdata','TcsreportesController@reporteBajasDiariasData')->name('bajasdiarias.data');
