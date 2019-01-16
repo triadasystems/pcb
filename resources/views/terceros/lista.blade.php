@@ -12,7 +12,7 @@
                     <div class="form-group row">
                         <div class="col-lg-12 text-right">
                             <button type="button" class="btn btn-warning" id="regresar">{{ __('Regresar') }}</button>
-                            <button class="btn btn-success" id="altaTerceros">Alta de externos activos</button>
+                            <button class="btn btn-success" id="altaTerceros">Alta de Externos Activos</button>
                         </div>
                     </div>
                     <div class="row">

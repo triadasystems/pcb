@@ -37,8 +37,6 @@ class tercerosController extends Controller
     {
         // Cálculo
         $dat = new terceros;
-        // echo '<pre>';print_r($dat->recuperar_idTercero());echo '</pre>';
-        // die();
         $calculo = $dat->recuperar_idTercero();
         $limite = 99999999;
         // Fin Cálculo
@@ -84,6 +82,7 @@ class tercerosController extends Controller
     {
         $this->requestProp = $request->post();
         $request->validate([
+            "gafete"    => "numeric",
             "mesa"      => "required",
             "name"      => "required|regex:/^[A-Za-z0-9[:space:]\s\S]+$/", 
             "a_paterno" => "required|regex:/^[A-Za-z0-9[:space:]\s\S]+$/",

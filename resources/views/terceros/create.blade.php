@@ -21,20 +21,14 @@
                 <form method="POST" action="{{ route('insertar')}}">
                     @csrf
                     <div class="form-group row">
-                        <!--<div class="col-md-4">
-                            <label>{{ __('Tipo de solicitud')}}</label><br>
-                            <select id="t_solicitud" class="form-control">
-                                <option>{{ __('Tipo de solicitud')}}</option>
-                            </select>
-                        </div>-->
                         <div class="col-md-6">
-                            <label>{{ __('No. de FUS/RFC')}}</label><br>
+                            <label for="fus" class="col-md-8 col-form-label text-md-rigth">No. de FUS/RFC</label>
                             <input type="text" id="fus" name="fus" class="form-control">
                         </div>
                         <div class="col-md-6">
-                            <label>{{'Mesa de control'}}</label><br>
+                            <label for="mesa" class="col-md-8 col-form-label text-md-rigth">Mesa de control</label>
                             <select id="mesa" name ="mesa" class="form-control{{ $errors->has('mesa') ? ' is-invalid' : '' }}" value="{{ old('mesa') }}" required>
-                                <option value="">{{ __('Mesa de control')}}</option>
+                                <option value="">Seleccione...</option>
                                 @foreach ($data['mesa'] as $val)
                                 <option value="{{ $val->id}}">{{ $val->name}}</option>                                
                                 @endforeach
@@ -46,11 +40,11 @@
                             @endif
                         </div>
                     </div>
-                    <label>Datos del usuario</label>
+                    <label><strong>Datos del usuario</strong></label>
                     <hr>
                     <div class="form-group row">
                         <div class="col-md-4">
-                            <label for="name" class="col-md-8 col-form-label text-md-left">{{ __('Nombre')}}</label><br>
+                            <label for="name" class="col-md-8 col-form-label text-md-rigth">Nombre</label>
                             <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') }}" onkeyup="javascript:this.value=this.value.toUpperCase();"  onKeyPress="return sololetras(event)" required >
                             @if ($errors->has('name'))
                                 <span class="invalid-feedback" role="alert">
@@ -59,7 +53,7 @@
                             @endif
                         </div>
                         <div class="col-md-4">
-                            <label for="paterno" class="col-md-8 col-form-label text-md-rigth">{{ __('Apellido paterno')}}</label>
+                            <label for="a_paterno" class="col-md-8 col-form-label text-md-rigth">Apellido Paterno</label>
                             <input id="a_paterno" type="text" class="form-control{{ $errors->has('a_paterno') ? ' is-invalid' : '' }}" name="a_paterno" value="{{ old('a_paterno') }}" onkeyup="javascript:this.value=this.value.toUpperCase();"  onKeyPress="return sololetras(event)" required >
                             @if ($errors->has('a_paterno'))
                                 <span class="invalid-feedback" role="alert">
@@ -68,7 +62,7 @@
                             @endif
                         </div>
                         <div class="col-md-4">
-                            <label for="materno" class="col-md-8 col-form-label text-md-rigth">{{ __('Apellido materno')}}</label>
+                            <label for="a_materno" class="col-md-8 col-form-label text-md-rigth">Apellido Materno</label>
                             <input id="a_materno" type="text" class="form-control{{ $errors->has('a_materno') ? ' is-invalid' : '' }}" name="a_materno" value="{{ old('a_materno') }}" onkeyup="javascript:this.value=this.value.toUpperCase();"  onKeyPress="return sololetras(event)" >
                             @if ($errors->has('a_materno'))
                                 <span class="invalid-feedback" role="alert">
@@ -79,7 +73,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-md-6">
-                            <label>Fecha inicial : </label>
+                            <label for="fecha_ini" class="col-md-8 col-form-label text-md-rigth">Fecha Inicial : </label>
                             <input class = "date form-control{{ $errors->has('fecha_ini') ? ' is-invalid' : '' }}" type = "date" id="fecha_ini" name="fecha_ini" value="{{ old('fecha_ini') }}" required>
                             @if ($errors->has('fecha_ini'))
                                 <span class="invalid-feedback" role="alert">
@@ -88,7 +82,7 @@
                             @endif
                         </div>
                         <div class="col-md-6">
-                            <label>Fecha final :</label>
+                            <label for="fecha_fin" class="col-md-8 col-form-label text-md-rigth">Fecha Final : </label>
                             <input class="date form-control{{ $errors->has('fecha_fin') ? ' is-invalid' : '' }}" type = "date" id="fecha_fin" name="fecha_fin" value="{{ old('fecha_fin') }}" required>
                             @if ($errors->has('fecha_fin'))
                                 <span class="invalid-feedback" role="alert">
@@ -99,7 +93,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-md-12">
-                            <label for="provedor" class="col-md-12 col-form-label text-md-left">{{ __('Empresa a la que pertenece')}}</label><br>
+                            <label for="empresa" class="col-md-12 col-form-label text-md-rigth">Empresa a la que Pertenece</label>
                             <select id="empresa" name="empresa" class="form-control{{ $errors->has('empresa') ? ' is-invalid' : '' }}" value="{{ old('empresa') }}" required>
                                 <option value="">Selecciona la empresa</option>
                                 @foreach ($data['empresa'] as $val)
@@ -115,11 +109,16 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-md-6">
-                            <label>{{ __('No. de gafete')}}</label><br>
+                            <label for="gafete" class="col-md-12 col-form-label text-md-rigth">No. de Gafete</label>
                             <input type="text" id="gafete" name="gafete"  class="form-control">
+                            @if ($errors->has('gafete'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('gafete') }}</strong>
+                                </span>
+                            @endif
                         </div>
                         <div class="col-md-6">
-                            <label>{{ __('Usuario de red/e-mail')}}</label><br>
+                            <label for="email" class="col-md-12 col-form-label text-md-rigth">Usuario de Red/E-mail</label>
                             <input type="text" id="email" name="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" value="{{ old('email') }}">
                             @if ($errors->has('email'))
                                 <span class="invalid-feedback" role="alert">
@@ -128,11 +127,11 @@
                             @endif
                         </div>
                     </div>
-                    <label>{{ __('Autorizador')}}</label>
+                    <label><strong>Autorizador</strong></label>
                     <hr>
                     <div class="form-group row">
-                    <div class="col-md-6">
-                            <label>{{ __('Nombre completo del autorizador')}}</label>
+                        <div class="col-md-6">
+                            <label for="nom_auto" class="col-md-12 col-form-label text-md-rigth">Nombre Completo del Autorizador</label>
                             <input type="text" class="form-control{{ $errors->has('nom_auto') ? ' is-invalid' : '' }} autocomplete_txt" data-type="nom_auto" id="nom_auto"  name="nom_auto" onKeyPress="return sololetras(event)" value="{{ old('nom_auto') }}" required>
                             @if ($errors->has('nom_auto'))
                                 <span class="invalid-feedback" role="alert">
@@ -141,7 +140,7 @@
                             @endif
                         </div>
                         <div class="col-md-6">
-                            <label>{{ __('Número de empleado del autorizador')}}</label>
+                            <label for="nom_auto" class="col-md-12 col-form-label text-md-rigth">Número de Empleado del Autorizador</label>
                             <input type="text" class="form-control{{ $errors->has('num_auto') ? ' is-invalid' : '' }} autocomplete_txt" data-type="num_auto" id="num_auto" name="num_auto" onKeyPress="return soloNumeros(event)" value="{{ old('num_auto') }}" required>
                             @if ($errors->has('num_auto'))
                                 <span class="invalid-feedback" role="alert">
@@ -151,11 +150,11 @@
                             <div id="au"></div>
                         </div>   
                     </div>
-                    <label>{{ __('Responsable')}}</label>
+                    <label><strong>Responsable</strong></label>
                     <hr>
                     <div class="form-group row">
                     <div class="col-md-6">
-                            <label>{{ __('Nombre completo del responsable')}}</label>
+                            <label for="nom_res" class="col-md-12 col-form-label text-md-rigth">Nombre Completo del Responsable</label>
                             <input type="text" class="form-control{{ $errors->has('nom_res') ? ' is-invalid' : '' }} autocomplete" data-type="nom_res" id="nom_res" name="nom_res" onKeyPress="return sololetras(event)" value="{{ old('nom_res') }}" required>
                             @if ($errors->has('nom_res'))
                                 <span class="invalid-feedback" role="alert">
@@ -164,7 +163,7 @@
                             @endif
                         </div>
                         <div class="col-md-6">
-                            <label>{{ __('Número de empleado del responsable')}}</label>
+                            <label for="num_res" class="col-md-12 col-form-label text-md-rigth">Número de Empleado del Responsable</label>
                             <input type="text" class="form-control{{ $errors->has('num_res') ? ' is-invalid' : '' }} autocomplete" data-type="num_res" id="num_res" name="num_res" onKeyPress="return soloNumeros(event)" value="{{ old('num_res') }}" required>
                             @if ($errors->has('num_res'))
                                 <span class="invalid-feedback" role="alert">
@@ -173,12 +172,12 @@
                             @endif
                         </div>                       
                     </div>
-                    <label>Aplicaciones</label>
+                    <label><strong>Aplicaciones</strong></label>
                     <hr>
                     <div class="form-group row">
-                    <div class="col-md-1"></div>
+                        <div class="col-md-1"></div>
                         <div class="col-md-4">
-                            <label>Aplicaciones para asignar</label><br>
+                            <label for="origen" class="col-md-12 col-form-label text-md-rigth">Aplicaciones para Asignar</label>
                             <select name="origen[]" id="origen" multiple="multiple" style="margin-bottom:15px;" class="form-control select_multiple">
                                 @foreach ($data['app'] as $val)
                                 <option value="{{$val->id}}">{{utf8_encode($val->name)}}</option>
@@ -199,7 +198,7 @@
                             <!--<input type="button" id="pasartodos" class="btn btn-info" value="Todos »">&nbsp;&nbsp;<input type="button" id="quitartodos" class="btn btn-info" value="« Todos">-->
                         </div>
                         <div class="col-md-4">
-                            <label>Aplicaciones asignadas</label><br>
+                            <label for="destino" class="col-md-12 col-form-label text-md-rigth">Aplicaciones Asignadas</label>
                             <select name="destino[]" id="destino" multiple="multiple" class="form-control{{ $errors->has('destino') ? ' is-invalid' : '' }} select_multiple" value="{{ old('destino[]') }}" required></select>
                             @if ($errors->has('destino'))
                                 <span class="invalid-feedback" role="alert">
@@ -211,7 +210,8 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-md-12 text-right">
-                            <button type="submit" class="btn btn-primary" id="enviar">Agregar</button>
+                            <a href="{{route('home')}}" id="regresar" class="btn btn-warning">Regresar</a>
+                            <button type="submit" class="btn btn-primary" id="enviar">Guardar</button>
                         </div>
                     </div>
                 </form>
