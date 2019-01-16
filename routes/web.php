@@ -176,3 +176,13 @@ Route::group(['prefix' =>'reportes', 'middleware' => 'userProfileInactivo'], fun
     Route::get('/responsables','TcsreportesController@reporteResponsables')->name('responsables')->middleware('writing');
     Route::get('/responsablesdata','TcsreportesController@reporteResponsablesData')->name('responsables.data');
 });
+
+Route::group(['prefix' =>'responsables', 'middleware' => 'userProfileInactivo'], function() {
+    Route::get('/lista', 'SustitucionresponsablesController@responsables')->name('sustitucionrespauth')->middleware('reading');
+    Route::get('/listadata','SustitucionresponsablesController@responsablesData')->name('sustitucionrespauth.data');
+
+    Route::put('/update', 'SustitucionresponsablesController@update')->name('sustitucion');
+
+    Route::get('/permisossustitucion','SustitucionresponsablesController@permisosSustitucion')->name('permisossustitucion');
+    Route::put('/cambiostatussustitucion','SustitucionresponsablesController@cambioStatus')->name('editarstatussustitucion');
+});
