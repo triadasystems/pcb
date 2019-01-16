@@ -23,13 +23,9 @@
                                         <th>Id</th>
                                         <th>Nombre | Gafete</th>
                                         <th>E-mail</th>
-                                        <!--<th>Fecha de alta</th>
-                                        <th>Fecha de baja</th>-->
                                         <th>Autorizador #</th>
                                         <th>Responsable #</th>
                                         <th>Empresa</th>
-                                        <!--<th>Estado</th>-->
-                                        <!--<th>Acciones</th>-->
                                     </tr>
                                 </thead>
                             </table>  
@@ -48,7 +44,7 @@
         @if (session('confirmacion'))
             swal(
                 'Tercero registrado',
-                'La operación se ha realizado con éxito',
+                'La operación se ha realizado con éxito. El ID del tercero es: {{session("confirmacion")}}',
                 'success'
             )
         @endif 
@@ -84,8 +80,6 @@
                     }
                 },
                 { data: 'correo', name: 'correo' },
-                /*{ data: 'f_inicial', name: 'f_inicial' },
-                { data: 'f_fin', name: 'f_fin' },*/
                 {
                     render: function (data, type, row) {
                         var autorizador = row.nom_autorizador+' | '+row.num_autorizador;
@@ -98,22 +92,7 @@
                         return reponsable;
                     }
                 },
-                { data: 'empresa', name: 'empresa' }/*,
-                { data: 'empresa', name: 'empresa' },
-                {
-                    targets: -1,
-                    render: function (data, type, row)
-                    {
-                        if (row.estatus == 1)
-                        {
-                            return '<div class="row"><div class="col-lg-5 text-center"><button type="button" class="btn btn-danger" data-id="'+row.id+'" data-tipo="Inactivo" id="delact">Desactivar <i class="fas fa-ban"></i></button></div></div>';
-                        } 
-                        else if(row.estatus == 2)
-                        {
-                            return '<div class="row"><div class="col-lg-12 text-center"><button type="button" class="btn btn-primary" data-id="'+row.id+'" data-tipo="Activo" id="delact">Activar <i class="fas fa-check"></i></button></div></div>';
-                        }
-                    }
-                }*/
+                { data: 'empresa', name: 'empresa' }
             ]
         });
     });

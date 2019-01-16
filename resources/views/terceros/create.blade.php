@@ -23,14 +23,23 @@
                     <div class="form-group row">
                         <div class="col-md-6">
                             <label for="fus" class="col-md-8 col-form-label text-md-rigth">No. de FUS/RFC</label>
-                            <input type="text" id="fus" name="fus" class="form-control">
+                            <input type="text" id="fus" name="fus" class="form-control{{ $errors->has('fus') ? ' is-invalid' : '' }}" value="{{ old('fus') }}">
+                            @if ($errors->has('fus'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('fus') }}</strong>
+                                </span>
+                            @endif
                         </div>
                         <div class="col-md-6">
                             <label for="mesa" class="col-md-8 col-form-label text-md-rigth">Mesa de control</label>
                             <select id="mesa" name ="mesa" class="form-control{{ $errors->has('mesa') ? ' is-invalid' : '' }}" value="{{ old('mesa') }}" required>
                                 <option value="">Seleccione...</option>
                                 @foreach ($data['mesa'] as $val)
-                                <option value="{{ $val->id}}">{{ $val->name}}</option>                                
+                                    @if(old('mesa'))
+                                        <option selected value="{{ $val->id}}">{{ $val->name}}</option>
+                                    @else
+                                        <option value="{{ $val->id}}">{{ $val->name}}</option>
+                                    @endif                           
                                 @endforeach
                             </select>
                             @if ($errors->has('mesa'))
@@ -97,7 +106,11 @@
                             <select id="empresa" name="empresa" class="form-control{{ $errors->has('empresa') ? ' is-invalid' : '' }}" value="{{ old('empresa') }}" required>
                                 <option value="">Selecciona la empresa</option>
                                 @foreach ($data['empresa'] as $val)
-                                <option value="{{ $val->id}}">{{ $val->name}}</option>                                
+                                    @if(old('empresa'))
+                                        <option selected value="{{ $val->id}}">{{ $val->name}}</option>
+                                    @else
+                                        <option value="{{ $val->id}}">{{ $val->name}}</option>
+                                    @endif
                                 @endforeach
                             </select>
                             @if ($errors->has('empresa'))
@@ -110,7 +123,7 @@
                     <div class="form-group row">
                         <div class="col-md-6">
                             <label for="gafete" class="col-md-12 col-form-label text-md-rigth">No. de Gafete</label>
-                            <input type="text" id="gafete" name="gafete"  class="form-control">
+                            <input type="text" id="gafete" name="gafete" value="{{ old('gafete') }}" class="form-control{{ $errors->has('gafete') ? ' is-invalid' : '' }}">
                             @if ($errors->has('gafete'))
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $errors->first('gafete') }}</strong>
@@ -176,12 +189,50 @@
                     <hr>
                     <div class="form-group row">
                         <div class="col-md-1"></div>
+                        @if(old('destino'))
+                            @php
+                                $destino = old('destino');
+                                // echo '<pre>';print_r($destino);echo '</pre>';
+                            @endphp
+                        @endif
                         <div class="col-md-4">
                             <label for="origen" class="col-md-12 col-form-label text-md-rigth">Aplicaciones para Asignar</label>
                             <select name="origen[]" id="origen" multiple="multiple" style="margin-bottom:15px;" class="form-control select_multiple">
-                                @foreach ($data['app'] as $val)
-                                <option value="{{$val->id}}">{{utf8_encode($val->name)}}</option>
-                                @endforeach
+                                @if(old('destino'))
+                                    @php
+                                        $origen = $data['app'];
+                                        $destino = old('destino');
+                                        $cDestino = count($destino);
+                                        $count = 0;
+                                    @endphp
+                                    @foreach($origen as $ind => $val)
+                                        @php
+                                            $show = 1;
+                                        @endphp
+                                        @foreach($destino as $index => $value)
+                                            @if($destino[$count] == $val->id)
+                                                @php
+                                                    $show = 0;
+                                                @endphp
+                                            @endif
+                                            @php
+                                                if($count < $cDestino) {
+                                                    $count = $count+1;
+                                                    if($count == $cDestino) {
+                                                        $count = 0;
+                                                    }
+                                                }
+                                            @endphp
+                                        @endforeach
+                                        @if($show == 1)
+                                            <option value="{{$val->id}}">{{utf8_encode($val->name)}}</option>
+                                        @endif
+                                    @endforeach
+                                @else
+                                    @foreach ($data['app'] as $val)
+                                        <option value="{{$val->id}}">{{utf8_encode($val->name)}}</option>
+                                    @endforeach
+                                @endif
                             </select>
                         </div>
                         <div class="col-md-2 text-center">
@@ -199,7 +250,20 @@
                         </div>
                         <div class="col-md-4">
                             <label for="destino" class="col-md-12 col-form-label text-md-rigth">Aplicaciones Asignadas</label>
-                            <select name="destino[]" id="destino" multiple="multiple" class="form-control{{ $errors->has('destino') ? ' is-invalid' : '' }} select_multiple" value="{{ old('destino[]') }}" required></select>
+                            <select name="destino[]" id="destino" multiple="multiple" class="form-control{{ $errors->has('destino') ? ' is-invalid' : '' }} select_multiple" required>
+                            @if(old('destino'))
+                                @php
+                                    $origen = $data['app'];
+                                @endphp
+                                @foreach(old('destino') as $row => $value)
+                                    @foreach($origen as $ind => $val)
+                                        @if($val->id == $value)
+                                            <option selected value="{{$val->id}}">{{utf8_encode($val->name)}}</option>
+                                        @endif
+                                    @endforeach
+                                @endforeach
+                            @endif
+                            </select>
                             @if ($errors->has('destino'))
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $errors->first('destino') }}</strong>

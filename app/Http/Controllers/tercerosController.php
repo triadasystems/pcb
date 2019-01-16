@@ -82,29 +82,29 @@ class tercerosController extends Controller
     {
         $this->requestProp = $request->post();
         $request->validate([
-            "gafete"    => "numeric",
+            "fus"    => "numeric|min:1|max:2147483647|digits_between:1,10",
+            "gafete"    => "numeric|min:1|max:2147483647|digits_between:1,10",
             "mesa"      => "required",
-            "name"      => "required|regex:/^[A-Za-z0-9[:space:]\s\S]+$/", 
-            "a_paterno" => "required|regex:/^[A-Za-z0-9[:space:]\s\S]+$/",
-            "a_materno" => "sometimes|regex:/^[A-Za-z0-9[:space:]\s\S]+$/",
-            "email"     => "required|regex:/^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$/|unique:tcs_external_employees",
+            "name"      => "required|max:100|regex:/^[A-Za-z0-9[:space:]\s\S]+$/", 
+            "a_paterno" => "required|max:100|regex:/^[A-Za-z0-9[:space:]\s\S]+$/",
+            "a_materno" => "sometimes|max:100|regex:/^[A-Za-z0-9[:space:]\s\S]+$/",
+            "email"     => "required|max:100|regex:/^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$/|unique:tcs_external_employees",
             "fecha_ini" => "required|date",
             "fecha_fin" => ["required","date","after:fecha_ini",function($attribute, $fecha_fin, $fail)
             {
-                $fecha=$this->requestProp['fecha_ini'];
+                $fecha = $this->requestProp['fecha_ini'];
                 $valores = explode('-', $fecha);
-                $anio=$valores[0]+1;
-                $comp=$anio."-".$valores[1]."-".$valores[2];
-                if ($fecha_fin > $comp) 
-                 {
+                $anio = $valores[0]+1;
+                $comp = $anio."-".$valores[1]."-".$valores[2];
+                if ($fecha_fin > $comp) {
                     $fail('La fecha final es mayor a un año desde la fecha de inicio');
-                 }
+                }
             }],
             "empresa"   => "required",
-            "nom_auto"  => "required|regex:/^[A-Za-z0-9[:space:]\s\S]+$/",
-            "num_auto"  => "required|numeric",
-            "num_res"   => "required|numeric",
-            "nom_res"   => "required|regex:/^[A-Za-z0-9[:space:]\s\S]+$/",
+            "nom_auto"  => "required|max:255|regex:/^[A-Za-z0-9[:space:]\s\S]+$/",
+            "num_auto"  => "required|min:1|max:2147483647|digits_between:1,10|numeric",
+            "num_res"   => "required|min:1|max:2147483647|digits_between:1,10|numeric",
+            "nom_res"   => "required|max:255|regex:/^[A-Za-z0-9[:space:]\s\S]+$/",
             "destino"   => "required"
         ]);
         $consecutivo = $this->generar_consecutivo();
@@ -150,7 +150,7 @@ class tercerosController extends Controller
             }
             $fus["tcs_external_employees_id"]           = $id;
             terceros::new_row_fus($fus);
-            return redirect()->route('listar')->with('confirmacion', 'registrado');
+            return redirect()->route('listar')->with('confirmacion', $data["id_external"]);
         } 
         catch (Exception $e) 
         {
