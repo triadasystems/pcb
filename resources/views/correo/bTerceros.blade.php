@@ -15,9 +15,9 @@
     <div>
         <table border="1">
             <thead bgcolor="#fcfcfc">
-                <th><p><b>Número de empleado</b></p></th>
+                <th><p><b>Número de Empleado</b></p></th>
                 <th><p><b>Nombre</b></p></th>
-                <th><p><b>Tipo de cargo</b></p></th>
+                <th><p><b>Tipo de Cargo</b></p></th>
             </thead>
             <tbody>
                 @foreach($data->data as $val)
@@ -32,12 +32,12 @@
                         @break
                         @case(2)
                             @php
-                            $dato='Revisor';
+                            $dato='Responsable';
                             @endphp
                         @break
                         @case(3)
                             @php
-                            $dato='Autorizador/Revisor';
+                            $dato='Autorizador/Responsable';
                             @endphp
                         @break
                     @endswitch
