@@ -3,7 +3,9 @@ namespace App\Http\Controllers;
 
 use App\mailSendModel;
 use App\Mail\DemoEmail;
+use App\Mail\bajasTerceros;
 use Illuminate\Support\Facades\Mail;
+use App\Comparelaboraremove;
 use Illuminate\Http\Request;
 use App\Http\Controllers\reportesController;
 use Illuminate\Support\Facades\DB;
@@ -66,6 +68,8 @@ class sendMailController extends Controller
             {
                 $tipoNombre = 'Bajas';
                 $data=$reporte->reporteBajasMail();
+                $terceros=new Comparelaboraremove;
+                $b_terceros=$terceros->v_bajas(); 
                 $datos=mailSendModel::select('correo')->where("bajas","=",1)->get()->toArray();
                 foreach($datos as $key)
                 {   
@@ -84,6 +88,27 @@ class sendMailController extends Controller
                     { 
                         $mail->send(new DemoEmail($objDemo, $option));
                         $errores[$key["correo"]]='Enviado';   
+                    }
+                }
+                if ($b_terceros!="" || $b_terceros>0)
+                {
+                    $correo=mailSendModel::select('correo')->where("tcs_terceros_baja_auth_resp","=",1)->get()->toArray();
+                    foreach ($correo as $value)
+                    {                    
+                        $objMail= new \stdClass();
+                        $objMail->data=$b_terceros;
+                        $objMail->sender='SYSADMIN';
+                        $correo=Validator::make($value, ['correo' => 'regex:/^.+@(.+\..+)$/']);
+                        $mail = Mail::to(array($value["correo"]));
+                        if ($correo->fails() === true) 
+                        {
+                            $errores[$value["correo"]] ='Falló al enviar correo de terceros';
+                        }
+                        else 
+                        { 
+                            $mail->send(new bajasTerceros($objMail));
+                            $errores[$value["correo"]]='Enviado';   
+                        }
                     }
                 }
             }
