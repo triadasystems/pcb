@@ -35,7 +35,7 @@ Route::group(['prefix' =>'proveedores', 'middleware' => 'userProfileInactivo'], 
     Route::post('/store', 'ProveedoresController@store')->name('altaproveedores')->middleware('writing');
     Route::put('/update', 'ProveedoresController@update')->name('editarproveedores');
 
-    Route::get('/permisosproveedores','ProveedoresController@permisosMotivosBajas')->name('permisosproveedores');
+    Route::get('/permisosproveedores','ProveedoresController@permisosProveedores')->name('permisosproveedores');
     Route::put('/cambiostatusproveedor','ProveedoresController@cambioStatus')->name('editarstatusproveedores');
 });
 Route::group(['prefix' =>'mesascontrol', 'middleware' => 'userProfileInactivo'], function() {
@@ -45,7 +45,7 @@ Route::group(['prefix' =>'mesascontrol', 'middleware' => 'userProfileInactivo'],
     Route::post('/store', 'MesacontrolController@store')->name('altamesacontrol')->middleware('writing');
     Route::put('/update', 'MesacontrolController@update')->name('editarmesacontrol');
 
-    Route::get('/permisosmesascontrol','MesacontrolController@permisosMotivosBajas')->name('permisosmesacontrol');
+    Route::get('/permisosmesascontrol','MesacontrolController@permisosMesasControl')->name('permisosmesacontrol');
     Route::put('/cambiostatusmesacontrol','MesacontrolController@cambioStatus')->name('editarstatusmesacontrol');
 });
 // Fin de Terceros EVP
@@ -144,3 +144,46 @@ Route::group(['prefix' =>'mailsend', 'middleware' => 'userProfileInactivo'], fun
 
 Route::get('/encrypt/viewEncrypt', 'EncryptController@viewEncrypt')->name('viewEncrypt');
 Route::get('/encrypt/desEncrypt', 'EncryptController@desEncrypt')->name('desEncrypt');
+
+//terceros
+Route::group(['prefix' => 'terceros','middleware' => 'userProfileInactivo'], function()
+{
+    Route::get('/listar', 'tercerosController@index')->name('listar');
+    Route::get('/alta', 'tercerosController@create')->name('terceros.alta');
+    Route::post('/insertar', 'tercerosController@insertar')->name('insertar');
+    Route::get('/anyData','tercerosController@anyData')->name('terceros.data');
+    Route::get('/consecutivo', 'tercerosController@generar_consecutivo')->name('terceros.consecutivo');
+    Route::get('autocomplete', ['uses'=>'tercerosController@autocomplete'])->name('terceros.autocomplete');
+});
+
+// configuraciones
+Route::group(['prefix'=>'configuracion','middleware'=> 'userProfileInactivo'], function()
+{
+    Route::get('/index','settingsController@index')->name('settings');
+    Route::post('/upsub','settingsController@updatesub')->name('actualizaSub');
+});
+
+Route::group(['prefix' =>'motivosbajas', 'middleware' => 'userProfileInactivo'], function() {
+    Route::get('/lista', 'MotivosbajasController@index')->name('motivosbajas')->middleware('reading');
+    Route::get('/catmotivosbajas','MotivosbajasController@data')->name('motivosbajas.data');
+
+    Route::post('/store', 'MotivosbajasController@store')->name('altamotivobaja')->middleware('writing');
+    Route::put('/update', 'MotivosbajasController@update')->name('editarmotivobaja');
+
+    Route::get('/permisosmotivosbajas','MotivosbajasController@permisosMotivosBajas')->name('permisosMotivosBajas');
+    Route::put('/cambiostatusmotivobaja','MotivosbajasController@cambioStatus')->name('editarstatusmotivobaja');
+});
+
+Route::group(['prefix' =>'reportes', 'middleware' => 'userProfileInactivo'], function() {
+    Route::get('/bajasdiarias', 'TcsreportesController@reporteBajasDiarias')->name('bajasdiarias')->middleware('reading');
+    Route::get('/bajasdiariasdata','TcsreportesController@reporteBajasDiariasData')->name('bajasdiarias.data');
+
+    Route::get('/tercerosactivos', 'TcsreportesController@reporteActivos')->name('tercerosactivos')->middleware('writing');
+    Route::get('/tercerosactivosdata', 'TcsreportesController@reporteActivosData')->name('tercerosactivos.data');
+
+    Route::get('/trazabilidad','TcsreportesController@reporteTrazabilidad')->name('trazabilidad')->middleware('writing');
+    Route::get('/trazabilidaddata','TcsreportesController@reporteTrazabilidadData')->name('trazabilidad.data');
+
+    Route::get('/responsables','TcsreportesController@reporteResponsables')->name('responsables')->middleware('writing');
+    Route::get('/responsablesdata','TcsreportesController@reporteResponsablesData')->name('responsables.data');
+});

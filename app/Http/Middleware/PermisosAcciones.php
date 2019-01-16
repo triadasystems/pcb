@@ -18,6 +18,10 @@ class PermisosAcciones
      */
     public function handle($request, Closure $next)
     {
+        if ($request->input("modulo")) {
+            $modulo = $request->input("modulo");
+        }
+
         if(isset(Auth::user()->id)) {
             $validacion = User::find(Auth::user()->id)->relProfile()->select('id')->first();
             if($permiso = permiso::where('profiles_users_id', '=', $validacion->id)->first()) {
@@ -25,7 +29,11 @@ class PermisosAcciones
                     if($permiso->writing == 1) {
                         return $next($request);
                     } else {
-                        return redirect('/home')->with('msjError', 'No cuenta con permisos para realizar la operación');
+                        if(isset($modulo) && $modulo == "tcsmotivosbajas") {
+                            return redirect()->route('permisosMotivosBajas')->with('msjError', true);
+                        } else {
+                            return redirect('/home')->with('msjError', 'No cuenta con permisos para realizar la operación');
+                        }
                     }
                 } else {
                     return redirect('/home')->with('msjError', 'No cuenta con permisos para realizar la operación');

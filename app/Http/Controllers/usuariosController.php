@@ -11,7 +11,8 @@ use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\Auth;use Illuminate\Support\Facades\DB;
 class usuariosController extends Controller
 {
-    public $ip_address_client;    
+    public $ip_address_client;
+
     public function __construct()
     {
         $this->ip_address_client = getIpAddress();// EVP ip para bitacora

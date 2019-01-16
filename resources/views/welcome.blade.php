@@ -123,7 +123,7 @@
                             </div>
                         </div>
                         <div class="col-lg-4 cuadros-mnu-welcome">
-                            <div class="text-center action-mnu-welcome" data-url="http://localhost/terceros/public/login">
+                            <div class="text-center action-mnu-welcome" data-url="http://10.7.15.207/televisa_triada/terceros/public/index.php/login">
                                 Portal de Bloqueo de Terceros
                             </div>
                         </div>

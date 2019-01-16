@@ -92,6 +92,24 @@ return [
             'encriptado' => true,
         ],
 
+        // 'mysql' => [
+        //     'driver' => 'mysql',
+        //     'host' => 'localhost',
+        //     'port' => '3306',
+        //     'database' => 'pes2018_prod',
+        //     'username' => 'root',
+        //     'password' => '',
+        //     'charset' => 'latin1',
+        //     'collation' => 'latin1_bin',
+        //     'unix_socket' => '',
+        //     // 'charset' => 'utf8mb4',
+        //     // 'collation' => 'utf8mb4_unicode_ci',
+        //     'prefix' => '',
+        //     'strict' => true,
+        //     'engine' => null,
+        //     'encriptado' => false,
+        // ],
+
         'pgsql' => [
             'driver' => 'pgsql',
             'host' => env('DB_HOST', '127.0.0.1'),

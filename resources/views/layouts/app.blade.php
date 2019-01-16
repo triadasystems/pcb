@@ -12,6 +12,9 @@
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}"></script>
         <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
+        <!-- jquery-ui -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+       
         
         <!-- Adicionales datatables -->
         <script src="{{ asset('js/dataTables.buttons.min.js') }}"></script>
@@ -33,6 +36,8 @@
         <link href="{{ asset('css/jquery.dataTables.min.css') }}" rel="stylesheet">
         <!-- Adicionales datatables -->
         <link href="{{ asset('css/buttons.dataTables.min.css') }}" rel="stylesheet">
+        <!-- css jquery ui -->
+        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
 
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
         <link rel="stylesheet" href="{{ asset('js/sweetalert2/dist/sweetalert2.min.css') }}">
@@ -42,7 +47,7 @@
         <div id="app">
             <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
                 <div class="container">
-                    <a class="navbar-brand" href="{{ url('/') }}">
+                    <a class="navbar-brand" href="{{ route('home') }}">
                         {{ config('app.name', 'PBC') }}
                     </a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -68,13 +73,10 @@
                             @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }} <span class="caret"></span>
+                                    PCB <span class="caret"></span>
                                 </a>
-                                
+
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('home') }}">
-                                        {{ __('Home') }}
-                                    </a>
                                     <a class="dropdown-item" href="{{ route('conciliacion') }}">
                                         {{ __('Conciliación / Bajas') }}
                                     </a>
@@ -102,11 +104,53 @@
                                     <a class="dropdown-item" href="{{ route('viewEncrypt') }}">
                                         {{ __('Herramienta de encriptación') }}
                                     </a>
-                                    
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    Terceros <span class="caret"></span>
+                                </a>
+
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('listar') }}">
+                                        {{ __('Terceros') }}
+                                    </a>
+                                    <a class="dropdown-item" href="{{ route('motivosbajas') }}">
+                                        {{ __('Motivos de Bajas') }}
+                                    </a>
+                                    <a class="dropdown-item" href="{{ route('proveedores') }}">
+                                        {{ __('Proveedores') }}
+                                    </a>
+                                    <a class="dropdown-item" href="{{ route('mesacontrol') }}">
+                                        {{ __('Mesa de Control') }}
+                                    </a>
+                                    <a class="dropdown-item" href="{{ route('settings') }}">
+                                        {{ __('Configuraciones') }}
+                                    </a>
+                                    <a class="dropdown-item" href="{{ route('bajasdiarias') }}">
+                                        {{ __('Rep. Bajas Diarias') }}
+                                    </a>
+                                    <a class="dropdown-item" href="{{ route('tercerosactivos') }}">
+                                        {{ __('Rep. Usuarios Activos') }}
+                                    </a>
+                                    <a class="dropdown-item" href="{{ route('responsables') }}">
+                                        {{ __('Reporte Responsables') }}
+                                    </a>
+                                    <a class="dropdown-item" href="{{ route('trazabilidad') }}">
+                                        {{ __('Reporte Trazabilidad') }}
+                                    </a>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    {{ Auth::user()->name }} <span class="caret"></span>
+                                </a>
+                                
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                         onclick="event.preventDefault();
                                         document.getElementById('logout-form').submit();">
-                                        {{ __('Cerrar Sesión') }}
+                                        {{ __('Cerrar Sesión') }} <i class="fas fa-sign-out-alt"></i>
                                     </a>
                                     
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -146,6 +190,16 @@
         @auth
             <script>
                 sessionStorage.desactivaLogout = 1;
+
+                // En caso de form con ajax y sweetalert2
+                function mostrarError(id = null) {
+                    $("#"+id).addClass("error-msj-activo");
+                    $("#"+id).removeClass("error-msj-inactivo");
+                }
+                function ocultarError(id = null) {
+                    $("#"+id).removeClass("error-msj-activo");
+                    $("#"+id).addClass("error-msj-inactivo");
+                } // En caso de form con ajax y sweetalert2
                 
                 function logout() {
                     if(sessionStorage.desactivaLogout == 1) {
