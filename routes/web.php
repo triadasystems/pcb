@@ -176,3 +176,8 @@ Route::group(['prefix' =>'reportes', 'middleware' => 'userProfileInactivo'], fun
     Route::get('/responsables','TcsreportesController@reporteResponsables')->name('responsables')->middleware('writing');
     Route::get('/responsablesdata','TcsreportesController@reporteResponsablesData')->name('responsables.data');
 });
+// aplicaciones
+Route::group(['prefix'=>'aplicacion','middleware'=> 'userProfileInactivo'], function() {
+    Route::get('/laplicacion','applicationController@index')->name('laplicacion')->middleware('reading');
+    Route::get('/aplicacionData','applicationController@aplicacionData')->name('aplicacion.lista');
+});

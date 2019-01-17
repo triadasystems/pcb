@@ -60,6 +60,7 @@
             var url = '{!!route('terceros.alta')!!}';
             $( location).attr("href",url);
         });
+        
         var table = $('#terceros-table').DataTable({
             language: {
                 url: "{{ asset('json/Spanish.json') }}"
