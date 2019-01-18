@@ -91,6 +91,7 @@ Route::group(['prefix' => 'usuarios', 'middleware' => 'userProfileInactivo'], fu
     Route::post('/cambiarrol','usuariosController@cambiarrol')->name('cambiarrol');
     Route::post('/desactivar','usuariosController@desactivar')->name('desactivarusuarios');
     Route::get('/editar','usuariosController@edit')->name('edit');
+    Route::put('/update','usuariosController@update')->name('userupdate');
     Route::get('/anyData','usuariosController@anyData')->name('datatables.data');
 });
 
