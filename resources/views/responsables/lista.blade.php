@@ -1,6 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
+<style>
+    .ui-autocomplete {
+        z-index: 9999;
+    }
+</style>
+<input type="hidden" id="modulo" value="tcssustitucionmasiva" />
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-lg-12">
@@ -34,59 +40,100 @@
 @endsection
 @push('scripts')
 <script>
+    // Autocomplete
+    $(document).on('focus','.autocomplete_txt', function() {
+        type = $(this).data('type');
+
+        if(type =='num_auto')autoType='numero';
+        if(type =='nom_auto')autoType='nombre';
+        
+        $(this).autocomplete({
+            minLength:0,
+            source: function(request, response) {
+                $.ajax({
+                    url:"{{ route('sustitucion.autocomplete') }}",
+                    dataType: "json",
+                    data:{ term: request.term, type: type },
+                    success: function(data) {
+                        var array = $.map(data, function(item){
+                            var response = "";
+                            if(item[autoType] !== undefined && item[autoType] !== undefined) {
+                                response = {
+                                    label: item[autoType],
+                                    value: item[autoType],
+                                    data: item
+                                }
+                            } else if(item != "") {
+                                response = {
+                                    label: item,
+                                    value: item,
+                                    data: "fail"
+                                };
+                            }
+                            return response;
+                        });
+                        console.log(array);
+                        response(array);
+                    }
+                });
+            },
+            select: function( event, ui) {
+                var data = ui.item.data;
+                if (data != "fail") {
+                    $('#nombre').val(data.nombre);
+                    $('#numEmpleado').val(data.numero);
+                } else if(data == "fail") {
+                    event.stopImmediatePropagation();
+                    event.preventDefault();
+                }
+            }
+        });
+    });
+
     $(document).ready(function(){
         $(document).on("click", "#sustituir", function(){
             var numEmpleado = $(this).attr("data-num-empleado");
+            var nombre = $(this).attr("data-nombre");
+            var tipo = $(this).attr("data-tipo");
 
-            formEditar(numEmpleado);
+            formEditar(numEmpleado, tipo, nombre);
+        });
+
+        $(document).on("click", "#guardarSustitucion", function(){
+            guardarAltaEditar("editar");
         });
         
-        function formEditar(numEmpleado = "") {
-            var idBotonGuardar = "guardarMesaControl"
-
-            if(tipo == "editar") {
-                idBotonGuardar = "guardarEditarMesa"
-            }
-
+        function formEditar(numEmpleado, tipo, nombre) {
             Swal({
-                title: 'MESA DE CONTROL',
+                title: 'SUSTITUCIÓN DE AUTORIZADOR/RESPONSABLE',
                 // type: 'info',
                 html:
                 '<div class="container" style="margin-top: 10px;">'+
                     '<form method="post" action="">'+
-                        '<input type="hidden" name="id" id="idMesaControl" value="'+id+'">'+
+                        '<input type="hidden" name="numEmpleadoActual" id="numEmpleadoActual" value="'+numEmpleado+'">'+
+                        '<input type="hidden" name="tipo" id="tipo" value="'+tipo+'">'+
                         '<div class="form-group row">'+
                             '<div class="col-md-6">'+
-                                '<label for="name" class="col-lg-12 col-form-label text-left txt-bold">Nombre</label>'+
-                                '<input id="name" type="text" class="form-control" name="name" required autofocus value="'+name+'">'+
+                                '<label for="nombre" class="col-lg-12 col-form-label text-left txt-bold">Nombre Completo</label>'+
+                                '<input id="nombre" type="text" class="form-control autocomplete_txt" data-type="nom_auto" name="nombre" required value="'+nombre+'">'+
 
-                                '<span id="errmsj_name" class="error-msj" role="alert">'+
+                                '<span id="errmsj_nombre" class="error-msj" role="alert">'+
                                     '<strong>El campo Nombre es obligatorio</strong>'+
                                 '</span>'+
                             '</div>'+
                             '<div class="col-md-6">'+
-                                '<label for="alias" class="col-lg-12 col-form-label text-left txt-bold">Alias</label>'+
-                                '<input id="alias" type="text" class="form-control" name="alias" required autofocus value="'+alias+'">'+
+                                '<label for="numEmpleado" class="col-lg-12 col-form-label text-left txt-bold">Número de Empleado</label>'+
+                                '<input id="numEmpleado" type="text" class="form-control" data-type="num_auto" name="numEmpleado" required value="'+numEmpleado+'">'+
 
-                                '<span id="errmsj_alias" class="error-msj" role="alert">'+
-                                    '<strong>El campo Alias es obligatorio</strong>'+
-                                '</span>'+
-                            '</div>'+
-                        '</div>'+
-                        '<div class="form-group row">'+
-                            '<div class="col-md-12">'+
-                                '<label for="description" class="col-lg-12 col-form-label text-left txt-bold">Descripción</label>'+
-                                '<input id="description" type="text" class="form-control" name="description" required autofocus value="'+description+'">'+
-
-                                '<span id="errmsj_descripcion" class="error-msj" role="alert">'+
-                                    '<strong>El campo Descripción es obligatorio</strong>'+
+                                '<span id="errmsj_numEmpleado" class="error-msj" role="alert">'+
+                                    '<strong>El campo número de empleado es obligatorio</strong>'+
                                 '</span>'+
                             '</div>'+
                         '</div>'+
                         '<div class="col-md-12 text-right">'+
                             '<label class="col-lg-12 col-form-label">&nbsp;</label>'+
                             '<a href="#" onclick="swal.closeModal(); return false;" class="btn btn-danger">Cancelar</a>&nbsp;&nbsp;'+
-                            '<input class="btn btn-primary" id="'+idBotonGuardar+'" type="button" value="Guardar">'+
+                            '<input class="btn btn-primary" id="guardarSustitucion" type="button" value="Sustituir">'+
                         '</div>'+
                     '</form>'+
                 '</div>',
@@ -100,61 +147,6 @@
                 allowOutsideClick: false,
             });   
         }
-// NEL
-        $(document).on("click", "#guardarsustitucion", function(){
-            swal({
-                title: '¿Esta seguro?',
-                text: "¡Todos los terceros asignados a este empleado serán actualizados.!",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Aceptar'
-            }).then((result) => {
-                if (result.value) {
-                    var id = $(this).attr("data-id");
-                    var statusNuevo = $(this).attr("data-status-nuevo");
-
-                    $.ajaxSetup({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        }
-                    });
-
-                    $.ajax({
-                        type: 'PUT',
-                        data: { id: id, status: statusNuevo },
-                        dataType: 'JSON',
-                        url: '{{ route("sustitucion") }}',
-                        async: false,
-                        beforeSend: function(){
-                            console.log("Cargando");
-                        },
-                        complete: function(){
-                            console.log("Listo");
-                        }
-                    }).done(function(response){
-                        if(response === true) {
-                            table.ajax.reload();
-                            swal(
-                                'Sustitución',
-                                'La operación se ha realizado con éxito',
-                                'success'
-                            )
-                        } else if(response === false) {
-                            swal(
-                                'Error',
-                                'La operación no pudo ser realizada',
-                                'error'
-                            )
-                        }
-                    }).fail(function(response) {
-                                            
-                    });
-                }
-            });
-        });
-// FIN
         var table = $('#responsables-table').DataTable({
             language: {
                 url: "{{ asset('json/Spanish.json') }}",
@@ -197,8 +189,8 @@
                     render: function (data, type, row) {
                         var html = '';
                         html = '<div class="row">'+
-                                    '<div class="col-lg-5 text-center">'+
-                                        '<button class="btn btn-primary" id="sustituir" data-num-empleado="'+row.numero+'">'+
+                                    '<div class="col-lg-12 text-center">'+
+                                        '<button class="btn btn-primary" id="sustituir" data-nombre="'+row.nombre+'" data-tipo="'+row.tipo+'" data-num-empleado="'+row.numero+'">'+
                                             'Sustituir <i class="fas fa-user-friends"></i>'+
                                         '</button>'+
                                     '</div>'+
@@ -220,6 +212,92 @@
                 'pdfHtml5'
             ]
         });
+
+        // NEL
+        var validaRequired = 0;
+
+        function guardarAltaEditar() {
+            var tipo = $("#tipo").val();
+            var nombre = $("#nombre").val();
+            var numEmpleado = $("#numEmpleado").val();
+            var numEmpleadoActual = $("#numEmpleadoActual").val();
+
+            if (nombre == null || nombre == "") {
+                mostrarError("errmsj_nombre");
+                if(validaRequired > 0) {
+                    validaRequired = validaRequired-1;    
+                }
+            } else {
+                ocultarError("errmsj_nombre");
+                validaRequired = validaRequired+1;
+            }
+            if (numEmpleado == null || numEmpleado == "") {
+                mostrarError("errmsj_numEmpleado");
+                if(validaRequired > 0) {
+                    validaRequired = validaRequired-1;    
+                }
+            } else {
+                ocultarError("errmsj_numEmpleado");
+                validaRequired = validaRequired+1;
+            }
+
+            if (validaRequired == 2) {
+                ocultarError("errmsj_nombre");
+                ocultarError("errmsj_numEmpleado");
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+                var ajax = $.ajax({
+                    type: 'PUT',
+                    data: { nombre: nombre, numEmpleado: numEmpleado, tipo: tipo, numEmpleadoActual: numEmpleadoActual },
+                    dataType: 'JSON',
+                    url: '{{ route("sustitucion") }}',
+                    async: false,
+                    beforeSend: function(){
+                        console.log("Cargando");
+                    },
+                    complete: function(){
+                        console.log("Listo");
+                    }
+                });
+                                
+                ajax.done(function(response){
+                    if(response === true) {
+                        table.ajax.reload();
+                        swal(
+                            'Sustitución',
+                            'La operación se ha realizado con éxito',
+                            'success'
+                        )
+                    } else if(response === false) {
+                        swal(
+                            'Error',
+                            'La operación no pudo ser realizada',
+                            'error'
+                        )
+                    }
+                }).fail(function(response) {
+                    if (response.responseText !== undefined && response.responseText == "middleUpgrade") {
+                        window.location.href = "{{ route('homeajax') }}";
+                    }
+                    if (response.responseJSON !== undefined && response.responseJSON.errors !== undefined && response.responseJSON.errors.nombre !== undefined && response.responseJSON.errors.nombre[0] != "") {
+                        $("#errmsj_nombre").html("<strong>"+response.responseJSON.errors.nombre[0]+"</strong>");
+                        mostrarError("errmsj_nombre");
+                    }
+                    if (response.responseJSON !== undefined && response.responseJSON.errors !== undefined && response.responseJSON.errors.numEmpleado !== undefined && response.responseJSON.errors.numEmpleado[0] != "") {
+                        $("#errmsj_numEmpleado").html("<strong>"+response.responseJSON.errors.numEmpleado[0]+"</strong>");
+                        mostrarError("errmsj_numEmpleado");
+                    }
+                });
+            }
+            
+            validaRequired = 0;
+        }
+        // FIN
     });
 </script>
 @endpush

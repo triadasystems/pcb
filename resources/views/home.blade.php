@@ -125,12 +125,17 @@
                                 </div>
                             </div>
                             <div class="col-lg-4 cuadros-mnu">
-                                <div class="text-center action-mnu" data-url="{{ route('bajasdiarias') }}">
-                                    Rep. Bajas Diarias
+                                <div class="text-center action-mnu" data-url="{{ route('sustitucionrespauth') }}">
+                                    Sustitución Aut/Resp
                                 </div>
                             </div>
                         </div>
                         <div class="row">
+                            <div class="col-lg-4 cuadros-mnu">
+                                <div class="text-center action-mnu" data-url="{{ route('bajasdiarias') }}">
+                                    Rep. Bajas Diarias
+                                </div>
+                            </div>
                             <div class="col-lg-4 cuadros-mnu">
                                 <div class="text-center action-mnu" data-url="{{ route('tercerosactivos') }}">
                                     Rep. Usuarios Activos
@@ -141,6 +146,8 @@
                                     Rep. Responsables
                                 </div>
                             </div>
+                        </div>
+                        <div class="row">
                             <div class="col-lg-4 cuadros-mnu">
                                 <div class="text-center action-mnu" data-url="{{ route('trazabilidad') }}">
                                     Rep. Trazabilidad

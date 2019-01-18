@@ -146,8 +146,8 @@ Route::get('/encrypt/viewEncrypt', 'EncryptController@viewEncrypt')->name('viewE
 Route::get('/encrypt/desEncrypt', 'EncryptController@desEncrypt')->name('desEncrypt');
 
 //terceros
-Route::group(['prefix' => 'terceros','middleware' => 'userProfileInactivo'], function()
-{
+Route::group(['prefix' => 'terceros','middleware' => 'userProfileInactivo'], function() {
+    Route::put('/update', 'tercerosController@update')->name('cambioautoresp');
     Route::get('/listar', 'tercerosController@index')->name('listar');
     Route::get('/alta', 'tercerosController@create')->name('terceros.alta');
     Route::post('/insertar', 'tercerosController@insertar')->name('insertar');
@@ -185,4 +185,6 @@ Route::group(['prefix' =>'responsables', 'middleware' => 'userProfileInactivo'],
 
     Route::get('/permisossustitucion','SustitucionresponsablesController@permisosSustitucion')->name('permisossustitucion');
     Route::put('/cambiostatussustitucion','SustitucionresponsablesController@cambioStatus')->name('editarstatussustitucion');
+
+    Route::get('autocomplete', ['uses'=>'SustitucionresponsablesController@autocomplete'])->name('sustitucion.autocomplete');
 });

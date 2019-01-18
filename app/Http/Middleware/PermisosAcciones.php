@@ -29,8 +29,20 @@ class PermisosAcciones
                     if($permiso->writing == 1) {
                         return $next($request);
                     } else {
-                        if(isset($modulo) && $modulo == "tcsmotivosbajas") {
-                            return redirect()->route('permisosMotivosBajas')->with('msjError', true);
+                        if(isset($modulo)) {
+                            switch ($modulo) {
+                                case "tcsmotivosbajas":
+                                case "tcslistaactivos":
+                                case "tcsproveedores":
+                                case "tcsmesascontrol":
+                                case "tcssustitucionmasiva":
+                                    return redirect()->route('permisosMotivosBajas')->with('msjError', true);
+                                    break;
+                                
+                                default:
+                                    return redirect('/home')->with('msjError', 'No cuenta con permisos para realizar la operación');        
+                                    break;
+                            }
                         } else {
                             return redirect('/home')->with('msjError', 'No cuenta con permisos para realizar la operación');
                         }
