@@ -67,7 +67,7 @@
                                 cargo = 'Responsable';
                                 break;
                             case '3':
-                                cargo = 'Autorizador/Responsabñe';
+                                cargo = 'Autorizador/Responsable';
                                 break;
                         }
                         return cargo;

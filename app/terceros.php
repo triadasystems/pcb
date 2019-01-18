@@ -5,9 +5,15 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Config;
+use App\requestFus;
+use App\ApplicationsEmployee;
+use App\tercerosHistorico;
+use App\InterfaceLabora;
 
 class terceros extends Model
 {
+    public $term;
+
     protected $table="tcs_external_employees";
 
     protected $fillable = [
@@ -26,39 +32,54 @@ class terceros extends Model
         'responsible_number',
         'created_at',
         'status',
+        'tcs_subfijo_id', 
+        'tcs_externo_proveedor',
     ];
 
-    protected $hidden = [
-        'tcs_subfijo_id', 'tcs_externo_proveedor',
-    ];
+    protected $hidden = [];
 
     public $timestamps = false;
-    public static function listar_terceros($dat=0)
-    {
-        $and="";
-        if ($dat!=0)
-        {
-            $and = " AND a.id_external=$dat";
+    
+    public static function listar_terceros($dat = 0) {
+
+        $consultas = terceros::select(
+            'tcs_external_employees.id as ident',
+            'tcs_external_employees.id_external AS id',
+            'tcs_external_employees.name', 
+            'tcs_external_employees.lastname1', 
+            'tcs_external_employees.lastname2',
+            'tcs_external_employees.initial_date AS f_inicial',
+            'tcs_external_employees.low_date AS f_fin',
+            'tcs_external_employees.badge_number AS gafete',
+            'tcs_external_employees.email AS correo',
+            'tcs_external_employees.authorizing_name AS nom_autorizador',
+            'tcs_external_employees.authorizing_number AS num_autorizador',
+            'tcs_external_employees.responsible_name AS nom_responsable',
+            'tcs_external_employees.responsible_number AS num_responsable',
+            'tcs_external_employees.status AS estatus',
+            'tcs_cat_suppliers.name AS empresa',
+            'tcs_cat_suppliers.description AS des_empresa'
+        )
+        ->join('tcs_cat_suppliers', 'tcs_external_employees.tcs_externo_proveedor', '=', 'tcs_cat_suppliers.id');
+        
+        $and = "";
+        
+        if ($dat != 0) {
+            $consultas->where('tcs_external_employees.id_external', '=', $dat);
         }
-        $sql="SELECT `a`.`id` as ident, `a`.`id_external` AS id, CONCAT(`a`.`name`,' ', a.`lastname1`,' ', `a`. `lastname2`) AS nombre, 
-            `a`.`initial_date` AS f_inicial, `a`.`low_date` AS f_fin, `a`.`badge_number` AS gafete, 
-            `a`.`email` AS correo,`a`.`authorizing_name` AS nom_autorizador, `a`.`authorizing_number` AS num_autorizador, 
-            `a`.`responsible_name` AS nom_resposable, `a`.`responsible_number` AS num_resposable, `a`.`status` AS estatus,
-            `b`.`name` AS empresa, `b`.`description` AS des_empresa
-            FROM tcs_external_employees a
-            INNER JOIN tcs_cat_suppliers b ON a.tcs_externo_proveedor=b.id
-            WHERE `a`.`status`=1 $and";
-            $consultas = DB::select(DB::raw($sql));
-            return $consultas;
+        
+        $consultas->get()->toArray();
+
+        return $consultas;
     }
-    public static function empresas()
-    {
+
+    public static function empresas() {
         $sql="SELECT id, `name` FROM tcs_cat_suppliers WHERE `status`='Activo'";
         $consultas = DB::select(DB::raw($sql));
         return $consultas;
     }
-    public static function aplicacion()
-    {
+
+    public static function aplicacion() {
         $sql="SELECT id, `name` FROM applications WHERE active = 1 ORDER BY `name` ASC";
         $consultas = DB::select(DB::raw($sql));
         return $consultas;
@@ -120,5 +141,317 @@ class terceros extends Model
         ->toArray();
 
         return $consultas;
+    }
+    public function cambioAutoResp($data) {
+        $tercero = terceros::find($data["idTercero"]);
+        $tercero->authorizing_name = strtoupper($data["nomAuto"]);
+        $tercero->authorizing_number = $data["numAuto"];
+        $tercero->responsible_name = strtoupper($data["nomResp"]);
+        $tercero->responsible_number = $data["numResp"];
+
+        $applicationsEmployee = new ApplicationsEmployee;
+        $aplicacionesDelTercero = "";
+        
+        foreach($applicationsEmployee->applicationEmployeeById($data["idTercero"]) as $row) {
+            $aplicacionesDelTercero .= $row["applications_id"].",";
+        }
+
+        $dataHistorico = array(
+            "id_external" => $tercero->id_external,
+            "name" => $tercero->name,
+            "lastname1" => $tercero->lastname1,
+            "lastname2" => $tercero->lastname2,
+            "initial_date" => $tercero->initial_date,
+            "low_date" => $tercero->low_date,
+            "badge_number" => $tercero->badge_number,
+            "email" => $tercero->email,
+            "authorizing_name" => $tercero->authorizing_name,
+            "authorizing_number" => $tercero->authorizing_number,
+            "responsible_name" => $tercero->responsible_name,
+            "responsible_number" => $tercero->responsible_number,
+            "created_at" => $tercero->created_at,
+            "status" => $tercero->status,
+            "tcs_fus_ext_hist" => $tercero->tcs_fus_ext_hist,
+            "tcs_applications_ids" => substr($aplicacionesDelTercero, 0, -1),
+            "tcs_subfijo_id" => $tercero->tcs_subfijo_id,
+            "tcs_externo_proveedor" => $tercero->tcs_externo_proveedor
+        );                    
+
+        $fus = new requestFus;
+        $id = $fus->altaFus(2, "Cambio de autorizador y/o responsable", $data);
+
+        if($id !== false) {
+            $historicoTercero = new tercerosHistorico;
+            $historicoTercero->sustitucionHistorico($dataHistorico, $id);
+        }
+
+
+        if($tercero->save()) {
+            return true;
+        }
+
+        return false;
+    }
+    public function sustitucion($dataR) {
+        switch ($dataR["tipo"]) {
+            case 1:
+                $sustitucion = terceros::where('authorizing_number', '=', $dataR["numEmpleadoActual"]);
+                $fields = array(
+                    "authorizing_name" => strtoupper($dataR["nombre"]),
+                    "authorizing_number" => $dataR["numEmpleado"]
+                );
+
+                foreach ($sustitucion->get()->toArray() as $key => $value) {
+                    $applicationsEmployee = new ApplicationsEmployee;
+                    $aplicacionesDelTercero = "";
+                    $data = array("id" => $value["id"]);
+                    
+                    foreach($applicationsEmployee->applicationEmployeeById($value["id"]) as $row) {
+                        $aplicacionesDelTercero .= $row["applications_id"].",";
+                    }
+
+                    $tcs_fus_ext_hist = null;
+
+                    if(isset($value["tcs_fus_ext_hist"])) {
+                        $tcs_fus_ext_hist = $value["tcs_fus_ext_hist"];
+                    }
+
+                    $dataHistorico = array(
+                        "id_external" => $value["id_external"],
+                        "name" => $value["name"],
+                        "lastname1" => $value["lastname1"],
+                        "lastname2" => $value["lastname2"],
+                        "initial_date" => $value["initial_date"],
+                        "low_date" => $value["low_date"],
+                        "badge_number" => $value["badge_number"],
+                        "email" => $value["email"],
+                        "authorizing_name" => $value["authorizing_name"],
+                        "authorizing_number" => $value["authorizing_number"],
+                        "responsible_name" => $value["responsible_name"],
+                        "responsible_number" => $value["responsible_number"],
+                        "created_at" => $value["created_at"],
+                        "status" => $value["status"],
+                        "tcs_fus_ext_hist" => $tcs_fus_ext_hist,
+                        "tcs_applications_ids" => substr($aplicacionesDelTercero, 0, -1),
+                        "tcs_subfijo_id" => $value["tcs_subfijo_id"],
+                        "tcs_externo_proveedor" => $value["tcs_externo_proveedor"]
+                    );                    
+
+                    $fus = new requestFus;
+                    $id = $fus->altaFus(2, "Cambio de Autorizador", $data);
+
+                    if($id !== false) {
+                        $historicoTercero = new tercerosHistorico;
+                        $historicoTercero->sustitucionHistorico($dataHistorico, $id);
+                    }
+                }
+                
+                if($sustitucion->update($fields)) {
+                    return true;
+                }
+                break;
+            case 2:
+                $sustitucion = terceros::where('responsible_number', '=', $dataR["numEmpleadoActual"]);
+                $fields = array(
+                    "responsible_name" => strtoupper($dataR["nombre"]),
+                    "responsible_number" => $dataR["numEmpleado"]
+                );
+
+                foreach ($sustitucion->get()->toArray() as $key => $value) {
+                    $applicationsEmployee = new ApplicationsEmployee;
+                    $aplicacionesDelTercero = "";
+                    $data = array("id" => $value["id"]);
+                    
+                    foreach($applicationsEmployee->applicationEmployeeById($value["id"]) as $row) {
+                        $aplicacionesDelTercero .= $row["applications_id"].",";
+                    }
+
+                    $tcs_fus_ext_hist = null;
+
+                    if(isset($value["tcs_fus_ext_hist"])) {
+                        $tcs_fus_ext_hist = $value["tcs_fus_ext_hist"];
+                    }
+
+                    $dataHistorico = array(
+                        "id_external" => $value["id_external"],
+                        "name" => $value["name"],
+                        "lastname1" => $value["lastname1"],
+                        "lastname2" => $value["lastname2"],
+                        "initial_date" => $value["initial_date"],
+                        "low_date" => $value["low_date"],
+                        "badge_number" => $value["badge_number"],
+                        "email" => $value["email"],
+                        "authorizing_name" => $value["authorizing_name"],
+                        "authorizing_number" => $value["authorizing_number"],
+                        "responsible_name" => $value["responsible_name"],
+                        "responsible_number" => $value["responsible_number"],
+                        "created_at" => $value["created_at"],
+                        "status" => $value["status"],
+                        "tcs_fus_ext_hist" => $tcs_fus_ext_hist,
+                        "tcs_applications_ids" => substr($aplicacionesDelTercero, 0, -1),
+                        "tcs_subfijo_id" => $value["tcs_subfijo_id"],
+                        "tcs_externo_proveedor" => $value["tcs_externo_proveedor"]
+                    );                    
+
+                    $fus = new requestFus;
+                    $id = $fus->altaFus(2, "Cambio de Autorizador", $data);
+
+                    if($id !== false) {
+                        $historicoTercero = new tercerosHistorico;
+                        $historicoTercero->sustitucionHistorico($dataHistorico, $id);
+                    }
+                }
+
+                if($sustitucion->update($fields)) {
+                    return true;
+                }
+                break;
+            case 3:
+                $sustitucionA = terceros::where('authorizing_number', '=', $dataR["numEmpleadoActual"]);
+                
+                foreach ($sustitucionA->get()->toArray() as $key => $value) {
+                    $applicationsEmployee = new ApplicationsEmployee;
+                    $aplicacionesDelTercero = "";
+                    $data = array("id" => $value["id"]);
+                    
+                    foreach($applicationsEmployee->applicationEmployeeById($value["id"]) as $row) {
+                        $aplicacionesDelTercero .= $row["applications_id"].",";
+                    }
+
+                    $tcs_fus_ext_hist = null;
+
+                    if(isset($value["tcs_fus_ext_hist"])) {
+                        $tcs_fus_ext_hist = $value["tcs_fus_ext_hist"];
+                    }
+
+                    $dataHistorico = array(
+                        "id_external" => $value["id_external"],
+                        "name" => $value["name"],
+                        "lastname1" => $value["lastname1"],
+                        "lastname2" => $value["lastname2"],
+                        "initial_date" => $value["initial_date"],
+                        "low_date" => $value["low_date"],
+                        "badge_number" => $value["badge_number"],
+                        "email" => $value["email"],
+                        "authorizing_name" => $value["authorizing_name"],
+                        "authorizing_number" => $value["authorizing_number"],
+                        "responsible_name" => $value["responsible_name"],
+                        "responsible_number" => $value["responsible_number"],
+                        "created_at" => $value["created_at"],
+                        "status" => $value["status"],
+                        "tcs_fus_ext_hist" => $tcs_fus_ext_hist,
+                        "tcs_applications_ids" => substr($aplicacionesDelTercero, 0, -1),
+                        "tcs_subfijo_id" => $value["tcs_subfijo_id"],
+                        "tcs_externo_proveedor" => $value["tcs_externo_proveedor"]
+                    );                    
+
+                    $fus = new requestFus;
+                    $id = $fus->altaFus(2, "Cambio de Autorizador", $data);
+
+                    if($id !== false) {
+                        $historicoTercero = new tercerosHistorico;
+                        $historicoTercero->sustitucionHistorico($dataHistorico, $id);
+                    }
+                }
+
+                $fieldsA = array(
+                    "authorizing_name" => strtoupper($dataR["nombre"]),
+                    "authorizing_number" => $dataR["numEmpleado"]
+                );
+
+                $sustitucionR = terceros::where('responsible_number', '=', $dataR["numEmpleadoActual"]);
+
+                foreach ($sustitucionR->get()->toArray() as $key => $value) {
+                    $applicationsEmployee = new ApplicationsEmployee;
+                    $aplicacionesDelTercero = "";
+                    $data = array("id" => $value["id"]);
+                    
+                    foreach($applicationsEmployee->applicationEmployeeById($value["id"]) as $row) {
+                        $aplicacionesDelTercero .= $row["applications_id"].",";
+                    }
+
+                    $tcs_fus_ext_hist = null;
+
+                    if(isset($value["tcs_fus_ext_hist"])) {
+                        $tcs_fus_ext_hist = $value["tcs_fus_ext_hist"];
+                    }
+
+                    $dataHistorico = array(
+                        "id_external" => $value["id_external"],
+                        "name" => $value["name"],
+                        "lastname1" => $value["lastname1"],
+                        "lastname2" => $value["lastname2"],
+                        "initial_date" => $value["initial_date"],
+                        "low_date" => $value["low_date"],
+                        "badge_number" => $value["badge_number"],
+                        "email" => $value["email"],
+                        "authorizing_name" => $value["authorizing_name"],
+                        "authorizing_number" => $value["authorizing_number"],
+                        "responsible_name" => $value["responsible_name"],
+                        "responsible_number" => $value["responsible_number"],
+                        "created_at" => $value["created_at"],
+                        "status" => $value["status"],
+                        "tcs_fus_ext_hist" => $tcs_fus_ext_hist,
+                        "tcs_applications_ids" => substr($aplicacionesDelTercero, 0, -1),
+                        "tcs_subfijo_id" => $value["tcs_subfijo_id"],
+                        "tcs_externo_proveedor" => $value["tcs_externo_proveedor"]
+                    );                    
+
+                    $fus = new requestFus;
+                    $id = $fus->altaFus(2, "Cambio de Autorizador", $data);
+
+                    if($id !== false) {
+                        $historicoTercero = new tercerosHistorico;
+                        $historicoTercero->sustitucionHistorico($dataHistorico, $id);
+                    }
+                }
+
+                $fieldsR = array(
+                    "responsible_name" => strtoupper($dataR["nombre"]),
+                    "responsible_number" => $dataR["numEmpleado"]
+                );
+                
+                if($sustitucionA->update($fieldsA) && $sustitucionR->update($fieldsR)) {
+                    return true;
+                }
+                break;
+        }
+
+        return false;
+    }
+
+    public function autocompleteAutResp($term, $request) {
+        if(empty($term)) {
+            return $data[] = array(
+                'response' => 'No se encontró el registro'
+            );
+        }
+        $this->term = $term;
+
+        $consultas = InterfaceLabora::where("consecutive", function($query){
+            $query->selectRaw('max(consecutive)')->from('interface_labora');
+        })
+        ->where(function ($query) {
+            $query->where("employee_number", "LIKE", $this->term."%")
+                  ->where("origen_id", "<>", 999)
+                  ->orWhere("name", "LIKE", "%".$this->term."%");
+        })->limit(5)->get();
+
+        $data = array();
+        
+        foreach ($consultas as $val) {
+            $data[]= array(
+                'numero' => $val->employee_number, 
+                'nombre' => str_replace("/", " ", $val->name)
+            );
+        }
+        
+        if (count($data)) {
+            return $data;
+        } else if($data == null) {
+            return $data[] = array(
+                'response' => 'No se encontró el registro'
+            );
+        }
     }
 }

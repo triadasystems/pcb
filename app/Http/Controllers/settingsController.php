@@ -56,7 +56,7 @@ class settingsController extends Controller
 
         if ($tipo==1) {
             $request->validate([
-                "subfijo_nuevo"  => "required|numeric|gte:old_sub"
+                "subfijo_nuevo"  => "required|digits_between:1,2|numeric|gte:old_sub"
             ]);
 
             $old = $request->post("old_sub");

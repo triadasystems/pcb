@@ -10,6 +10,7 @@ use App\Profileusers;
 use App\LogBookMovements;
 
 use App\subfijo;
+use Illuminate\Support\Facades\Response;
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -70,7 +71,13 @@ class tercerosController extends Controller
     }
     public function autocomplete(Request $request)
     {
-        $term= $request->get('term', '');
+        $term = $request->get('term', '');
+        
+        if(empty($term)) {
+            return $data[] = array(
+                'response' => 'No se encontró el registro'
+            );
+        }
         if ($request->type=='num_auto' || $request->type=='num_res' ) {
             $and=" AND `employee_number`  LIKE '".$term."%'";
         }
@@ -78,7 +85,7 @@ class tercerosController extends Controller
             $and=" AND `name` LIKE '%".$term."%'";
         }
         $sql="SELECT * FROM interface_labora ai
-                WHERE consecutive = (SELECT max(consecutive) FROM interface_labora) AND origen_id <> 999 $and";
+                WHERE consecutive = (SELECT max(consecutive) FROM interface_labora) AND origen_id <> 999 $and LIMIT 5";
         $consultas = DB::select(DB::raw($sql));        
         $data=array();
         foreach ($consultas as $val) {
@@ -93,8 +100,44 @@ class tercerosController extends Controller
             return $data[] = array('response'=>'No se encontró el registro');
         }    
     }
-    public function insertar(Request $request)//'email' => 'sometimes|required|'regex:/^.+@.+$/i' a_paterno
-    {
+    public function update(Request $request) {
+        $this->requestProp = $request->post();
+        $request->validate([
+            "nomAuto"  => "required|max:255|regex:/^[A-Za-z0-9[:space:]\s\S]+$/",
+            "numAuto"  => ["required", "min:1", "max:2147483647", "digits_between:1,10", "numeric", function($attribute, $value, $fail){
+                if($value == $this->requestProp["numResp"]) {
+                    $fail("El número de empleado del autorizador no debe coincider con el del responsable");
+                }
+            }],
+            "nomResp"  => "required|max:255|regex:/^[A-Za-z0-9[:space:]\s\S]+$/",
+            "numResp"  => ["required", "min:1", "max:2147483647", "digits_between:1,10", "numeric", function($attribute, $value, $fail){
+                if($value == $this->requestProp["numAuto"]) {
+                    $fail("El número de empleado del responsable no debe coincider con el del autorizador");
+                }
+            }],
+        ]);
+        
+        $sustitucion = new terceros;
+        
+        if($sustitucion->cambioAutoResp($request->post()) === true) {
+            $data = array(
+                'ip_address' => $this->ip_address_client, 
+                'description' => 'Se ha realizado sustitución de un Autorizador/Responsable',
+                'tipo' => 'modificacion',
+                'id_user' => Auth::user()->id
+            );
+            
+            $bitacora = new LogBookMovements;
+            $bitacora->guardarBitacora($data);
+
+            return Response::json(true);
+        }
+
+        return Response::json(false);
+    }
+
+    public function insertar(Request $request) {
+        //'email' => 'sometimes|required|'regex:/^.+@.+$/i' a_paterno
         $this->requestProp = $request->post();
         $request->validate([
             "fus"    => "numeric|min:1|max:2147483647|digits_between:1,10",

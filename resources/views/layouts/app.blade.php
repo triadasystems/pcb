@@ -127,6 +127,9 @@
                                     <a class="dropdown-item" href="{{ route('settings') }}">
                                         {{ __('Configuraciones') }}
                                     </a>
+                                    <a class="dropdown-item" href="{{ route('sustitucionrespauth') }}">
+                                        {{ __('Sustitución de Autorizador/Responsable') }}
+                                    </a>
                                     <a class="dropdown-item" href="{{ route('bajasdiarias') }}">
                                         {{ __('Rep. Bajas Diarias') }}
                                     </a>

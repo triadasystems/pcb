@@ -18,6 +18,8 @@ class TcsreportesController extends Controller
     {
         $this->ip_address_client = getIpAddress();// EVP ip para bitacora
         $this->middleware('auth');
+        $this->middleware('writing', ['only' => ['store']]);
+        $this->middleware('upgrade', ['only' => ['update']]);
     }
 
     public function reporteBajasDiarias() {      
@@ -79,7 +81,7 @@ class TcsreportesController extends Controller
         
         return Datatables::of($trazabilidad->trazabilidad())->make(true);
     }
-// Sin terminar aun
+
     public function reporteResponsables() {
         $data = array(
             'ip_address' => $this->ip_address_client, 
