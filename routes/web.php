@@ -188,3 +188,11 @@ Route::group(['prefix' =>'responsables', 'middleware' => 'userProfileInactivo'],
 
     Route::get('autocomplete', ['uses'=>'SustitucionresponsablesController@autocomplete'])->name('sustitucion.autocomplete');
 });
+// aplicaciones
+Route::group(['prefix'=>'aplicacion','middleware'=> 'userProfileInactivo'], function() {
+    Route::get('/laplicacion','applicationController@index')->name('laplicacion')->middleware('reading');
+    Route::get('/aplicacionData','applicationController@aplicacionData')->name('aplicacion.lista');
+    Route::post('/desactivar','applicationController@desactivar')->name('desactivarapp');
+    Route::get('/alta','applicationController@alta')->name('altaAplicaciones')->middleware('writing');
+    Route::post('/nuevo','applicationController@create')->name('appCreate');
+});
