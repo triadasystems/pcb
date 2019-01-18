@@ -59,12 +59,7 @@
                 { data: 'badge_number', name: 'badge_number' },
                 { data: 'email', name: 'email' },
                 { data: 'initial_date', name: 'initial_date' },
-                {
-                    render: function (data, type, row) {
-                        var autorizador = row.authorizing_name+' | '+row.authorizing_number;
-                        return autorizador;
-                    }
-                },
+                { data: 'autorizador', name: 'autorizador' },
                 { data: 'low_date', name: 'low_date' },
                 { data: 'typelow', name: 'typelow' },
                 { data: 'real_low_date', name: 'real_low_date' }

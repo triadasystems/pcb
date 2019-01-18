@@ -146,30 +146,10 @@
             ajax: '{!! route('terceros.data') !!}',
             columns: [
                 { data: 'id', name: 'id' },
-                {
-                    render: function (data, type, row) {
-                        var gafete = "S/N";
-                        
-                        if (row.gafete != null) {
-                            gafete = row.gafete;
-                        }
-                        var nombre = row.name+' '+row.lastname1+' '+row.lastname2+' | '+gafete;
-                        return nombre;
-                    }
-                },
+                { data: 'datos_tercero', name: 'datos_tercero' },
                 { data: 'correo', name: 'correo' },
-                {
-                    render: function (data, type, row) {
-                        var autorizador = row.nom_autorizador+' | '+row.num_autorizador;
-                        return autorizador;
-                    }
-                },
-                {
-                    render: function (data, type, row) {
-                        var reponsable = row.nom_responsable+' | '+row.num_responsable;
-                        return reponsable;
-                    }
-                },
+                { data: 'autorizador', name: 'autorizador' },
+                { data: 'responsable', name: 'responsable' },
                 { data: 'empresa', name: 'empresa' },
                 {
                     render: function (data, type, row) {

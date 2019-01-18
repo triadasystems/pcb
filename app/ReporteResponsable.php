@@ -20,6 +20,17 @@ class ReporteResponsable extends Model
     public $timestamps = false;
 
     public function reporteResponsables() {
-        return $responsables = ReporteResponsable::select('nombre', 'numero', DB::raw('SUM(tipo) AS tipo'))->groupBy('nombre', 'numero')->get()->toArray();
+        return $responsables = ReporteResponsable::select(
+            'nombre', 
+            'numero', 
+            DB::raw('
+                case 
+                    when SUM(tipo) = 1 then "Autorizador"
+                    when SUM(tipo) = 2 then "Responsable"
+                    when SUM(tipo) = 3 then "Autorizador/Responsable"
+                end AS tipo
+            ')
+        )
+        ->groupBy('nombre', 'numero')->get()->toArray();
     }
 }

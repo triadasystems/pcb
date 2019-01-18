@@ -56,26 +56,11 @@
             ajax: '{!! route("tercerosactivos.data") !!}',
             columns: [
                 { data: 'id_generate_fus', name: 'id_generate_fus' },
-                {
-                    render: function (data, type, row) {
-                        var nombre = row.name+' '+row.lastname1+' '+row.lastname2;
-                        return nombre;
-                    }
-                },
+                { data: 'datos_tercero', name: 'datos_tercero' },                
                 { data: 'initial_date', name: 'initial_date' },
                 { data: 'low_date', name: 'low_date' },
-                {
-                    render: function (data, type, row) {
-                        var autorizador = row.authorizing_name+' | '+row.authorizing_number;
-                        return autorizador;
-                    }
-                },
-                {
-                    render: function (data, type, row) {
-                        var reponsable = row.responsible_name+' | '+row.responsible_number;
-                        return reponsable;
-                    }
-                },
+                { data: 'autorizador', name: 'autorizador' },
+                { data: 'responsable', name: 'responsable' }
             ],
             dom: 'Blfrtip',
             lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todo"]],

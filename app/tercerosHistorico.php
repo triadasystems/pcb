@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Support\Facades\DB;
 // use App\ReportesTerceros;
 
 class tercerosHistorico extends Model
@@ -55,7 +55,8 @@ class tercerosHistorico extends Model
             'tcs_external_employees_hist.status AS tcs_status',
             'tcs_type_low.type AS typelow',
             'tcs_request_fus.created_at AS low_date_fus',
-            'tcs_request_fus.real_low_date'
+            'tcs_request_fus.real_low_date',
+            DB::raw('CONCAT(tcs_external_employees_hist.authorizing_name, " | ", tcs_external_employees_hist.authorizing_number) AS autorizador')
         )
         ->union($union)
         ->get()

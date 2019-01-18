@@ -57,18 +57,8 @@
             columns: [
                 { data: 'badge_number', name: 'badge_number' },
                 { data: 'email', name: 'email' },
-                {
-                    render: function (data, type, row) {
-                        var nombre = row.name+' '+row.lastname1+' '+row.lastname2;
-                        return nombre;
-                    }
-                },
-                {
-                    render: function (data, type, row) {
-                        var autorizador = row.authorizing_name+' | '+row.authorizing_number;
-                        return autorizador;
-                    }
-                },
+                { data: 'datos_tercero', name: 'datos_tercero' },
+                { data: 'autorizador', name: 'autorizador' },
                 {
                     render: function (data, type, row) {
                         var lowDate = new Date(row.low_date).getTime() / 1000;

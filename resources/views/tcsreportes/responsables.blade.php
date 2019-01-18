@@ -54,25 +54,7 @@
             columns: [
                 { data: 'numero', name: 'numero' },
                 { data: 'nombre', name: 'nombre' },
-                {
-                    render: function (data, type, row) {
-                        var tipo = row.tipo;
-                        var cargo = '';
-
-                        switch (tipo) {
-                            case '1':
-                                cargo = 'Autorizador';
-                                break;
-                            case '2':
-                                cargo = 'Responsable';
-                                break;
-                            case '3':
-                                cargo = 'Autorizador/Responsable';
-                                break;
-                        }
-                        return cargo;
-                    }
-                }
+                { data: 'tipo', name: 'tipo' }
             ],
             dom: 'Blfrtip',
             lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todo"]],

@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use App\tercerosHistorico;
 
 class ReportesTerceros extends Model
@@ -49,12 +50,13 @@ class ReportesTerceros extends Model
             'tcs_external_employees.status AS tcs_status',
             'tcs_type_low.type AS typelow',
             'tcs_request_fus.created_at AS low_date_fus',
-            'tcs_request_fus.real_low_date'
+            'tcs_request_fus.real_low_date',
+            DB::raw('CONCAT(tcs_external_employees.name, " ", tcs_external_employees.lastname1, " ", tcs_external_employees.lastname2) AS datos_tercero'),
+            DB::raw('CONCAT(tcs_external_employees.authorizing_name, " | ", tcs_external_employees.authorizing_number) AS autorizador'),
+            DB::raw('CONCAT(tcs_external_employees.responsible_name, " | ", tcs_external_employees.responsible_number) AS responsable')
         )
         ->where("tcs_external_employees.status", "=", 2)
         ->where("tcs_request_fus.type", "=", 3)
-        // ->whereNotNull("tcs_request_fus.created_at")
-        // ->whereRaw("tcs_request_fus.created_at = CURDATE()")
         ->get()
         ->toArray();
     }
@@ -74,7 +76,10 @@ class ReportesTerceros extends Model
             'tcs_external_employees.authorizing_number',
             'tcs_external_employees.responsible_name',
             'tcs_external_employees.responsible_number',
-            'tcs_external_employees.status AS tcs_status'
+            'tcs_external_employees.status AS tcs_status',
+            DB::raw('CONCAT(tcs_external_employees.name, " ", tcs_external_employees.lastname1, " ", tcs_external_employees.lastname2) AS datos_tercero'),
+            DB::raw('CONCAT(tcs_external_employees.authorizing_name, " | ", tcs_external_employees.authorizing_number) AS autorizador'),
+            DB::raw('CONCAT(tcs_external_employees.responsible_name, " | ", tcs_external_employees.responsible_number) AS responsable')
         )
         ->where("tcs_external_employees.status", "=", 1)
         ->where("tcs_request_fus.type", "=", 1)
@@ -108,7 +113,8 @@ class ReportesTerceros extends Model
             'tcs_external_employees.status AS tcs_status',
             'tcs_request_fus.tcs_type_low_id AS typelow',
             'tcs_request_fus.created_at AS low_date_fus',
-            'tcs_request_fus.real_low_date'
+            'tcs_request_fus.real_low_date',
+            DB::raw('CONCAT(tcs_external_employees.authorizing_name, " | ", tcs_external_employees.authorizing_number) AS autorizador')
         );
 
         $trazabilidad = new tercerosHistorico;
