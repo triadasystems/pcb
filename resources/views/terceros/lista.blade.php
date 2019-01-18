@@ -115,6 +115,13 @@
                 'La operación se ha realizado con éxito. El ID del tercero es: {{session("confirmacion")}}',
                 'success'
             )
+        @endif
+        @if (session('error_alta'))
+            swal(
+                'Advertencia',
+                'La operación no se ha llevado acabo ya que el limite de subfijo ha sido superado, favor de ponerse en contacto con el administrador del sistema',
+                'warning'
+            )
         @endif 
         @if (session('validacionCalculo'))
             swal(
