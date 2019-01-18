@@ -28,7 +28,8 @@ class settingsController extends Controller
     }
     public function index()
     {
-        $sub = terceros::recuperar_subfijo();
+        $sufijo = new terceros;
+        $sub = $sufijo->recuperar_subfijo();
         $set = setting::settings();
         $subfijo = $sub[0]->id;// subfijo de la tabla
         
