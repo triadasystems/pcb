@@ -195,13 +195,15 @@ class tercerosController extends Controller
         if ($subfijo == $sub_conse && $id_externo_cons < $id_external_max)//cuando el numero de la secuencia es consecutivo
         {
             return $id_external;
-        } elseif($id_externo_cons < $id_external_max && $sub_conse < $subfijo)// cuando actualizaron el catalogo de subfijos
+        } 
+        elseif($id_externo_cons < $id_external_max && $sub_conse < $subfijo)// cuando actualizaron el catalogo de subfijos
         {
             $act_seq = terceros::actualizar_sequence($subfijo);
             $id_external = terceros::nextval($seq);
             $id_externo_cons_n = $id_external[0]->id;//consecutivo del id del externo
             $id_external = $id_externo_cons_n;
-        } elseif($id_externo_cons == $id_external_max)//cuando llega al numero maximo del consecutivo
+        } 
+        elseif($id_externo_cons == $id_external_max)//cuando llega al numero maximo del consecutivo
         {
             $subfijo_new = $subfijo+1;
             $act_seq = terceros::actualizar_sequence($subfijo_new);

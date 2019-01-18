@@ -17,13 +17,20 @@ class Applications extends Model
         'alias',
         'active'
     ];
-    public function recuperarapps()
+    public static function recuperarapps()
     {
-        $consultas= Applications::where("active","=","1")
-        ->get()
+        $consultas= Applications::get()
         ->toArray();
-        // print_r($consultas);
-        // die();
         return $consultas;
+    }
+    public function store($nom,$alias)
+    {
+        $sql= new Applications;
+        $sql->instance_id = 1;
+        $sql->responsability_id=1;
+        $sql->name = $nom;
+        $sql->alias = $alias;
+        $sql->active = 1;
+        $sql->save();
     }
 }

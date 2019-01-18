@@ -180,4 +180,7 @@ Route::group(['prefix' =>'reportes', 'middleware' => 'userProfileInactivo'], fun
 Route::group(['prefix'=>'aplicacion','middleware'=> 'userProfileInactivo'], function() {
     Route::get('/laplicacion','applicationController@index')->name('laplicacion')->middleware('reading');
     Route::get('/aplicacionData','applicationController@aplicacionData')->name('aplicacion.lista');
+    Route::post('/desactivar','applicationController@desactivar')->name('desactivarapp');
+    Route::get('/alta','applicationController@alta')->name('altaAplicaciones')->middleware('writing');
+    Route::post('/nuevo','applicationController@create')->name('appCreate');
 });
