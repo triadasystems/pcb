@@ -49,6 +49,20 @@
                         </div>
 
                         <div class="form-group row">
+                            <label for="keyemp" class="col-md-4 col-form-label text-md-right">{{ __('# Empleado') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="keyemp" type="number" min="1" step="1" class="form-control{{ $errors->has('keyemp') ? ' is-invalid' : '' }}" name="keyemp" value="{{ old('keyemp') }}" required autofocus>
+
+                                @if ($errors->has('keyemp'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('keyemp') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail') }}</label>
 
                             <div class="col-md-6">
