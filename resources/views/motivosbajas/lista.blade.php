@@ -14,6 +14,7 @@
     }
 </style>
 <input type="hidden" id="modulo" value="tcsmotivosbajas" />
+<input type="hidden" id="formAjax" value="1" />
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -238,6 +239,7 @@
                 var codigo = $("#code").val();
                 var descripcion = $("#type").val();
                 var modulo = $("#modulo").val();
+                var formAjax = $("#formAjax").val();
 
                 if (codigo == null || codigo == "") {
                     mostrarError("errmsj_codigo");
@@ -272,7 +274,7 @@
                         var id = $("#idMotBaja").val();
                         var ajax = $.ajax({
                             type: 'PUT',
-                            data: { code: codigo, type: descripcion, modulo: modulo, id: id },
+                            data: { formAjax: formAjax, code: codigo, type: descripcion, modulo: modulo, id: id },
                             dataType: 'JSON',
                             url: '{{ route("editarmotivobaja") }}',
                             async: false,
@@ -315,6 +317,7 @@
                             )
                         }
                     }).fail(function(response) {
+                        console.log(response.responseText);
                         if (response.responseText !== undefined && response.responseText == "middleUpgrade") {
                             window.location.href = "{{ route('homeajax') }}";
                         }

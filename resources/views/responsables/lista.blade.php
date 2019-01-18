@@ -7,6 +7,7 @@
     }
 </style>
 <input type="hidden" id="modulo" value="tcssustitucionmasiva" />
+<input type="hidden" id="formAjax" value="1" />
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-lg-12">
@@ -217,6 +218,9 @@
         var validaRequired = 0;
 
         function guardarAltaEditar() {
+            var modulo = $("#modulo").val();
+            var formAjax = $("#formAjax").val();
+
             var tipo = $("#tipo").val();
             var nombre = $("#nombre").val();
             var numEmpleado = $("#numEmpleado").val();
@@ -253,7 +257,7 @@
 
                 var ajax = $.ajax({
                     type: 'PUT',
-                    data: { nombre: nombre, numEmpleado: numEmpleado, tipo: tipo, numEmpleadoActual: numEmpleadoActual },
+                    data: { formAjax: formAjax, modulo: modulo, nombre: nombre, numEmpleado: numEmpleado, tipo: tipo, numEmpleadoActual: numEmpleadoActual },
                     dataType: 'JSON',
                     url: '{{ route("sustitucion") }}',
                     async: false,

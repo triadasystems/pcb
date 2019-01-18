@@ -25,7 +25,7 @@ Route::group(['prefix' =>'motivosbajas', 'middleware' => 'userProfileInactivo'],
     Route::post('/store', 'MotivosbajasController@store')->name('altamotivobaja')->middleware('writing');
     Route::put('/update', 'MotivosbajasController@update')->name('editarmotivobaja');
 
-    Route::get('/permisosmotivosbajas','MotivosbajasController@permisosMotivosBajas')->name('permisosMotivosBajas');
+    Route::put('/permisosmotivosbajas','MotivosbajasController@permisosMotivosBajas')->name('permisosMotivosBajas');
     Route::put('/cambiostatusmotivobaja','MotivosbajasController@cambioStatus')->name('editarstatusmotivobaja');
 });
 Route::group(['prefix' =>'proveedores', 'middleware' => 'userProfileInactivo'], function() {
@@ -35,7 +35,7 @@ Route::group(['prefix' =>'proveedores', 'middleware' => 'userProfileInactivo'], 
     Route::post('/store', 'ProveedoresController@store')->name('altaproveedores')->middleware('writing');
     Route::put('/update', 'ProveedoresController@update')->name('editarproveedores');
 
-    Route::get('/permisosproveedores','ProveedoresController@permisosProveedores')->name('permisosproveedores');
+    Route::put('/permisosproveedores','ProveedoresController@permisosProveedores')->name('permisosproveedores');
     Route::put('/cambiostatusproveedor','ProveedoresController@cambioStatus')->name('editarstatusproveedores');
 });
 Route::group(['prefix' =>'mesascontrol', 'middleware' => 'userProfileInactivo'], function() {

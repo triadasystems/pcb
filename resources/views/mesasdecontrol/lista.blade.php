@@ -14,6 +14,7 @@
     }
 </style>
 <input type="hidden" id="modulo" value="tcsmesascontrol" />
+<input type="hidden" id="formAjax" value="1" />
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
@@ -232,6 +233,9 @@
             var validaRequired = 0;
 
             function guardarAltaEditar(tipo = "alta") {
+                var modulo = $("#modulo").val();
+                var formAjax = $("#formAjax").val();
+
                 var name = $("#name").val();
                 var alias = $("#alias").val();
                 var description = $("#description").val();
@@ -279,7 +283,7 @@
                         var id = $("#idMesaControl").val();
                         var ajax = $.ajax({
                             type: 'PUT',
-                            data: { name: name, alias: alias, description: description, id: id },
+                            data: { formAjax: formAjax, modulo: modulo, name: name, alias: alias, description: description, id: id },
                             dataType: 'JSON',
                             url: '{{ route("editarmesacontrol") }}',
                             async: false,
@@ -293,7 +297,7 @@
                     } else {
                         var ajax = $.ajax({
                             type: 'POST',
-                            data: { name: name, alias: alias, description: description},
+                            data: { formAjax: formAjax, modulo: modulo, name: name, alias: alias, description: description},
                             dataType: 'JSON',
                             url: '{{ route("altamesacontrol") }}',
                             async: false,

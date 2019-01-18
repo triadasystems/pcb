@@ -71,11 +71,11 @@ class ProveedoresController extends Controller
         return Response::json(false);
     }
 
-    public function permisosProveedores() {
-        if (session("msjError") === true) {
-            return "middleUpgrade";
-        }
-    }
+    // public function permisosProveedores() {
+    //     if (session("msjError") === true) {
+    //         return "middleUpgrade";
+    //     }
+    // }
 
     public function update(Request $request) {
         $request->validate([

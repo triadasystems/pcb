@@ -14,6 +14,7 @@
     }
 </style>
 <input type="hidden" id="modulo" value="tcsproveedores" />
+<input type="hidden" id="formAjax" value="1" />
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
@@ -239,6 +240,8 @@
                 var name = $("#name").val();
                 var alias = $("#alias").val();
                 var description = $("#description").val();
+                var modulo = $("#modulo").val();
+                var formAjax = $("#formAjax").val();
 
                 if (name == null || name == "") {
                     mostrarError("errmsj_name");
@@ -283,7 +286,7 @@
                         var id = $("#idProveedor").val();
                         var ajax = $.ajax({
                             type: 'PUT',
-                            data: { name: name, alias: alias, description: description, id: id },
+                            data: { modulo: modulo, formAjax: formAjax, name: name, alias: alias, description: description, id: id },
                             dataType: 'JSON',
                             url: '{{ route("editarproveedores") }}',
                             async: false,
@@ -297,7 +300,7 @@
                     } else {
                         var ajax = $.ajax({
                             type: 'POST',
-                            data: { name: name, alias: alias, description: description},
+                            data: { modulo: modulo, formAjax: formAjax, name: name, alias: alias, description: description},
                             dataType: 'JSON',
                             url: '{{ route("altaproveedores") }}',
                             async: false,
@@ -326,6 +329,7 @@
                             )
                         }
                     }).fail(function(response) {
+                        console.log(response);
                         if (response.responseText !== undefined && response.responseText == "middleUpgrade") {
                             window.location.href = "{{ route('homeajax') }}";
                         }

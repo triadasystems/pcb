@@ -6,6 +6,7 @@
     }
 </style>
 <input type="hidden" id="modulo" value="tcslistaactivos" />
+<input type="hidden" id="formAjax" value="1" />
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-lg-12">
@@ -270,6 +271,9 @@
         var validaRequired = 0;
 
         function guardarAltaEditar() {
+            var modulo = $("#modulo").val();
+            var formAjax = $("#formAjax").val();
+
             var idTercero = $("#idTercero").val();
             var nomAuto = $("#nomAuto").val();
             var numAuto = $("#numAuto").val();
@@ -333,7 +337,7 @@
 
                 var ajax = $.ajax({
                     type: 'PUT',
-                    data: { idTercero: idTercero, nomAuto: nomAuto, numAuto: numAuto, nomResp: nomResp, numResp: numResp, nomAutoActual: nomAutoActual, numAutoActual: numAutoActual, nomRespActual: nomRespActual, numRespActual: numRespActual },
+                    data: { formAjax: formAjax, modulo: modulo, idTercero: idTercero, nomAuto: nomAuto, numAuto: numAuto, nomResp: nomResp, numResp: numResp, nomAutoActual: nomAutoActual, numAutoActual: numAutoActual, nomRespActual: nomRespActual, numRespActual: numRespActual },
                     dataType: 'JSON',
                     url: '{{ route("cambioautoresp") }}',
                     async: false,

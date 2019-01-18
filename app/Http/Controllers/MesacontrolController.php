@@ -69,11 +69,11 @@ class MesacontrolController extends Controller
         return Response::json(false);
     }
 
-    public function permisosMesasControl() {
-        if (session("msjError") === true) {
-            return "middleUpgrade";
-        }
-    }
+    // public function permisosMesasControl() {
+    //     if (session("msjError") === true) {
+    //         return "middleUpgrade";
+    //     }
+    // }
 
     public function update(Request $request) {
         $request->validate([
