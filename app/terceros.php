@@ -40,8 +40,11 @@ class terceros extends Model
 
     public $timestamps = false;
     
-    public static function listar_terceros($dat = 0) {
+    public $datt;
 
+    public function listar_terceros($dat = 0) {
+        $this->datt = $dat;
+        
         $consultas = terceros::select(
             'tcs_external_employees.id as ident',
             'tcs_external_employees.id_external AS id',
@@ -60,16 +63,15 @@ class terceros extends Model
             'tcs_cat_suppliers.name AS empresa',
             'tcs_cat_suppliers.description AS des_empresa'
         )
-        ->join('tcs_cat_suppliers', 'tcs_external_employees.tcs_externo_proveedor', '=', 'tcs_cat_suppliers.id');
-        
-        $and = "";
-        
-        if ($dat != 0) {
-            $consultas->where('tcs_external_employees.id_external', '=', $dat);
-        }
-        
-        $consultas->get()->toArray();
-
+        ->join('tcs_cat_suppliers', 'tcs_external_employees.tcs_externo_proveedor', '=', 'tcs_cat_suppliers.id')
+        ->where(function ($query) {
+            if ($this->datt != 0) {
+                $query->where('tcs_external_employees.id_external', '=', $this->datt);
+            }
+        })     
+        ->get()->toArray();
+        //  echo "<pre>";print_r($consultas);echo "</pre>";
+        // die();
         return $consultas;
     }
 
@@ -90,7 +92,7 @@ class terceros extends Model
         $consultas = DB::select(DB::raw($sql));
         return $consultas;
     }
-    public static function recuperar_subfijo()
+    public function recuperar_subfijo()
     {
         $sql="SELECT id, subfijo 
         FROM tcs_subfijo
@@ -98,13 +100,13 @@ class terceros extends Model
         $consultas = DB::select(DB::raw($sql));
         return $consultas;
     }
-    public static function nextval($seq)
+    public function nextval($seq)
     {
         $sql="SELECT nextval('".$seq."') as id";
         $consultas = DB::select(DB::raw($sql));
         return $consultas;
     } 
-    public static function actualizar_sequence($subfijo)
+    public function actualizar_sequence($subfijo)
     {
         $sql="UPDATE sequence
                 SET
@@ -114,7 +116,7 @@ class terceros extends Model
         $consultas = DB::select(DB::raw($sql));
         return $consultas;
     }
-    public static function actualiza_sub($subfijo_new)
+    public function actualiza_sub($subfijo_new)
     {
         $sql="INSERT INTO `tcs_subfijo`(`subfijo`) VALUES ($subfijo_new)";
         $consultas = DB::select(DB::raw($sql));
@@ -132,7 +134,7 @@ class terceros extends Model
     {
         DB::table('tcs_request_fus')->insert($fus);
     }
-    public static function recuperar_idTercero()
+    public function recuperar_idTercero()
     {
         $consultas = terceros::where("id_external", function($subquery){
             $subquery->selectRaw('max(id_external)')->from('tcs_external_employees');

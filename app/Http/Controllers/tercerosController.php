@@ -46,8 +46,9 @@ class tercerosController extends Controller
     }
     public function anyData()
     {
-        $querys = terceros::listar_terceros();
-        return Datatables::of($querys)->make(true);
+        $querys = new terceros;
+        
+        return Datatables::of($querys->listar_terceros())->make(true);
     }
     public function create()
     {
@@ -55,7 +56,12 @@ class tercerosController extends Controller
         $dat = new terceros;
         $calculo = $dat->recuperar_idTercero();
         $limite = 99999999;
-        // Fin Cálculo
+        $sub = $dat->recuperar_subfijo();
+        $subfijo = $sub[0]->subfijo;// subfijo de la tabla
+        if (strlen($subfijo)>=3)
+        {
+            return redirect()->route('listar')->with('error_alta', 'a');
+        }
         if($calculo[0]["id_external"] == $limite) {
             return redirect()->route('listar')->with('validacionCalculo', 'Cálculo');
         }
@@ -138,9 +144,12 @@ class tercerosController extends Controller
 
     public function insertar(Request $request) {
         //'email' => 'sometimes|required|'regex:/^.+@.+$/i' a_paterno
+        $querys = new terceros;
         $this->requestProp = $request->post();
+        $f=$request->post("fecha_fin");
+        
         $request->validate([
-            "fus"    => "numeric|min:1|max:2147483647|digits_between:1,10",
+            "fus"       => "numeric|min:1|max:2147483647|digits_between:1,10",
             "gafete"    => "numeric|min:1|max:2147483647|digits_between:1,10",
             "mesa"      => "required",
             "name"      => "required|max:100|regex:/^[A-Za-z0-9[:space:]\s\S]+$/", 
@@ -166,8 +175,12 @@ class tercerosController extends Controller
             "destino"   => "required"
         ]);
         $consecutivo = $this->generar_consecutivo();
-        $sub=terceros::recuperar_subfijo();
-        $subfijo=$sub[0]->id;// subfijo de la tabla
+        if ($consecutivo == false)
+        {
+            return redirect()->route('listar')->with('error_alta', 'a');
+        }
+        $sub = $querys->recuperar_subfijo();
+        $subfijo = $sub[0]->id;// subfijo de la tabla
         $destino = $request->post("destino");
 
         $data=array();
@@ -195,29 +208,30 @@ class tercerosController extends Controller
         $fus["users_id"]                            = Auth::user()->id;
         $fus["fus_physical"]                        = ($request->post("fus") !='') ? strtoupper($request->post("fus")) : NULL;
         try {
-            terceros::new_row($data);
+            
+            $querys->new_row($data);
             $dat = $consecutivo[0]->id;
-            $querys = terceros::listar_terceros($dat);
-            $id = $querys[0]->ident;
-
+            $result = $querys->listar_terceros($dat);            
+            
             foreach ($destino as $value) {
-                $apps["tcs_external_employees_id"] = $id;
+                $apps["tcs_external_employees_id"] = $result[0]["ident"];
                 $apps["applications_id"] = $value;
                 terceros::new_row_app($apps);     
             }
             
-            $fus["tcs_external_employees_id"] = $id;
+            
+            $fus["tcs_external_employees_id"] = $result[0]["ident"];
             terceros::new_row_fus($fus);
 
-            $data = array(
+            $bit = array(
                 'ip_address' => $this->ip_address_client, 
                 'description' => 'Se ha realizado la alta del tercero con ID: '.$data["id_external"],
                 'tipo' => 'alta',
                 'id_user' => Auth::user()->id
             );
-    
+            
             $bitacora = new LogBookMovements;
-            $bitacora->guardarBitacora($data);
+            $bitacora->guardarBitacora($bit);
 
             return redirect()->route('listar')->with('confirmacion', $data["id_external"]);
         } 
@@ -227,11 +241,16 @@ class tercerosController extends Controller
         }
     }
     public function generar_consecutivo() {
-        $sub = terceros::recuperar_subfijo();
+        $terceros = new terceros;
+        $sub = $terceros->recuperar_subfijo();
         $subfijo = $sub[0]->subfijo;// subfijo de la tabla
+        if (strlen($subfijo)>=3)
+        {
+            return false;
+        }
         $id_external_max = $subfijo."999999";//tope maximo del subfijo de la tabla
         $seq = "seq_ext_emp";
-        $id_external = terceros::nextval($seq);
+        $id_external = $terceros->nextval($seq);
         $id_externo_cons = $id_external[0]->id;//consecutivo del id del externo
         $sub_conse = substr($id_externo_cons,0,2);
         
@@ -241,16 +260,16 @@ class tercerosController extends Controller
         } 
         elseif($id_externo_cons < $id_external_max && $sub_conse < $subfijo)// cuando actualizaron el catalogo de subfijos
         {
-            $act_seq = terceros::actualizar_sequence($subfijo);
-            $id_external = terceros::nextval($seq);
+            $act_seq = $terceros->actualizar_sequence($subfijo);
+            $id_external = $terceros->nextval($seq);
             $id_externo_cons_n = $id_external[0]->id;//consecutivo del id del externo
             $id_external = $id_externo_cons_n;
         } 
         elseif($id_externo_cons == $id_external_max)//cuando llega al numero maximo del consecutivo
         {
             $subfijo_new = $subfijo+1;
-            $act_seq = terceros::actualizar_sequence($subfijo_new);
-            $act_seq = terceros::actualiza_sub($subfijo_new);     
+            $act_seq = $terceros->actualizar_sequence($subfijo_new);
+            $act_seq = $terceros->actualiza_sub($subfijo_new);     
             return $id_external;
         }
     }
