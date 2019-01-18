@@ -132,6 +132,11 @@
                         </div>
                         <div class="row">
                             <div class="col-lg-4 cuadros-mnu">
+                                <div class="text-center action-mnu" data-url="{{ route('laplicacion') }}">
+                                    Aplicaciones
+                                </div>
+                            </div>
+                            <div class="col-lg-4 cuadros-mnu">
                                 <div class="text-center action-mnu" data-url="{{ route('bajasdiarias') }}">
                                     Rep. Bajas Diarias
                                 </div>
@@ -141,13 +146,13 @@
                                     Rep. Usuarios Activos
                                 </div>
                             </div>
+                        </div>
+                        <div class="row">
                             <div class="col-lg-4 cuadros-mnu">
                                 <div class="text-center action-mnu" data-url="{{ route('responsables') }}">
                                     Rep. Responsables
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
                             <div class="col-lg-4 cuadros-mnu">
                                 <div class="text-center action-mnu" data-url="{{ route('trazabilidad') }}">
                                     Rep. Trazabilidad
