@@ -51,7 +51,7 @@ Route::group(['prefix' =>'mesascontrol', 'middleware' => 'userProfileInactivo'],
 // Fin de Terceros EVP
 
 Route::resource('mails', "MailController", ['middleware' => ['userProfileInactivo']]);
-Route::get('consultatodomails', 'consultasController@consulta_todo_mails')->name('consultatodomails.data');
+Route::get('consultatodomails', 'MailController@consulta_todo_mails')->name('consultatodomails.data');
 
 Route::resource('modulos', "ModuloController", ['middleware' => ['userProfileInactivo']]);
 Route::get('consultatodomodulos', 'consultasController@consulta_todo_modulos')->name('consultatodomodulos.data');

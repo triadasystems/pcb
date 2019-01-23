@@ -6,6 +6,8 @@ use App\mail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Yajra\Datatables\Datatables;
+
 use Session;
 
 class MailController extends Controller {
@@ -35,6 +37,11 @@ class MailController extends Controller {
         ]);
 
         return view('mails.index');
+    }
+
+    public function consulta_todo_mails() {
+        $mail = new mail;
+        return Datatables::of($mail->listaMailsPermisos())->make(true);
     }
 
     /**

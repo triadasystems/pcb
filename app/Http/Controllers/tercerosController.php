@@ -10,6 +10,7 @@ use App\Profileusers;
 use App\LogBookMovements;
 
 use App\subfijo;
+use App\InterfaceLabora;
 use Illuminate\Support\Facades\Response;
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\Auth;
@@ -114,11 +115,23 @@ class tercerosController extends Controller
                 if($value == $this->requestProp["numResp"]) {
                     $fail("El número de empleado del autorizador no debe coincider con el del responsable");
                 }
+                $interfaceLabora = new InterfaceLabora;
+                $resutl = $interfaceLabora->employeeByNumber($value);
+                
+                if(count($resutl) == 0) {
+                    $fail("El número de empleado no existe");
+                }
             }],
             "nomResp"  => "required|max:255|regex:/^[A-Za-z0-9[:space:]\s\S]+$/",
             "numResp"  => ["required", "min:1", "max:2147483647", "digits_between:1,10", "numeric", function($attribute, $value, $fail){
                 if($value == $this->requestProp["numAuto"]) {
                     $fail("El número de empleado del responsable no debe coincider con el del autorizador");
+                }
+                $interfaceLabora = new InterfaceLabora;
+                $resutl = $interfaceLabora->employeeByNumber($value);
+                
+                if(count($resutl) == 0) {
+                    $fail("El número de empleado no existe");
                 }
             }],
         ]);
@@ -169,8 +182,28 @@ class tercerosController extends Controller
             }],
             "empresa"   => "required",
             "nom_auto"  => "required|max:255|regex:/^[A-Za-z0-9[:space:]\s\S]+$/",
-            "num_auto"  => "required|min:1|max:2147483647|digits_between:1,10|numeric",
-            "num_res"   => "required|min:1|max:2147483647|digits_between:1,10|numeric",
+            "num_auto"  => ["required", "min:1", "max:2147483647", "digits_between:1,10", "numeric", function($attribute, $value, $fail){
+                if($value == $this->requestProp["num_res"]) {
+                    $fail("El número de empleado del autorizador no debe coincider con el del responsable");
+                }
+                $interfaceLabora = new InterfaceLabora;
+                $resutl = $interfaceLabora->employeeByNumber($value);
+                
+                if(count($resutl) == 0) {
+                    $fail("El número de empleado no existe");
+                }
+            }],
+            "num_res"   => ["required", "min:1", "max:2147483647", "digits_between:1,10", "numeric", function($attribute, $value, $fail){
+                if($value == $this->requestProp["num_auto"]) {
+                    $fail("El número de empleado del responsable no debe coincider con el del autorizador");
+                }
+                $interfaceLabora = new InterfaceLabora;
+                $resutl = $interfaceLabora->employeeByNumber($value);
+                
+                if(count($resutl) == 0) {
+                    $fail("El número de empleado no existe");
+                }
+            }],
             "nom_res"   => "required|max:255|regex:/^[A-Za-z0-9[:space:]\s\S]+$/",
             "destino"   => "required"
         ]);

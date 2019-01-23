@@ -55,34 +55,6 @@ class consultasController extends Controller {
         return Datatables::of($permiso)->make(true);
     }
 
-    public function consulta_todo_mails() {
-        $mail = DB::table('mails')->get();
-
-        for ($aux = 0; $aux < count($mail); $aux++) {
-            if ((int) $mail[$aux]->automatizacion == 0) {
-                $mail[$aux]->automatizacion = "Inactivo";
-            } else {
-                $mail[$aux]->automatizacion = "Activo";
-            }
-            if ((int) $mail[$aux]->bajas == 0) {
-                $mail[$aux]->bajas = "Inactivo";
-            } else {
-                $mail[$aux]->bajas = "Activo";
-            }
-            if ((int) $mail[$aux]->tcs_terceros_baja == 0) {
-                $mail[$aux]->tcs_terceros_baja = "Inactivo";
-            } else {
-                $mail[$aux]->tcs_terceros_baja = "Activo";
-            }
-            if ((int) $mail[$aux]->tcs_terceros_baja_auth_resp == 0) {
-                $mail[$aux]->tcs_terceros_baja_auth_resp = "Inactivo";
-            } else {
-                $mail[$aux]->tcs_terceros_baja_auth_resp = "Activo";
-            }
-        }
-        return Datatables::of($mail)->make(true);
-    }
-
     public function consulta_todo_relacionpm() {
         $relacionmp = DB::table('rel_profiles_modules')->get();
         $salida = array();

@@ -82,7 +82,7 @@
             },
             processing: true,
             serverSide: true,
-            ajax: '{!! route('consultatodomails.data') !!}',
+            ajax: '{!! route("consultatodomails.data") !!}',
             columns: [
                 { data: 'id', name: 'id' },
                 { data: 'correo', name: 'correo' },

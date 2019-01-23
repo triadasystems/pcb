@@ -78,7 +78,7 @@
                                         @php
                                             $checkedTcsBAR = '';
                                         @endphp
-                                        @if(old('tcs_terceros_baja_auth_resp') == 1)
+                                        @if(old('tcs_terceros_baja_auth_resp') == 1 || $mail->tcs_terceros_baja_auth_resp == 1)
                                             @php
                                                 $checkedTcsBAR = 'checked';
                                             @endphp

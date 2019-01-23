@@ -3,11 +3,16 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class mail extends Model
 {
-    protected $fillable=[
-        "correo", "automatizacion", "bajas", "tcs_terceros_baja", "tcs_terceros_baja_auth_resp"
+    protected $fillable = [
+        "correo", 
+        "automatizacion", 
+        "bajas", 
+        "tcs_terceros_baja", 
+        "tcs_terceros_baja_auth_resp"
     ];
 
     public function updateMail($data) {
@@ -43,5 +48,18 @@ class mail extends Model
         }
 
         return false;
+    }
+
+    public function listaMailsPermisos() {
+        return mail::select(
+            'id',
+            'correo',
+            DB::raw('CASE WHEN automatizacion = 1 THEN "Activo" WHEN automatizacion = 0 THEN "Inactivo" WHEN automatizacion = "" THEN "Inactivo" END AS automatizacion'),
+            DB::raw('CASE WHEN bajas = 1 THEN "Activo" WHEN bajas = 0 THEN "Inactivo" WHEN automatizacion = "" THEN "Inactivo" END AS bajas'),
+            DB::raw('CASE WHEN tcs_terceros_baja = 1 THEN "Activo" WHEN tcs_terceros_baja = 0 THEN "Inactivo" WHEN automatizacion = "" THEN "Inactivo" END AS tcs_terceros_baja'),
+            DB::raw('CASE WHEN tcs_terceros_baja_auth_resp = 1 THEN "Activo" WHEN tcs_terceros_baja_auth_resp = 0 THEN "Inactivo" WHEN automatizacion = "" THEN "Inactivo" END AS tcs_terceros_baja_auth_resp')
+        )
+        ->get()
+        ->toArray();
     }
 }

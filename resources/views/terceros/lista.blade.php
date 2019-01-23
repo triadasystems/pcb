@@ -94,7 +94,7 @@
                     switch (tipoResponsable) {
                         case "auto":
                             $('#nomAuto').val(data.nombre);
-                            $('#numauto').val(data.numero);    
+                            $('#numAuto').val(data.numero);    
                             break;
                         case "resp":
                             $('#nomResp').val(data.nombre);

@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class InterfaceLabora extends Model
 {
@@ -25,4 +26,14 @@ class InterfaceLabora extends Model
     protected $hidden = [];
 
     public $timestamps = false;
+
+    public function employeeByNumber($number) {
+        return InterfaceLabora::where("employee_number", "=", $number)
+        ->where("consecutive", "=", function($subquery){
+            $subquery->select(DB::raw("max(consecutive)"))
+            ->from(with(new InterfaceLabora)->getTable());
+        })
+        ->get()
+        ->toArray();
+    }
 }
