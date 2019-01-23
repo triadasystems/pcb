@@ -59,23 +59,23 @@
                 { data: 'email', name: 'email' },
                 { data: 'datos_tercero', name: 'datos_tercero' },
                 { data: 'autorizador', name: 'autorizador' },
-                {
-                    render: function (data, type, row) {
-                        var lowDate = new Date(row.low_date).getTime() / 1000;
-                        var lowDateFus = new Date(row.low_date_fus).getTime() / 1000;
+                { data: 'low_date_fus', name: 'low_date_fus' },
+                // {
+                //     render: function (data, type, row) {
+                //         var lowDate = new Date(row.low_date).getTime() / 1000;
+                //         var lowDateFus = new Date(row.low_date_fus).getTime() / 1000;
                         
-                        var showDateLow;
+                //         var showDateLow;
 
- 	                    if(lowDate < lowDateFus) {
-                            showDateLow = row.low_date_fus;
-                        } else {
-                            showDateLow = row.low_date;
-                        }
+ 	            //         if(lowDate < lowDateFus) {
+                //             showDateLow = row.low_date_fus;
+                //         } else {
+                //             showDateLow = row.low_date;
+                //         }
 
-                        return showDateLow;
-                    }
-                },
-                // { data: 'low_date', name: 'low_date' },
+                //         return showDateLow;
+                //     }
+                // },
                 { data: 'typelow', name: 'typelow' }
             ],
             dom: 'Blfrtip',

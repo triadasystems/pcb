@@ -124,7 +124,7 @@
                             '</div>'+
                             '<div class="col-md-6">'+
                                 '<label for="numEmpleado" class="col-lg-12 col-form-label text-left txt-bold">Número de Empleado</label>'+
-                                '<input id="numEmpleado" type="text" class="form-control" data-type="num_auto" name="numEmpleado" required value="'+numEmpleado+'">'+
+                                '<input id="numEmpleado" type="text" class="form-control autocomplete_txt" data-type="num_auto" name="numEmpleado" required value="'+numEmpleado+'">'+
 
                                 '<span id="errmsj_numEmpleado" class="error-msj" role="alert">'+
                                     '<strong>El campo número de empleado es obligatorio</strong>'+

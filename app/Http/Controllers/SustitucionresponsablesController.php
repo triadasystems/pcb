@@ -9,10 +9,12 @@ use App\ReporteResponsable;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Auth;
 use Yajra\Datatables\Datatables;
+use App\InterfaceLabora;
 
 class SustitucionresponsablesController extends Controller
 {
     public $ip_address_client;
+    public $requestProp;
 
     public function __construct() {
         $this->ip_address_client = getIpAddress();// EVP ip para bitacora
@@ -51,7 +53,14 @@ class SustitucionresponsablesController extends Controller
     public function update(Request $request) {
         $request->validate([
             "nombre"  => "required|max:255|regex:/^[A-Za-z0-9[:space:]\s\S]+$/",
-            "numEmpleado"  => "required|min:1|max:2147483647|digits_between:1,10|numeric",
+            "numEmpleado"  => ["required", "min:1", "max:2147483647", "digits_between:1,10", "numeric", function($attribute, $value, $fail){
+                $interfaceLabora = new InterfaceLabora;
+                $resutl = $interfaceLabora->employeeByNumber($value);
+                
+                if(count($resutl) == 0) {
+                    $fail("El número de empleado no existe");
+                }
+            }]
         ]);
         
         $sustitucion = new terceros;
