@@ -155,12 +155,12 @@ class tercerosController extends Controller
         return Response::json(false);
     }
 
-    public function insertar(Request $request) {
-        //'email' => 'sometimes|required|'regex:/^.+@.+$/i' a_paterno
+    public function insertar(Request $request)
+    {
+        ini_set('date.timezone','America/Mexico_City');
         $querys = new terceros;
         $this->requestProp = $request->post();
         $f=$request->post("fecha_fin");
-        
         $request->validate([
             "fus"       => "numeric|min:1|max:2147483647|digits_between:1,10",
             "gafete"    => "numeric|min:1|max:2147483647|digits_between:1,10",
@@ -169,15 +169,26 @@ class tercerosController extends Controller
             "a_paterno" => "required|max:100|regex:/^[A-Za-z0-9[:space:]\s\S]+$/",
             "a_materno" => "sometimes|max:100|regex:/^[A-Za-z0-9[:space:]\s\S]+$/",
             "email"     => "required|max:100|regex:/^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$/|unique:tcs_external_employees",
-            "fecha_ini" => "required|date",
-            "fecha_fin" => ["required","date","after:fecha_ini",function($attribute, $fecha_fin, $fail)
+            "fecha_ini" => ["required","date_format:Y-m-d",function($attribute, $fecha_ini, $fail)
             {
+                $fecha_actual = date("Y-m-d");
+                if ($fecha_ini > $fecha_actual)
+                {
+                    $fail('La fecha inicial debe ser menor o igual a la fecha de captura');
+                }
+            }],
+            "fecha_fin" => ["required","date_format:Y-m-d","after:fecha_ini",function($attribute, $fecha_fin, $fail)
+            {
+                $fecha_actual = date("Y-m-d");
                 $fecha = $this->requestProp['fecha_ini'];
                 $valores = explode('-', $fecha);
                 $anio = $valores[0]+1;
                 $comp = $anio."-".$valores[1]."-".$valores[2];
                 if ($fecha_fin > $comp) {
                     $fail('La fecha final es mayor a un año desde la fecha de inicio');
+                }
+                if ($fecha_fin < $fecha_actual) {
+                    $fail('La fecha final debe ser mayor a la fecha de captura');
                 }
             }],
             "empresa"   => "required",

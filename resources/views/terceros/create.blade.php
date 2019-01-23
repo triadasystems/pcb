@@ -83,7 +83,7 @@
                     <div class="form-group row">
                         <div class="col-md-6">
                             <label for="fecha_ini" class="col-md-8 col-form-label text-md-rigth">Fecha Inicial : </label>
-                            <input class = "date form-control{{ $errors->has('fecha_ini') ? ' is-invalid' : '' }}" type = "date" id="fecha_ini" name="fecha_ini" value="{{ old('fecha_ini') }}" required>
+                            <input class = "date form-control{{ $errors->has('fecha_ini') ? ' is-invalid' : '' }}" placeholder="yyyy-mm-dd" id="fecha_ini" name="fecha_ini" value="{{ old('fecha_ini') }}" required>
                             @if ($errors->has('fecha_ini'))
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $errors->first('fecha_ini') }}</strong>
@@ -92,7 +92,7 @@
                         </div>
                         <div class="col-md-6">
                             <label for="fecha_fin" class="col-md-8 col-form-label text-md-rigth">Fecha Final : </label>
-                            <input class="date form-control{{ $errors->has('fecha_fin') ? ' is-invalid' : '' }}" type = "date" id="fecha_fin" name="fecha_fin" value="{{ old('fecha_fin') }}" required>
+                            <input class="date form-control{{ $errors->has('fecha_fin') ? ' is-invalid' : '' }}" placeholder="yyyy-mm-dd" id="fecha_fin" name="fecha_fin" value="{{ old('fecha_fin') }}" required>
                             @if ($errors->has('fecha_fin'))
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $errors->first('fecha_fin') }}</strong>
@@ -287,7 +287,33 @@
 </div>
 @endsection
 @push('scripts')
-<script type="text/javascript">  
+<script type="text/javascript">
+ $.datepicker.regional['es'] = {
+ closeText: 'Cerrar',
+ prevText: '< Ant',
+ nextText: 'Sig >',
+ currentText: 'Hoy',
+ monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+ monthNamesShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
+ dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+ dayNamesShort: ['Dom','Lun','Mar','Mié','Juv','Vie','Sáb'],
+ dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
+ changeMonth: true,
+changeYear: true,
+ weekHeader: 'Sm',
+ dateFormat: 'yy-mm-dd',
+ firstDay: 1,
+ isRTL: false,
+ showMonthAfterYear: false,
+ yearSuffix: ''
+ };
+ $.datepicker.setDefaults($.datepicker.regional['es']);
+$( function() {
+    $( "#fecha_ini" ).datepicker({ maxDate: 0}); //.attr('readonly', 'readonly'); para bloquear el input
+  });
+  $( function() {
+    $( "#fecha_fin" ).datepicker({ minDate: 1 });
+  });
   function sololetras(e){
         key = e.keyCode || e.which;
         tecla = String.fromCharCode(key).toLowerCase();
