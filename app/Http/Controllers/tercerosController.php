@@ -63,7 +63,7 @@ class tercerosController extends Controller
         {
             return redirect()->route('listar')->with('error_alta', 'a');
         }
-        if($calculo[0]["id_external"] == $limite) {
+        if(count($calculo)>0 && $calculo[0]["id_external"] == $limite) {
             return redirect()->route('listar')->with('validacionCalculo', 'Cálculo');
         }
 

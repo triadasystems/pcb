@@ -127,7 +127,7 @@
         @if (session('validacionCalculo'))
             swal(
                 'Tercero registrado',
-                'La operción no se puede realizar se ha llegado al limite de id de externos, favor de ponerse en contacto con el administrador.',
+                'La operación no se puede realizar se ha llegado al limite de id de externos, favor de ponerse en contacto con el administrador.',
                 'success'
             )
         @endif                         
