@@ -17,7 +17,7 @@ class MotivosBajas extends Model
     ];
 
     public function motivosbajas() {
-        $mBajas = MotivosBajas::get()->toArray();
+        $mBajas = MotivosBajas::where("code", "<>", 0)->get()->toArray();
 
         return $mBajas;
     }
