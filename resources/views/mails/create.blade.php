@@ -42,7 +42,7 @@
                                         @endphp
                                     @endif
                                     <input id="automatizacion" type="checkbox" class="form-control{{ $errors->has('automatizacion') ? ' is-invalid' : '' }}" name="automatizacion" value="1" {{$checkedA}} autofocus>
-                                    <label for="automatizacion" class="col-lg-10 col-form-label">{{ __('Automatización') }}</label>
+                                    <label for="automatizacion" class="col-lg-10 col-form-label">{{ __('Conciliación') }}</label>
                                 </div>
                                 <div class="col-md-4">
                                     @php

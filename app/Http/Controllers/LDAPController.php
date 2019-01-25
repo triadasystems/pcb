@@ -43,7 +43,7 @@ class LDAPController extends Controller
         ldap_set_option($ldap_con, LDAP_OPT_PROTOCOL_VERSION, 3);
         ldap_set_option($ldap_con, LDAP_OPT_REFERRALS, 0);
         
-        if(ldap_bind($ldap_con, $ldap_email, $ldap_password)) {
+        if(@ldap_bind($ldap_con, $ldap_email, $ldap_password)) {
             // $filter = "(objectClass=user)";
             $filter = "(samaccountname=$email)";
             $result = ldap_search($ldap_con,"DC=corp,dc=televisa,DC=com,DC=mx",$filter) or exit("Unable to search");
