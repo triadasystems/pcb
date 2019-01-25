@@ -3,7 +3,7 @@
 /public/storage
 /storage/*.key
 /vendor
-!/vendor/laravel
+!/vendor/laravel/framework/src/Illuminate/Foundation/Auth/RegistersUsers.php
 /.idea
 /.vscode
 /.vagrant
