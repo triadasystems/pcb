@@ -9,6 +9,7 @@ use App\requestFus;
 use App\ApplicationsEmployee;
 use App\tercerosHistorico;
 use App\InterfaceLabora;
+use App\Comparelaboraconcilia;
 
 class terceros extends Model
 {
@@ -434,8 +435,8 @@ class terceros extends Model
         }
         $this->term = $term;
 
-        $consultas = InterfaceLabora::where("consecutive", function($query){
-            $query->selectRaw('max(consecutive)')->from('interface_labora');
+        $consultas = Comparelaboraconcilia::where("consecutive", function($query){
+            $query->selectRaw('max(consecutive)')->from('compare_labora_concilia');
         })
         ->where(function ($query) {
             $query->where("employee_number", "LIKE", $this->term."%")

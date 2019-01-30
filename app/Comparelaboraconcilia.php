@@ -20,4 +20,7 @@ class Comparelaboraconcilia extends Model
         'consecutive',
         'operation'
     ];
+    protected $hidden = [];
+
+    public $timestamps = false;
 }
