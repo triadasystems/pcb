@@ -92,7 +92,7 @@ class tercerosController extends Controller
             $and=" AND `name` LIKE '%".$term."%'";
         }
         $sql="SELECT * FROM interface_labora ai
-                WHERE consecutive = (SELECT max(consecutive) FROM interface_labora) AND origen_id <> 999 $and LIMIT 5";
+                WHERE consecutive = (SELECT max(consecutive) FROM interface_labora AND origen_id <> 999) AND origen_id <> 999 $and LIMIT 5";
         $consultas = DB::select(DB::raw($sql));        
         $data=array();
         foreach ($consultas as $val) {
