@@ -36,7 +36,7 @@ class MotivosBajas extends Model
 
     public function editarMotivosBajas($data) {
         $motivos = MotivosBajas::find($data["id"]);
-        $motivos->code = $data["code"];
+        // $motivos->code = $data["code"];
         $motivos->type = mb_strtoupper($data["type"]);
         $motivos->updated_at = date("Y-m-d H:m:i");
 

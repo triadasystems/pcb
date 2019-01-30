@@ -185,10 +185,37 @@
             
             function formAltaEditar(tipo = "alta", id = "", codigo = "", descripcion = "") {
                 var idBotonGuardar = "guardarMotBaja"
+                var htmlCode =  '';
+
+                htmlCode = '<div class="col-md-6">'+
+                    '<label for="code" class="col-lg-12 col-form-label text-left txt-bold">Código</label>'+
+                    '<input id="code" type="number" class="form-control" name="code" required autofocus value="'+codigo+'" min="1" step="1">'+
+
+                    '<span id="errmsj_codigo" class="error-msj" role="alert">'+
+                        '<strong>El campo Código es obligatorio</strong>'+
+                    '</span>'+
+                '</div>'+
+                '<div class="col-md-6">'+
+                    '<label for="type" class="col-lg-12 col-form-label text-left txt-bold">Descripción</label>'+
+                    '<input id="type" type="text" class="form-control" name="type" required autofocus value="'+descripcion+'">'+
+
+                    '<span id="errmsj_tipo" class="error-msj" role="alert">'+
+                        '<strong>El campo Descripción es obligatorio</strong>'+
+                    '</span>'+
+                '</div>';
 
                 if(tipo == "editar") {
-                    idBotonGuardar = "guardarEditarMotBaja"
-                }
+                    idBotonGuardar = "guardarEditarMotBaja";
+
+                    htmlCode = '<div class="col-md-12">'+
+                        '<label for="type" class="col-lg-12 col-form-label text-left txt-bold">Descripción</label>'+
+                        '<input id="type" type="text" class="form-control" name="type" required autofocus value="'+descripcion+'">'+
+
+                        '<span id="errmsj_tipo" class="error-msj" role="alert">'+
+                            '<strong>El campo Descripción es obligatorio</strong>'+
+                        '</span>'+
+                    '</div>';
+                }                
 
                 Swal({
                     title: 'MOTIVOS DE BAJAS',
@@ -198,22 +225,7 @@
                         '<form method="post" action="">'+
                             '<input type="hidden" name="id" id="idMotBaja" value="'+id+'">'+
                             '<div class="form-group row">'+
-                                '<div class="col-md-6">'+
-                                    '<label for="code" class="col-lg-12 col-form-label text-left txt-bold">Código</label>'+
-                                    '<input id="code" type="number" class="form-control" name="code" required autofocus value="'+codigo+'" min="1" step="1">'+
-
-                                    '<span id="errmsj_codigo" class="error-msj" role="alert">'+
-                                        '<strong>El campo Código es obligatorio</strong>'+
-                                    '</span>'+
-                                '</div>'+
-                                '<div class="col-md-6">'+
-                                    '<label for="type" class="col-lg-12 col-form-label text-left txt-bold">Descripción</label>'+
-                                    '<input id="type" type="text" class="form-control" name="type" required autofocus value="'+descripcion+'">'+
-
-                                    '<span id="errmsj_tipo" class="error-msj" role="alert">'+
-                                        '<strong>El campo Descripción es obligatorio</strong>'+
-                                    '</span>'+
-                                '</div>'+
+                                htmlCode+
                             '</div>'+
                             '<div class="col-md-12 text-right">'+
                                 '<label class="col-lg-12 col-form-label">&nbsp;</label>'+
@@ -236,20 +248,26 @@
             var validaRequired = 0;
 
             function guardarAltaEditar(tipo = "alta") {
-                var codigo = $("#code").val();
                 var descripcion = $("#type").val();
                 var modulo = $("#modulo").val();
                 var formAjax = $("#formAjax").val();
 
-                if (codigo == null || codigo == "") {
-                    mostrarError("errmsj_codigo");
-                    if(validaRequired > 0) {
-                        validaRequired = validaRequired-1;    
+                var codigo = '';
+
+                if(tipo == "alta") {
+                    codigo = $("#code").val();
+
+                    if (codigo == null || codigo == "") {
+                        mostrarError("errmsj_codigo");
+                        if(validaRequired > 0) {
+                            validaRequired = validaRequired-1;    
+                        }
+                    } else {
+                        ocultarError("errmsj_codigo");
+                        validaRequired = validaRequired+1;
                     }
-                } else {
-                    ocultarError("errmsj_codigo");
-                    validaRequired = validaRequired+1;
                 }
+
                 if (descripcion == null || descripcion == "") {
                     mostrarError("errmsj_tipo");
                     if(validaRequired > 0) {
@@ -260,21 +278,21 @@
                     validaRequired = validaRequired+1;
                 }
 
-                if (validaRequired == 2) {
-                    ocultarError("errmsj_codigo");
-                    ocultarError("errmsj_tipo");
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });    
 
-                    $.ajaxSetup({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        }
-                    });
-
-                    if(tipo == "editar") {
+                if(tipo == "editar") {
+                    if (validaRequired == 1) {
+                        ocultarError("errmsj_codigo");
+                        ocultarError("errmsj_tipo");
+                
                         var id = $("#idMotBaja").val();
                         var ajax = $.ajax({
                             type: 'PUT',
-                            data: { formAjax: formAjax, code: codigo, type: descripcion, modulo: modulo, id: id },
+                            data: { formAjax: formAjax, type: descripcion, modulo: modulo, id: id },
                             dataType: 'JSON',
                             url: '{{ route("editarmotivobaja") }}',
                             async: false,
@@ -285,7 +303,12 @@
                                 console.log("Listo");
                             }
                         });
-                    } else {
+                    }
+                } else {
+                    if (validaRequired == 2) {
+                        ocultarError("errmsj_codigo");
+                        ocultarError("errmsj_tipo");
+                     
                         var ajax = $.ajax({
                             type: 'POST',
                             data: { code: codigo, type: descripcion, modulo: modulo },
@@ -300,37 +323,37 @@
                             }
                         });
                     }
-                    
-                    ajax.done(function(response){
-                        if(response === true) {
-                            table.ajax.reload();
-                            swal(
-                                'Motivo de Baja',
-                                'La operación se ha realizado con éxito',
-                                'success'
-                            )
-                        } else if(response === false) {
-                            swal(
-                                'Error',
-                                'La operación no pudo ser realizada',
-                                'error'
-                            )
-                        }
-                    }).fail(function(response) {
-                        console.log(response.responseText);
-                        if (response.responseText !== undefined && response.responseText == "middleUpgrade") {
-                            window.location.href = "{{ route('homeajax') }}";
-                        }
-                        if (response.responseJSON !== undefined && response.responseJSON.errors !== undefined && response.responseJSON.errors.code !== undefined && response.responseJSON.errors.code[0] != "") {
-                            $("#errmsj_codigo").html("<strong>"+response.responseJSON.errors.code[0]+"</strong>");
-                            mostrarError("errmsj_codigo");
-                        }
-                        if (response.responseJSON !== undefined && response.responseJSON.errors !== undefined && response.responseJSON.errors.type !== undefined && response.responseJSON.errors.type[0] != "") {
-                            $("#errmsj_tipo").html("<strong>"+response.responseJSON.errors.type[0]+"</strong>");
-                            mostrarError("errmsj_tipo");
-                        }
-                    });
                 }
+
+                ajax.done(function(response){
+                    if(response === true) {
+                        table.ajax.reload();
+                        swal(
+                            'Motivo de Baja',
+                            'La operación se ha realizado con éxito',
+                            'success'
+                        )
+                    } else if(response === false) {
+                        swal(
+                            'Error',
+                            'La operación no pudo ser realizada',
+                            'error'
+                        )
+                    }
+                }).fail(function(response) {
+                    console.log(response.responseText);
+                    if (response.responseText !== undefined && response.responseText == "middleUpgrade") {
+                        window.location.href = "{{ route('homeajax') }}";
+                    }
+                    if (response.responseJSON !== undefined && response.responseJSON.errors !== undefined && response.responseJSON.errors.code !== undefined && response.responseJSON.errors.code[0] != "") {
+                        $("#errmsj_codigo").html("<strong>"+response.responseJSON.errors.code[0]+"</strong>");
+                        mostrarError("errmsj_codigo");
+                    }
+                    if (response.responseJSON !== undefined && response.responseJSON.errors !== undefined && response.responseJSON.errors.type !== undefined && response.responseJSON.errors.type[0] != "") {
+                        $("#errmsj_tipo").html("<strong>"+response.responseJSON.errors.type[0]+"</strong>");
+                        mostrarError("errmsj_tipo");
+                    }
+                });
                 
                 validaRequired = 0;
             }

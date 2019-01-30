@@ -115,12 +115,10 @@ class ReportesTerceros extends Model
             'tcs_request_fus.created_at AS low_date_fus',
             'tcs_request_fus.real_low_date',
             DB::raw('CONCAT(tcs_external_employees.authorizing_name, " | ", tcs_external_employees.authorizing_number) AS autorizador')
-        );
+        )->where("tcs_request_fus.type", "=", 1);
 
         $trazabilidad = new tercerosHistorico;
         
         return $trazabilidad->trazabilidad($trazabilidadAlta);
     }
-
-    
 }

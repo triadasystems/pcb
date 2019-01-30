@@ -31,7 +31,7 @@ class InterfaceLabora extends Model
         return InterfaceLabora::where("employee_number", "=", $number)
         ->where("consecutive", "=", function($subquery){
             $subquery->select(DB::raw("max(consecutive)"))
-            ->from(with(new InterfaceLabora)->getTable());
+            ->from(with(new InterfaceLabora)->getTable())->where("origen_id", "<>", 999);
         })
         ->get()
         ->toArray();

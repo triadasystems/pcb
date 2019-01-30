@@ -40,8 +40,12 @@ class tercerosHistorico extends Model
 
         $reporteTerceros = new ReportesTerceros;
 
-        return $trazabilidad = tercerosHistorico::join('tcs_request_fus', 'tcs_request_fus.id', '=', 'tcs_external_employees_hist.tcs_fus_ext_hist')
-        ->join('tcs_type_low', 'tcs_type_low.id', '=', 'tcs_request_fus.tcs_type_low_id')
+        return $trazabilidad = tercerosHistorico::join(
+            'tcs_request_fus', 'tcs_request_fus.id', '=', 'tcs_external_employees_hist.tcs_fus_ext_hist'
+        )
+        ->leftJoin(
+            'tcs_type_low', 'tcs_type_low.id', '=', 'tcs_request_fus.tcs_type_low_id'
+        )
         ->select(
             'tcs_external_employees_hist.badge_number', 
             'tcs_external_employees_hist.email',

@@ -9,6 +9,7 @@ use App\requestFus;
 use App\ApplicationsEmployee;
 use App\tercerosHistorico;
 use App\InterfaceLabora;
+use App\Comparelaboraconcilia;
 
 class terceros extends Model
 {
@@ -149,10 +150,6 @@ class terceros extends Model
     }
     public function cambioAutoResp($data) {
         $tercero = terceros::find($data["idTercero"]);
-        $tercero->authorizing_name = strtoupper($data["nomAuto"]);
-        $tercero->authorizing_number = $data["numAuto"];
-        $tercero->responsible_name = strtoupper($data["nomResp"]);
-        $tercero->responsible_number = $data["numResp"];
 
         $applicationsEmployee = new ApplicationsEmployee;
         $aplicacionesDelTercero = "";
@@ -190,6 +187,10 @@ class terceros extends Model
             $historicoTercero->sustitucionHistorico($dataHistorico, $id);
         }
 
+        $tercero->authorizing_name = strtoupper($data["nomAuto"]);
+        $tercero->authorizing_number = $data["numAuto"];
+        $tercero->responsible_name = strtoupper($data["nomResp"]);
+        $tercero->responsible_number = $data["numResp"];
 
         if($tercero->save()) {
             return true;
@@ -434,10 +435,16 @@ class terceros extends Model
         }
         $this->term = $term;
 
-        $consultas = InterfaceLabora::where("consecutive", function($query){
-            $query->selectRaw('max(consecutive)')->from('interface_labora');
-        })
-        ->where(function ($query) {
+        // $consultas = InterfaceLabora::where("consecutive", function($query){
+        //     $query->selectRaw('max(consecutive)')->from('interface_labora')->where("origen_id", "<>", 999);
+        // })
+        // ->where(function ($query) {
+        //     $query->where("employee_number", "LIKE", $this->term."%")
+        //           ->where("origen_id", "<>", 999)
+        //           ->orWhere("name", "LIKE", "%".$this->term."%");
+        // })->limit(5)->get();
+
+        $consultas = Comparelaboraconcilia::where(function ($query) {
             $query->where("employee_number", "LIKE", $this->term."%")
                   ->where("origen_id", "<>", 999)
                   ->orWhere("name", "LIKE", "%".$this->term."%");

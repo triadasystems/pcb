@@ -78,7 +78,7 @@ class MotivosbajasController extends Controller
 
     public function update(Request $request) {
         $request->validate([
-            "code" => "required|min:1|max:2147483647|digits_between:1,10|numeric|unique:tcs_type_low",
+            // "code" => "required|min:1|max:2147483647|digits_between:1,10|numeric|unique:tcs_type_low",
             "type" => "required|string|min:3|max:150|regex:/^[A-Za-z0-9[:space:]\s\S]+$/|unique:tcs_type_low"
         ]);
         
