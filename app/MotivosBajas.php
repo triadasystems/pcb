@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class MotivosBajas extends Model
 {
@@ -12,12 +13,19 @@ class MotivosBajas extends Model
     
     protected $fillable = [
         "id",
+        "status",
         "code",
         "type"
     ];
 
     public function motivosbajas() {
-        $mBajas = MotivosBajas::where("code", "<>", 0)->get()->toArray();
+        $mBajas = MotivosBajas::select(
+            "id",
+            DB::raw("UPPER(status) as status"),
+            "code",
+            "type"
+        )
+        ->where("code", "<>", 0)->get()->toArray();
 
         return $mBajas;
     }

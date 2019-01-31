@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class MesaControl extends Model
 {
@@ -21,7 +22,15 @@ class MesaControl extends Model
     ];
 
     public function mesascontrol() {
-        $mesascontrol = MesaControl::get()->toArray();
+        $mesascontrol = MesaControl::select(
+            "id",
+            "name",
+            "alias",
+            "description",
+            DB::raw("UPPER(status) as status")
+        )
+        ->get()
+        ->toArray();
         return $mesascontrol;
     }
 

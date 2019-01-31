@@ -23,6 +23,7 @@
                                     <th>Fecha de Alta</th>
                                     <th>Tipo de Movimiento</th>
                                     <th>Autorizador #</th>
+                                    <th>Responsable #</th>
                                     <th>Fecha Captura de Baja</th>
                                     <th>Motivo Baja</th>
                                     <th>Fecha Efectiva de Baja</th>
@@ -62,6 +63,7 @@
                 { data: 'initial_date', name: 'initial_date' },
                 { data: 'description', name: 'description' },
                 { data: 'autorizador', name: 'autorizador' },
+                { data: 'responsable', name: 'responsable' },
                 { data: 'low_date', name: 'low_date' },
                 { data: 'typelow', name: 'typelow' },
                 { data: 'real_low_date', name: 'real_low_date' }

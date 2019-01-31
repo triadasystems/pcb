@@ -14,20 +14,20 @@ class ReporteResponsable extends Model
         'numero',
         'tipo'
     ];
-
+    
     protected $hidden = [];
 
     public $timestamps = false;
 
     public function reporteResponsables() {
         return $responsables = ReporteResponsable::select(
-            'nombre', 
+            DB::raw("UPPER(nombre) as nombre"), 
             'numero', 
             DB::raw('
                 case 
-                    when SUM(tipo) = 1 then "Autorizador"
-                    when SUM(tipo) = 2 then "Responsable"
-                    when SUM(tipo) = 3 then "Autorizador/Responsable"
+                    when SUM(tipo) = 1 then "AUTORIZADOR"
+                    when SUM(tipo) = 2 then "RESPONSABLE"
+                    when SUM(tipo) = 3 then "AUTORIZADOR/RESPONSABLE"
                 end AS tipo
             ')
         )

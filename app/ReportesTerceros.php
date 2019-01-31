@@ -88,8 +88,7 @@ class ReportesTerceros extends Model
     }
 
     public function responsables() {
-        return $responsables = ReportesTerceros::select('')
-        ->get()
+        return $responsables = ReportesTerceros::get()
         ->toArray();
     }
 
@@ -113,9 +112,10 @@ class ReportesTerceros extends Model
             'tcs_external_employees.status AS tcs_status',
             'tcs_request_fus.tcs_type_low_id AS typelow',
             'tcs_request_fus.created_at AS low_date_fus',
-            'tcs_request_fus.description',
+            DB::raw('UPPER(tcs_request_fus.description) as description'),
             'tcs_request_fus.real_low_date',
-            DB::raw('CONCAT(tcs_external_employees.authorizing_name, " | ", tcs_external_employees.authorizing_number) AS autorizador')
+            DB::raw('CONCAT(tcs_external_employees.authorizing_name, " | ", tcs_external_employees.authorizing_number) AS autorizador'),
+            DB::raw('CONCAT(tcs_external_employees.responsible_name, " | ", tcs_external_employees.responsible_number) AS responsable')
         )->where("tcs_request_fus.type", "=", 1);
 
         $trazabilidad = new tercerosHistorico;
