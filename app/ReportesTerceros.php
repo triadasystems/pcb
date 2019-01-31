@@ -113,6 +113,7 @@ class ReportesTerceros extends Model
             'tcs_external_employees.status AS tcs_status',
             'tcs_request_fus.tcs_type_low_id AS typelow',
             'tcs_request_fus.created_at AS low_date_fus',
+            'tcs_request_fus.description',
             'tcs_request_fus.real_low_date',
             DB::raw('CONCAT(tcs_external_employees.authorizing_name, " | ", tcs_external_employees.authorizing_number) AS autorizador')
         )->where("tcs_request_fus.type", "=", 1);
