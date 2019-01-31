@@ -55,7 +55,7 @@
             
             ajax: '{!! route("tercerosactivos.data") !!}',
             columns: [
-                { data: 'id_generate_fus', name: 'id_generate_fus' },
+                { data: 'badge_number', name: 'badge_number' },
                 { data: 'datos_tercero', name: 'datos_tercero' },                
                 { data: 'initial_date', name: 'initial_date' },
                 { data: 'low_date', name: 'low_date' },
