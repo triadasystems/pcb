@@ -56,7 +56,7 @@ class tercerosController extends Controller
         // Cálculo
         $dat = new terceros;
         $calculo = $dat->recuperar_idTercero();
-        $limite = 99999999;
+        $limite = 9999999;
         $sub = $dat->recuperar_subfijo();
         $subfijo = $sub[0]->subfijo;// subfijo de la tabla
         if (strlen($subfijo)>=3)
@@ -316,8 +316,9 @@ class tercerosController extends Controller
         {
             $act_seq = $terceros->actualizar_sequence($subfijo);
             $id_external = $terceros->nextval($seq);
-            $id_externo_cons_n = $id_external[0]->id;//consecutivo del id del externo
-            $id_external = $id_externo_cons_n;
+            //$id_externo_cons_n = $id_external[0]->id;//consecutivo del id del externo
+            //$id_external = $id_externo_cons_n;
+            return $id_external;
         } 
         elseif($id_externo_cons == $id_external_max)//cuando llega al numero maximo del consecutivo
         {
