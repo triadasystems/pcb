@@ -11,7 +11,7 @@
                     @csrf
                         <div class="form-group row">
                             <div class="col-md-12">
-                                <label for="nombre" class="col-lg-12 col-form-label">Nombre de la Aplicación</label>
+                                <label for="nombre" class="col-lg-12 col-form-label">Nombre de la Aplicación<span style="color: red;">*</span></label>
                                 <input id="nombre" name="nombre" type="txt" class="form-control{{ $errors->has('nombre') ? ' is-invalid' : '' }}" value="{{ old('nombre') }}" required autofocus/>
                                 @if ($errors->has('nombre'))
                                     <span class="invalid-feedback" role="alert">
@@ -22,7 +22,7 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-md-12">
-                                <label for="nombre" class="col-lg-12 col-form-label">Alias de la Aplicación</label>
+                                <label for="nombre" class="col-lg-12 col-form-label">Alias de la Aplicación<span style="color: red;">*</span></label>
                                 <input id="alias" name="alias" type="txt" class="form-control{{ $errors->has('alias') ? ' is-invalid' : '' }}" value="{{ old('alias') }}" required autofocus/>
                                 @if ($errors->has('alias'))
                                     <span class="invalid-feedback" role="alert">
