@@ -38,6 +38,7 @@ class ReportesTerceros extends Model
         return $bajasDiarias = ReportesTerceros::join('tcs_request_fus', 'tcs_request_fus.tcs_external_employees_id', '=', 'tcs_external_employees.id')
         ->join('tcs_type_low', 'tcs_type_low.id', '=', 'tcs_request_fus.tcs_type_low_id')
         ->select(
+            'tcs_external_employees.id_external',
             'tcs_external_employees.badge_number', 
             'tcs_external_employees.email',
             'tcs_external_employees.name',

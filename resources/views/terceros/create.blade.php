@@ -83,7 +83,7 @@
                     <div class="form-group row">
                         <div class="col-md-6">
                             <label for="fecha_ini" class="col-md-8 col-form-label text-md-rigth">Fecha Inicial : </label>
-                            <input class = "date form-control{{ $errors->has('fecha_ini') ? ' is-invalid' : '' }}" placeholder="yyyy-mm-dd" id="fecha_ini" name="fecha_ini" value="{{ old('fecha_ini') }}" required>
+                            <input class = "date form-control{{ $errors->has('fecha_ini') ? ' is-invalid' : '' }}" placeholder="dd-mm-yyyy" id="fecha_ini" name="fecha_ini" value="{{ old('fecha_ini') }}" required>
                             @if ($errors->has('fecha_ini'))
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $errors->first('fecha_ini') }}</strong>
@@ -92,7 +92,7 @@
                         </div>
                         <div class="col-md-6">
                             <label for="fecha_fin" class="col-md-8 col-form-label text-md-rigth">Fecha Final : </label>
-                            <input class="date form-control{{ $errors->has('fecha_fin') ? ' is-invalid' : '' }}" placeholder="yyyy-mm-dd" id="fecha_fin" name="fecha_fin" value="{{ old('fecha_fin') }}" required>
+                            <input class="date form-control{{ $errors->has('fecha_fin') ? ' is-invalid' : '' }}" placeholder="dd-mm-yyyy" id="fecha_fin" name="fecha_fin" value="{{ old('fecha_fin') }}" required>
                             @if ($errors->has('fecha_fin'))
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $errors->first('fecha_fin') }}</strong>
@@ -301,7 +301,7 @@
  changeMonth: true,
 changeYear: true,
  weekHeader: 'Sm',
- dateFormat: 'yy-mm-dd',
+ dateFormat: 'dd-mm-yy',
  firstDay: 1,
  isRTL: false,
  showMonthAfterYear: false,

@@ -179,25 +179,25 @@ class tercerosController extends Controller
             "a_paterno" => "required|max:100|regex:/^[A-Za-z0-9[:space:]\s\S]+$/",
             "a_materno" => "sometimes|max:100|regex:/^[A-Za-z0-9[:space:]\s\S]+$/",
             "email"     => "required|max:100|regex:/^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$/|unique:tcs_external_employees",
-            "fecha_ini" => ["required","date_format:Y-m-d",function($attribute, $fecha_ini, $fail)
+            "fecha_ini" => ["required","date_format:d-m-Y",function($attribute, $fecha_ini, $fail)
             {
-                $fecha_actual = date("Y-m-d");
+                $fecha_actual = date("d-m-Y");
                 if ($fecha_ini > $fecha_actual)
                 {
                     $fail('La fecha inicial debe ser menor o igual a la fecha de captura');
                 }
             }],
-            "fecha_fin" => ["required","date_format:Y-m-d","after:fecha_ini",function($attribute, $fecha_fin, $fail)
+            "fecha_fin" => ["required","date_format:d-m-Y","after:fecha_ini",function($attribute, $fecha_fin, $fail)
             {
-                $fecha_actual = date("Y-m-d");
+                $fecha_actual = date("d-m-Y");
                 $fecha = $this->requestProp['fecha_ini'];
                 $valores = explode('-', $fecha);
-                $anio = $valores[0]+1;
-                $comp = $anio."-".$valores[1]."-".$valores[2];
-                if ($fecha_fin > $comp) {
+                $anio = $valores[2]+1;
+                $comp = $valores[0]."-".$valores[1]."-".$anio;
+                if (strtotime($fecha_fin) > strtotime($comp)) {
                     $fail('La fecha final es mayor a un año desde la fecha de inicio');
                 }
-                if ($fecha_fin < $fecha_actual) {
+                if (strtotime($fecha_fin) < strtotime($fecha_actual)) {
                     $fail('La fecha final debe ser mayor a la fecha de captura');
                 }
             }],
@@ -242,8 +242,8 @@ class tercerosController extends Controller
         $data["name"]                   = ($request->post("name") != '' ) ? strtoupper($request->post("name")) : NULL;        
         $data["lastname1"]              = ($request->post("a_paterno") !='') ? strtoupper($request->post("a_paterno")) : NULL;
         $data["lastname2"]              = ($request->post("a_materno") !='') ? strtoupper($request->post("a_materno")) : NULL;
-        $data["initial_date"]           = ($request->post("fecha_ini") !='') ? strtoupper($request->post("fecha_ini")) : NULL;
-        $data["low_date"]               = ($request->post("fecha_fin") !='') ? strtoupper($request->post("fecha_fin")) : NULL;
+        $data["initial_date"]           = ($request->post("fecha_ini") !='') ? date('Y-m-d',strtotime($request->post("fecha_ini"))) : NULL;
+        $data["low_date"]               = ($request->post("fecha_fin") !='') ? date('Y-m-d',strtotime($request->post("fecha_fin"))) : NULL;
         $data["badge_number"]           = ($request->post("gafete") !='') ? strtoupper($request->post("gafete")) : NULL;
         $data["email"]                  = ($request->post("email") !='') ? strtoupper($request->post("email")) : NULL;
         $data["authorizing_name"]       = ($request->post("nom_auto") !='') ? strtoupper($request->post("nom_auto")) : NULL;
@@ -252,7 +252,6 @@ class tercerosController extends Controller
         $data["responsible_number"]     = ($request->post("num_res") !='') ? strtoupper($request->post("num_res")) : NULL;
         $data["tcs_subfijo_id"]         = $subfijo;
         $data["tcs_externo_proveedor"]  = ($request->post("empresa") !='') ? strtoupper($request->post("empresa")) : NULL;
-
         $fus=array();
         $fus["id_generate_fus"]                     = strtotime(date("Y-m-d H:i:s"));
         $fus["description"]                         = "Alta de tercero";

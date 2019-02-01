@@ -18,8 +18,9 @@
                         <table class="table table-bordered" id="bajasdiarias-table">
                             <thead>
                                 <tr>
+                                    <th>Número del Empleado</th>
                                     <th># Gafete del Tercero</th>
-                                    <th>Usuario del Tercero</th>
+                                    <th>Nombre del Tercero</th>
                                     <th>Nombre del Empleado</th>
                                     <th>Autorizador #</th>
                                     <th>Fecha de Baja</th>
@@ -55,11 +56,12 @@
             
             ajax: '{!! route("bajasdiarias.data") !!}',
             columns: [
-                { data: 'badge_number', name: 'badge_number' },
-                { data: 'email', name: 'email' },
-                { data: 'datos_tercero', name: 'datos_tercero' },
-                { data: 'autorizador', name: 'autorizador' },
-                { data: 'low_date_fus', name: 'low_date_fus' },
+                { data: 'id_external',      name: 'id_external' },
+                { data: 'badge_number',     name: 'badge_number' },
+                { data: 'datos_tercero',    name: 'datos_tercero' },
+                { data: 'datos_tercero',    name: 'datos_tercero' },
+                { data: 'autorizador',      name: 'autorizador' },
+                { data: 'low_date_fus',     name: 'low_date_fus' },
                 // {
                 //     render: function (data, type, row) {
                 //         var lowDate = new Date(row.low_date).getTime() / 1000;
