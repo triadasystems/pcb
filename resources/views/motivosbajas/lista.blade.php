@@ -188,7 +188,7 @@
                 var htmlCode =  '';
 
                 htmlCode = '<div class="col-md-6">'+
-                    '<label for="code" class="col-lg-12 col-form-label text-left txt-bold">Código</label>'+
+                    '<label for="code" class="col-lg-12 col-form-label text-left txt-bold">Código<span style="color: red;">*</span></label>'+
                     '<input id="code" type="number" class="form-control" name="code" required autofocus value="'+codigo+'" min="1" step="1">'+
 
                     '<span id="errmsj_codigo" class="error-msj" role="alert">'+
@@ -196,7 +196,7 @@
                     '</span>'+
                 '</div>'+
                 '<div class="col-md-6">'+
-                    '<label for="type" class="col-lg-12 col-form-label text-left txt-bold">Descripción</label>'+
+                    '<label for="type" class="col-lg-12 col-form-label text-left txt-bold">Descripción<span style="color: red;">*</span></label>'+
                     '<input id="type" type="text" class="form-control" name="type" required autofocus value="'+descripcion+'">'+
 
                     '<span id="errmsj_tipo" class="error-msj" role="alert">'+
@@ -208,7 +208,7 @@
                     idBotonGuardar = "guardarEditarMotBaja";
 
                     htmlCode = '<div class="col-md-12">'+
-                        '<label for="type" class="col-lg-12 col-form-label text-left txt-bold">Descripción</label>'+
+                        '<label for="type" class="col-lg-12 col-form-label text-left txt-bold">Descripción<span style="color: red;">*</span></label>'+
                         '<input id="type" type="text" class="form-control" name="type" required autofocus value="'+descripcion+'">'+
 
                         '<span id="errmsj_tipo" class="error-msj" role="alert">'+

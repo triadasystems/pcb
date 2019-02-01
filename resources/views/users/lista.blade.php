@@ -262,7 +262,7 @@ $(document).ready(function(){
                     '<input type="hidden" name="id" id="idUsuario" value="'+id+'">'+
                     '<div class="form-group row">'+
                         '<div class="col-md-4">'+
-                            '<label for="nombre" class="col-lg-12 col-form-label text-left txt-bold">Nombre</label>'+
+                            '<label for="nombre" class="col-lg-12 col-form-label text-left txt-bold">Nombre<span style="color: red;">*</span></label>'+
                             '<input id="nombre" type="text" class="form-control" name="nombre" required autofocus value="'+nombre+'">'+
 
                             '<span id="errmsj_nombre" class="error-msj" role="alert">'+
@@ -270,7 +270,7 @@ $(document).ready(function(){
                             '</span>'+
                         '</div>'+
                         '<div class="col-md-4">'+
-                            '<label for="apellidos" class="col-lg-12 col-form-label text-left txt-bold">Apellidos</label>'+
+                            '<label for="apellidos" class="col-lg-12 col-form-label text-left txt-bold">Apellidos<span style="color: red;">*</span></label>'+
                             '<input id="apellidos" type="text" class="form-control" name="apellidos" required autofocus value="'+apellidos+'">'+
 
                             '<span id="errmsj_apellidos" class="error-msj" role="alert">'+
@@ -278,7 +278,7 @@ $(document).ready(function(){
                             '</span>'+
                         '</div>'+
                         '<div class="col-md-4">'+
-                            '<label for="numEmpleado" class="col-lg-12 col-form-label text-left txt-bold"># Empleado</label>'+
+                            '<label for="numEmpleado" class="col-lg-12 col-form-label text-left txt-bold"># Empleado<span style="color: red;">*</span></label>'+
                             '<input id="numEmpleado" type="number" class="form-control" name="numEmpleado" required autofocus value="'+numEmpleado+'" min="1" step="1">'+
 
                             '<span id="errmsj_numEmpleado" class="error-msj" role="alert">'+

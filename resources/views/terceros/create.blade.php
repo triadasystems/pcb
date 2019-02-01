@@ -31,7 +31,7 @@
                             @endif
                         </div>
                         <div class="col-md-6">
-                            <label for="mesa" class="col-md-8 col-form-label text-md-rigth">Mesa de control</label>
+                            <label for="mesa" class="col-md-8 col-form-label text-md-rigth">Mesa de control<span style="color: red;">*</span></label>
                             <select id="mesa" name ="mesa" class="form-control{{ $errors->has('mesa') ? ' is-invalid' : '' }}" value="{{ old('mesa') }}" required>
                                 <option value="">Seleccione...</option>
                                 @foreach ($data['mesa'] as $val)
@@ -53,7 +53,7 @@
                     <hr>
                     <div class="form-group row">
                         <div class="col-md-4">
-                            <label for="name" class="col-md-8 col-form-label text-md-rigth">Nombre</label>
+                            <label for="name" class="col-md-8 col-form-label text-md-rigth">Nombre<span style="color: red;">*</span></label>
                             <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') }}" onkeyup="javascript:this.value=this.value.toUpperCase();"  onKeyPress="return sololetras(event)" required >
                             @if ($errors->has('name'))
                                 <span class="invalid-feedback" role="alert">
@@ -62,7 +62,7 @@
                             @endif
                         </div>
                         <div class="col-md-4">
-                            <label for="a_paterno" class="col-md-8 col-form-label text-md-rigth">Apellido Paterno</label>
+                            <label for="a_paterno" class="col-md-8 col-form-label text-md-rigth">Apellido Paterno<span style="color: red;">*</span></label>
                             <input id="a_paterno" type="text" class="form-control{{ $errors->has('a_paterno') ? ' is-invalid' : '' }}" name="a_paterno" value="{{ old('a_paterno') }}" onkeyup="javascript:this.value=this.value.toUpperCase();"  onKeyPress="return sololetras(event)" required >
                             @if ($errors->has('a_paterno'))
                                 <span class="invalid-feedback" role="alert">
@@ -82,7 +82,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-md-6">
-                            <label for="fecha_ini" class="col-md-8 col-form-label text-md-rigth">Fecha Inicial : </label>
+                            <label for="fecha_ini" class="col-md-8 col-form-label text-md-rigth">Fecha Inicial<span style="color: red;">*</span> : </label>
                             <input class = "date form-control{{ $errors->has('fecha_ini') ? ' is-invalid' : '' }}" placeholder="dd-mm-yyyy" id="fecha_ini" name="fecha_ini" value="{{ old('fecha_ini') }}" required>
                             @if ($errors->has('fecha_ini'))
                                 <span class="invalid-feedback" role="alert">
@@ -91,7 +91,7 @@
                             @endif
                         </div>
                         <div class="col-md-6">
-                            <label for="fecha_fin" class="col-md-8 col-form-label text-md-rigth">Fecha Final : </label>
+                            <label for="fecha_fin" class="col-md-8 col-form-label text-md-rigth">Fecha Final<span style="color: red;">*</span> : </label>
                             <input class="date form-control{{ $errors->has('fecha_fin') ? ' is-invalid' : '' }}" placeholder="dd-mm-yyyy" id="fecha_fin" name="fecha_fin" value="{{ old('fecha_fin') }}" required>
                             @if ($errors->has('fecha_fin'))
                                 <span class="invalid-feedback" role="alert">
@@ -102,7 +102,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-md-12">
-                            <label for="empresa" class="col-md-12 col-form-label text-md-rigth">Empresa a la que Pertenece</label>
+                            <label for="empresa" class="col-md-12 col-form-label text-md-rigth">Empresa a la que Pertenece<span style="color: red;">*</span></label>
                             <select id="empresa" name="empresa" class="form-control{{ $errors->has('empresa') ? ' is-invalid' : '' }}" value="{{ old('empresa') }}" required>
                                 <option value="">Selecciona la empresa</option>
                                 @foreach ($data['empresa'] as $val)
@@ -131,7 +131,7 @@
                             @endif
                         </div>
                         <div class="col-md-6">
-                            <label for="email" class="col-md-12 col-form-label text-md-rigth">Usuario de Red/E-mail</label>
+                            <label for="email" class="col-md-12 col-form-label text-md-rigth">Usuario de Red/E-mail<span style="color: red;">*</span></label>
                             <input type="text" id="email" name="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" value="{{ old('email') }}">
                             @if ($errors->has('email'))
                                 <span class="invalid-feedback" role="alert">
@@ -144,8 +144,8 @@
                     <hr>
                     <div class="form-group row">
                         <div class="col-md-6">
-                            <label for="nom_auto" class="col-md-12 col-form-label text-md-rigth">Nombre Completo del Autorizador</label>
-                            <input type="text" class="form-control{{ $errors->has('nom_auto') ? ' is-invalid' : '' }} autocomplete_txt" data-type="nom_auto" id="nom_auto"  name="nom_auto" onKeyPress="return sololetras(event)" value="{{ old('nom_auto') }}" required>
+                            <label for="nom_auto" class="col-md-12 col-form-label text-md-rigth">Nombre Completo del Autorizador<span style="color: red;">*</span></label>
+                            <input type="text" class="form-control{{ $errors->has('nom_auto') ? ' is-invalid' : '' }} autocomplete_txt" data-type="nom_auto" id="nom_auto"  name="nom_auto" onKeyPress="return sololetras(event)" value="{{ old('nom_auto') }}" required readonly="readonly">
                             @if ($errors->has('nom_auto'))
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $errors->first('nom_auto') }}</strong>
@@ -153,7 +153,7 @@
                             @endif
                         </div>
                         <div class="col-md-6">
-                            <label for="nom_auto" class="col-md-12 col-form-label text-md-rigth">Número de Empleado del Autorizador</label>
+                            <label for="num_auto" class="col-md-12 col-form-label text-md-rigth">Número de Empleado del Autorizador<span style="color: red;">*</span></label>
                             <input type="text" class="form-control{{ $errors->has('num_auto') ? ' is-invalid' : '' }} autocomplete_txt" data-type="num_auto" id="num_auto" name="num_auto" onKeyPress="return soloNumeros(event)" value="{{ old('num_auto') }}" required>
                             @if ($errors->has('num_auto'))
                                 <span class="invalid-feedback" role="alert">
@@ -167,8 +167,8 @@
                     <hr>
                     <div class="form-group row">
                     <div class="col-md-6">
-                            <label for="nom_res" class="col-md-12 col-form-label text-md-rigth">Nombre Completo del Responsable</label>
-                            <input type="text" class="form-control{{ $errors->has('nom_res') ? ' is-invalid' : '' }} autocomplete" data-type="nom_res" id="nom_res" name="nom_res" onKeyPress="return sololetras(event)" value="{{ old('nom_res') }}" required>
+                        <label for="nom_res" class="col-md-12 col-form-label text-md-rigth">Nombre Completo del Responsable<span style="color: red;">*</span></label>
+                            <input type="text" class="form-control{{ $errors->has('nom_res') ? ' is-invalid' : '' }} autocomplete" data-type="nom_res" id="nom_res" name="nom_res" onKeyPress="return sololetras(event)" value="{{ old('nom_res') }}" required readonly="readonly">
                             @if ($errors->has('nom_res'))
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $errors->first('nom_res') }}</strong>
@@ -176,7 +176,7 @@
                             @endif
                         </div>
                         <div class="col-md-6">
-                            <label for="num_res" class="col-md-12 col-form-label text-md-rigth">Número de Empleado del Responsable</label>
+                            <label for="num_res" class="col-md-12 col-form-label text-md-rigth">Número de Empleado del Responsable<span style="color: red;">*</span></label>
                             <input type="text" class="form-control{{ $errors->has('num_res') ? ' is-invalid' : '' }} autocomplete" data-type="num_res" id="num_res" name="num_res" onKeyPress="return soloNumeros(event)" value="{{ old('num_res') }}" required>
                             @if ($errors->has('num_res'))
                                 <span class="invalid-feedback" role="alert">
@@ -249,7 +249,7 @@
                             <!--<input type="button" id="pasartodos" class="btn btn-info" value="Todos »">&nbsp;&nbsp;<input type="button" id="quitartodos" class="btn btn-info" value="« Todos">-->
                         </div>
                         <div class="col-md-4">
-                            <label for="destino" class="col-md-12 col-form-label text-md-rigth">Aplicaciones Asignadas</label>
+                            <label for="destino" class="col-md-12 col-form-label text-md-rigth">Aplicaciones Asignadas<span style="color: red;">*</span></label>
                             <select name="destino[]" id="destino" multiple="multiple" class="form-control{{ $errors->has('destino') ? ' is-invalid' : '' }} select_multiple" required>
                             @if(old('destino'))
                                 @php
@@ -337,6 +337,10 @@ function soloNumeros(e){
     var key = window.Event ? e.which : e.keyCode
 	return (key >= 48 && key <= 57);
 }
+
+$('#num_auto').click(function() {
+                $('#nom_auto').val('');
+            });
 //autocomplete script autorizador
 $(document).on('focus','.autocomplete_txt', function()
 {
@@ -389,7 +393,9 @@ $(document).on('focus','.autocomplete_txt', function()
             {
                 $('#nom_auto').val(data.nombre);
                 $('#num_auto').val(data.numero);
+                //$('#nom_res').blur();
             } else if(data == "fail") {
+                
                 event.stopImmediatePropagation();
                 event.preventDefault();
             }
@@ -448,6 +454,7 @@ $(document).on('focus','.autocomplete', function()
             {
                 $('#nom_res').val(data.nombre);
                 $('#num_res').val(data.numero);
+                //$('#nom_res').blur();
             } else if(data == "fail") {
                 event.stopImmediatePropagation();
                 event.preventDefault();

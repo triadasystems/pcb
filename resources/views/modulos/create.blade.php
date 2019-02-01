@@ -19,7 +19,7 @@
                                 @csrf
                                 <div class="form-group row">
                                     <div class="col-md-6">
-                                        <label for="modulename" class="col-lg-12 col-form-label">{{ __('Nombre') }}</label>
+                                        <label for="modulename" class="col-lg-12 col-form-label">{{ __('Nombre') }}<span style="color: red;">*</s</label>
                                         <input id="modulename" type="text" class="form-control{{ $errors->has('modulename') ? ' is-invalid' : '' }}" name="modulename" value="{{ old('modulename') }}" required autofocus>
                                         
                                         @if ($errors->has('modulename'))
@@ -45,7 +45,7 @@
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-md-12">
-                                        <label for="description" class="col-lg-12 col-form-label">{{ __('Descripción') }}</label>
+                                        <label for="description" class="col-lg-12 col-form-label">{{ __('Descripción') }}<span style="color: red;">*</span></label>
                                         <textarea id="description" type="text" class="form-control{{ $errors->has('description') ? ' is-invalid' : '' }}" name="description" required autofocus>{{ old('description') }}</textarea>
                                         
                                         @if ($errors->has('description'))

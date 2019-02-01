@@ -76,10 +76,10 @@ return [
         
         'mysql' => [
             'driver' => 'mysql',
-            'host' => env('DB_HOST', '10.7.6.177'),
-            'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_DATABASE', 'pes2018_prod'),
-            'username' => env('DB_USERNAME', 'triada'), // triada
+            'host' => '10.7.6.177',
+            'port' => '3306',
+            'database' => 'pes2018_prod',
+            'username' => 'triada', // triada
             'password' => 'eyJpdiI6Imx3YkNoWFAyMFpHUnNaNzdHbWcrOHc9PSIsInZhbHVlIjoiWVhhalwvaGxMbmVzcE5LWXRnY0xuY1E9PSIsIm1hYyI6IjcxNTUzN2M5ZTc5ZDJiNTdmODRmOGUxODIwNWVkN2ZkZDZlZDRmOGQzYzc0NzZhM2Q4Y2I2M2E0ZTUwNzM5YmIifQ==',
             'charset' => 'latin1',
             'collation' => 'latin1_bin',

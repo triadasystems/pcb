@@ -22,7 +22,7 @@
                         ?>
                         <div class="form-group row">
                             <div class="col-md-6">
-                                <label for="name" class="col-lg-12 col-form-label">{{ __('Nombre') }}</label>
+                                <label for="name" class="col-lg-12 col-form-label">{{ __('Nombre') }}<span style="color: red;">*</span></label>
                                 <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') }}" required autofocus>
 
                                 @if ($errors->has('name'))
@@ -33,7 +33,7 @@
                             </div>
 
                             <div class="col-md-6">
-                                <label for="rdbms_type" class="col-lg-12 col-form-label">{{ __('Manejador de Base de Datos') }}</label>
+                                <label for="rdbms_type" class="col-lg-12 col-form-label">{{ __('Manejador de Base de Datos') }}<span style="color: red;">*</span></label>
                                 <select id="rdbms_type" class="form-control{{ $errors->has('rdbms_type') ? ' is-invalid' : '' }}" name="rdbms_type" required>
                                     <option value="">Seleccione...</option>
                                     <option value="1">Oracle</option>
@@ -49,7 +49,7 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-md-6">
-                                <label for="hostname" class="col-lg-12 col-form-label">{{ __('Hostname') }}</label>
+                                <label for="hostname" class="col-lg-12 col-form-label">{{ __('Hostname') }}<span style="color: red;">*</span></label>
                                 <input id="hostname" type="text" class="form-control{{ $errors->has('hostname') ? ' is-invalid' : '' }}" name="hostname" value="{{ old('hostname') }}" required autofocus>
 
                                 @if ($errors->has('hostname'))
@@ -60,7 +60,7 @@
                             </div>
 
                             <div class="col-md-6">
-                                <label for="sox" class="col-lg-12 col-form-label">{{ __('SOX') }}</label>
+                                <label for="sox" class="col-lg-12 col-form-label">{{ __('SOX') }}<span style="color: red;">*</span></label>
                                 <select id="sox" class="form-control{{ $errors->has('sox') ? ' is-invalid' : '' }}" name="sox" required>
                                     <option value="">Seleccione...</option>
                                     <option value="1">Si</option>
@@ -75,7 +75,7 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-md-6">
-                                <label for="ip_address" class="col-lg-12 col-form-label">{{ __('Dirección IP') }}</label>
+                                <label for="ip_address" class="col-lg-12 col-form-label">{{ __('Dirección IP') }}<span style="color: red;">*</span></label>
                                 <input id="ip_address" type="text" class="form-control{{ $errors->has('ip_address') ? ' is-invalid' : '' }}" name="ip_address" value="{{ old('ip_address') }}" required autofocus>
 
                                 @if ($errors->has('ip_address'))
@@ -86,7 +86,7 @@
                             </div>
 
                             <div class="col-md-6">
-                                <label for="port" class="col-lg-12 col-form-label">{{ __('Puerto') }}</label>
+                                <label for="port" class="col-lg-12 col-form-label">{{ __('Puerto') }}<span style="color: red;">*</span></label>
                                 <input id="port" type="text" class="form-control{{ $errors->has('port') ? ' is-invalid' : '' }}" name="port" value="{{ old('port') }}" required autofocus>
                                 @if ($errors->has('port'))
                                     <span class="invalid-feedback" role="alert">
@@ -97,7 +97,7 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-md-6">
-                                <label for="db_name" class="col-lg-12 col-form-label">{{ __('Nombre DB') }}</label>
+                                <label for="db_name" class="col-lg-12 col-form-label">{{ __('Nombre DB') }}<span style="color: red;">*</span></label>
                                 <div class="input-group">
                                     <input id="db_name" type="password" class="form-control{{ $errors->has('db_name') ? ' is-invalid' : '' }}" name="db_name" value="{{ old('db_name') }}" required autofocus>
                                     <span class="input-group-btn">
@@ -112,7 +112,7 @@
                             </div>
 
                             <div class="col-md-6">
-                                <label for="db_user" class="col-lg-12 col-form-label">{{ __('Usuario DB') }}</label>
+                                <label for="db_user" class="col-lg-12 col-form-label">{{ __('Usuario DB') }}<span style="color: red;">*</span></label>
                                 <div class="input-group">
                                     <input id="db_user" type="password" class="form-control{{ $errors->has('db_user') ? ' is-invalid' : '' }}" name="db_user" value="{{ old('db_user') }}" required autofocus>
                                     <span class="input-group-btn">
@@ -128,7 +128,7 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-md-6">
-                                <label for="db_psw" class="col-lg-12 col-form-label">{{ __('Password DB') }}</label>
+                                <label for="db_psw" class="col-lg-12 col-form-label">{{ __('Password DB') }}<span style="color: red;">*</span></label>
                                 <div class="input-group">
                                     <input id="db_psw" type="password" class="form-control{{ $errors->has('db_psw') ? ' is-invalid' : '' }}" name="db_psw" value="{{ old('db_psw') }}" required autofocus>
                                     <span class="input-group-btn">

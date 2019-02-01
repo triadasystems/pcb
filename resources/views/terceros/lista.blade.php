@@ -200,7 +200,7 @@
                         '</div>'+
                         '<div class="form-group row">'+
                             '<div class="col-md-6">'+
-                                '<label for="nomAuto" class="col-lg-12 col-form-label text-left txt-bold">Nombre Completo</label>'+
+                                '<label for="nomAuto" class="col-lg-12 col-form-label text-left txt-bold">Nombre Completo<span style="color: red;">*</span></label>'+
                                 '<input id="nomAuto" type="text" class="form-control autocomplete_txt" data-type="nom_auto" data-responsable="auto" name="nomAuto" required autofocus value="'+nomAuto+'">'+
 
                                 '<span id="errmsj_nomAuto" class="error-msj" role="alert">'+
@@ -208,7 +208,7 @@
                                 '</span>'+
                             '</div>'+
                             '<div class="col-md-6">'+
-                                '<label for="numAuto" class="col-lg-12 col-form-label text-left txt-bold"># de Empleado</label>'+
+                                '<label for="numAuto" class="col-lg-12 col-form-label text-left txt-bold"># de Empleado<span style="color: red;">*</span></label>'+
                                 '<input id="numAuto" type="text" class="form-control autocomplete_txt" data-type="num_auto" data-responsable="auto" name="numAuto" required autofocus value="'+numAuto+'">'+
 
                                 '<span id="errmsj_numAuto" class="error-msj" role="alert">'+
@@ -221,7 +221,7 @@
                         '</div>'+
                         '<div class="form-group row">'+
                             '<div class="col-md-6">'+
-                                '<label for="nomResp" class="col-lg-12 col-form-label text-left txt-bold">Nombre Completo</label>'+
+                                '<label for="nomResp" class="col-lg-12 col-form-label text-left txt-bold">Nombre Completo<span style="color: red;">*</span></label>'+
                                 '<input id="nomResp" type="text" class="form-control autocomplete_txt2" data-type="nom_res" data-responsable="resp" name="nomResp" required autofocus value="'+nomResp+'">'+
                             
                                 '<span id="errmsj_nomResp" class="error-msj" role="alert">'+
@@ -229,7 +229,7 @@
                                 '</span>'+
                             '</div>'+
                             '<div class="col-md-6">'+
-                                '<label for="numResp" class="col-lg-12 col-form-label text-left txt-bold"># de Empleado</label>'+
+                                '<label for="numResp" class="col-lg-12 col-form-label text-left txt-bold"># de Empleado<span style="color: red;">*</span></label>'+
                                 '<input id="numResp" type="text" class="form-control autocomplete_txt2" data-type="num_res" data-responsable="resp" name="numResp" required autofocus value="'+numResp+'">'+
 
                                 '<span id="errmsj_numResp" class="error-msj" role="alert">'+
