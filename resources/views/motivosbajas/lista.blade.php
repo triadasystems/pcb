@@ -169,10 +169,10 @@
                         render: function (data, type, row) {
                             var html = '';
                             switch (row.status) {
-                                case "Activo":
+                                case "ACTIVO":
                                     html += '<div class="row"><div class="col-lg-5 text-center"><button class="btn btn-danger" id="cambioStatus" data-status-nuevo="Inactivo" data-id="'+row.id+'">Desactivar <i class="fas fa-ban"></i></button></div></div>';
                                     break;
-                                case "Inactivo":
+                                case "INACTIVO":
                                     html += '<div class="row"><div class="col-lg-5 text-center"><button class="btn btn-primary" id="cambioStatus" data-status-nuevo="Activo" data-id="'+row.id+'">Activar <i class="fas fa-check"></i></button></div></div>';
                                     break;
                             }

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-lg-12">
             <div class="card">
@@ -21,7 +21,9 @@
                                     <th># Gafete del Tercero</th>
                                     <th>Usuario del Tercero</th>
                                     <th>Fecha de Alta</th>
+                                    <th>Tipo de Movimiento</th>
                                     <th>Autorizador #</th>
+                                    <th>Responsable #</th>
                                     <th>Fecha Captura de Baja</th>
                                     <th>Motivo Baja</th>
                                     <th>Fecha Efectiva de Baja</th>
@@ -59,7 +61,9 @@
                 { data: 'badge_number', name: 'badge_number' },
                 { data: 'email', name: 'email' },
                 { data: 'initial_date', name: 'initial_date' },
+                { data: 'description', name: 'description' },
                 { data: 'autorizador', name: 'autorizador' },
+                { data: 'responsable', name: 'responsable' },
                 { data: 'low_date', name: 'low_date' },
                 { data: 'typelow', name: 'typelow' },
                 { data: 'real_low_date', name: 'real_low_date' }

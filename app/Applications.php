@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Applications extends Model
 {
@@ -19,7 +20,13 @@ class Applications extends Model
     ];
     public static function recuperarapps()
     {
-        $consultas= Applications::get()
+        $consultas= Applications::select(
+            'id',
+            DB::raw('UPPER(name) AS name'),
+            DB::raw('UPPER(alias) AS alias'),
+            'active'
+        )
+        ->get()
         ->toArray();
         return $consultas;
     }
@@ -28,8 +35,8 @@ class Applications extends Model
         $sql= new Applications;
         $sql->instance_id = 1;
         $sql->responsability_id=1;
-        $sql->name = $nom;
-        $sql->alias = $alias;
+        $sql->name = mb_strtoupper($nom);
+        $sql->alias = mb_strtoupper($alias);
         $sql->active = 1;
         $sql->save();
     }

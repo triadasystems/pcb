@@ -59,8 +59,10 @@ class tercerosHistorico extends Model
             'tcs_external_employees_hist.status AS tcs_status',
             'tcs_type_low.type AS typelow',
             'tcs_request_fus.created_at AS low_date_fus',
+            DB::raw('UPPER(tcs_request_fus.description) as description'),
             'tcs_request_fus.real_low_date',
-            DB::raw('CONCAT(tcs_external_employees_hist.authorizing_name, " | ", tcs_external_employees_hist.authorizing_number) AS autorizador')
+            DB::raw('CONCAT(tcs_external_employees_hist.authorizing_name, " | ", tcs_external_employees_hist.authorizing_number) AS autorizador'),
+            DB::raw('CONCAT(tcs_external_employees_hist.responsible_name, " | ", tcs_external_employees_hist.responsible_number) AS responsable')
         )
         ->union($union)
         ->get()

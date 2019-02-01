@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Proveedores extends Model
 {
@@ -22,7 +23,16 @@ class Proveedores extends Model
     ];
 
     public function proveedores() {
-        $proveedores = Proveedores::get()->toArray();
+        $proveedores = Proveedores::select(
+            "id",
+            "name",
+            "alias",
+            "description",
+            DB::raw("UPPER(status) as status"),
+            "high_date",
+            "low_date"
+        )
+        ->get()->toArray();
 
         return $proveedores;
     }
@@ -31,7 +41,7 @@ class Proveedores extends Model
         $proveedor = new Proveedores;
         $proveedor->name = mb_strtoupper($data["name"]);
         $proveedor->alias = mb_strtoupper($data["alias"]);
-        $proveedor->description = $data["description"];
+        $proveedor->description = mb_strtoupper($data["description"]);
         $proveedor->high_date = date("Y-m-d H:m:i");
 
         if($proveedor->save()) {
@@ -45,7 +55,7 @@ class Proveedores extends Model
         $proveedor = Proveedores::find($data["id"]);
         $proveedor->name = mb_strtoupper($data["name"]);
         $proveedor->alias = mb_strtoupper($data["alias"]);
-        $proveedor->description = $data["description"];
+        $proveedor->description = mb_strtoupper($data["description"]);
         $proveedor->updated_at = date("Y-m-d H:m:i");
 
         if($proveedor->save()) {
