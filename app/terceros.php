@@ -201,7 +201,7 @@ class terceros extends Model
     public function sustitucion($dataR) {
         
         switch ($dataR["tipo"]) {
-            case "Autorizador":
+            case "AUTORIZADOR":
                 $sustitucion = terceros::where('authorizing_number', '=', $dataR["numEmpleadoActual"]);
                 $fields = array(
                     "authorizing_name" => strtoupper($dataR["nombre"]),
@@ -257,7 +257,7 @@ class terceros extends Model
                     return true;
                 }
                 break;
-            case "Responsable":
+            case "RESPONSABLE":
                 $sustitucion = terceros::where('responsible_number', '=', $dataR["numEmpleadoActual"]);
                 $fields = array(
                     "responsible_name" => strtoupper($dataR["nombre"]),
@@ -313,7 +313,7 @@ class terceros extends Model
                     return true;
                 }
                 break;
-            case "Autorizador/Responsable":
+            case "AUTORIZADOR/RESPONSABLE":
                 $sustitucionA = terceros::where('authorizing_number', '=', $dataR["numEmpleadoActual"]);
                 
                 foreach ($sustitucionA->get()->toArray() as $key => $value) {
