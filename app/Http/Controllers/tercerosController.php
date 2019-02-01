@@ -237,7 +237,7 @@ class tercerosController extends Controller
         $subfijo = $sub[0]->id;// subfijo de la tabla
         $destino = $request->post("destino");
 
-        $data=array();
+        $data = array();
         $data["id_external"]            = $consecutivo[0]->id;
         $data["name"]                   = ($request->post("name") != '' ) ? strtoupper($request->post("name")) : NULL;        
         $data["lastname1"]              = ($request->post("a_paterno") !='') ? strtoupper($request->post("a_paterno")) : NULL;
@@ -252,7 +252,9 @@ class tercerosController extends Controller
         $data["responsible_number"]     = ($request->post("num_res") !='') ? strtoupper($request->post("num_res")) : NULL;
         $data["tcs_subfijo_id"]         = $subfijo;
         $data["tcs_externo_proveedor"]  = ($request->post("empresa") !='') ? strtoupper($request->post("empresa")) : NULL;
-        $fus=array();
+        
+        $fus = array();
+        
         $fus["id_generate_fus"]                     = strtotime(date("Y-m-d H:i:s"));
         $fus["description"]                         = "Alta de tercero";
         $fus["type"]                                = 1;
@@ -260,8 +262,8 @@ class tercerosController extends Controller
         $fus["tcs_number_responsable_authorizer"]   = ($request->post("num_auto") !='') ? strtoupper($request->post("num_auto")) : NULL;
         $fus["users_id"]                            = Auth::user()->id;
         $fus["fus_physical"]                        = ($request->post("fus") !='') ? strtoupper($request->post("fus")) : NULL;
+        
         try {
-            
             $querys->new_row($data);
             $dat = $consecutivo[0]->id;
             $result = $querys->listar_terceros($dat);            
@@ -271,10 +273,9 @@ class tercerosController extends Controller
                 $apps["applications_id"] = $value;
                 terceros::new_row_app($apps);     
             }
-            
-            
+
             $fus["tcs_external_employees_id"] = $result[0]["ident"];
-            terceros::new_row_fus($fus);
+            terceros::new_row_fus($fus, $data, $destino);
 
             $bit = array(
                 'ip_address' => $this->ip_address_client, 
@@ -287,9 +288,7 @@ class tercerosController extends Controller
             $bitacora->guardarBitacora($bit);
 
             return redirect()->route('listar')->with('confirmacion', $data["id_external"]);
-        } 
-        catch (Exception $e) 
-        {
+        } catch (Exception $e)  {
             report($e);
         }
     }

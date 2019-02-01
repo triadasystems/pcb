@@ -22,6 +22,7 @@
                                     <th># Gafete del Tercero</th>
                                     <th>Nombre del Tercero</th>
                                     <th>Autorizador #</th>
+                                    <th>Responsable #</th>
                                     <th>Fecha de Baja</th>
                                     <th>Tipo de Baja</th>
                                 </tr>
@@ -59,23 +60,8 @@
                 { data: 'badge_number',     name: 'badge_number' },
                 { data: 'datos_tercero',    name: 'datos_tercero' },
                 { data: 'autorizador',      name: 'autorizador' },
+                { data: 'responsable',      name: 'responsable' },
                 { data: 'low_date_fus',     name: 'low_date_fus' },
-                // {
-                //     render: function (data, type, row) {
-                //         var lowDate = new Date(row.low_date).getTime() / 1000;
-                //         var lowDateFus = new Date(row.low_date_fus).getTime() / 1000;
-                        
-                //         var showDateLow;
-
- 	            //         if(lowDate < lowDateFus) {
-                //             showDateLow = row.low_date_fus;
-                //         } else {
-                //             showDateLow = row.low_date;
-                //         }
-
-                //         return showDateLow;
-                //     }
-                // },
                 { data: 'typelow', name: 'typelow' }
             ],
             dom: 'Blfrtip',

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\ReportesTerceros;
+use App\tercerosHistorico;
 use App\ReporteResponsable;
 use App\LogBookMovements;
 use Illuminate\Support\Facades\Auth;
@@ -77,7 +78,10 @@ class TcsreportesController extends Controller
     }
 
     public function reporteTrazabilidadData() {
-        $trazabilidad = new ReportesTerceros;
+        // $trazabilidad = new ReportesTerceros;
+        
+        // return Datatables::of($trazabilidad->trazabilidad())->make(true);
+        $trazabilidad = new tercerosHistorico;
         
         return Datatables::of($trazabilidad->trazabilidad())->make(true);
     }

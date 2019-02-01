@@ -134,10 +134,26 @@ class terceros extends Model
     {
         DB::table('tcs_applications_employee')->insert($data);
     }
-    public static function new_row_fus($fus)
+    
+    public static function new_row_fus($fus, $data, $apps)
     {
-        DB::table('tcs_request_fus')->insert($fus);
+        $listApps = "";
+        
+        foreach ($apps as $value) {
+            $listApps .= $value.",";
+        }
+
+        $listApps = substr($listApps, 0, -1);
+        $data["created_at"] = date("Y-m-d H:i:s");
+        $data["status"] = 1;
+        $data["tcs_applications_ids"] = $listApps;
+
+        $fus = requestFus::create($fus);
+
+        $historico = new tercerosHistorico;
+        $historico->sustitucionHistorico($data, $fus->id);
     }
+    
     public function recuperar_idTercero()
     {
         $consultas = terceros::where("id_external", function($subquery){
@@ -148,6 +164,7 @@ class terceros extends Model
 
         return $consultas;
     }
+    
     public function cambioAutoResp($data) {
         $tercero = terceros::find($data["idTercero"]);
 
@@ -167,10 +184,10 @@ class terceros extends Model
             "low_date" => $tercero->low_date,
             "badge_number" => $tercero->badge_number,
             "email" => $tercero->email,
-            "authorizing_name" => $tercero->authorizing_name,
-            "authorizing_number" => $tercero->authorizing_number,
-            "responsible_name" => $tercero->responsible_name,
-            "responsible_number" => $tercero->responsible_number,
+            "authorizing_name" => $data["nomAuto"],
+            "authorizing_number" => $data["numAuto"],
+            "responsible_name" => $data["nomResp"],
+            "responsible_number" => $data["numResp"],
             "created_at" => $tercero->created_at,
             "status" => $tercero->status,
             "tcs_fus_ext_hist" => $tercero->tcs_fus_ext_hist,
@@ -187,9 +204,9 @@ class terceros extends Model
             $historicoTercero->sustitucionHistorico($dataHistorico, $id);
         }
 
-        $tercero->authorizing_name = strtoupper($data["nomAuto"]);
+        $tercero->authorizing_name = $data["nomAuto"];
         $tercero->authorizing_number = $data["numAuto"];
-        $tercero->responsible_name = strtoupper($data["nomResp"]);
+        $tercero->responsible_name = $data["nomResp"];
         $tercero->responsible_number = $data["numResp"];
 
         if($tercero->save()) {
@@ -207,7 +224,7 @@ class terceros extends Model
                     "authorizing_name" => strtoupper($dataR["nombre"]),
                     "authorizing_number" => $dataR["numEmpleado"]
                 );
-
+                
                 foreach ($sustitucion->get()->toArray() as $key => $value) {
                     $applicationsEmployee = new ApplicationsEmployee;
                     $aplicacionesDelTercero = "";
@@ -232,8 +249,8 @@ class terceros extends Model
                         "low_date" => $value["low_date"],
                         "badge_number" => $value["badge_number"],
                         "email" => $value["email"],
-                        "authorizing_name" => $value["authorizing_name"],
-                        "authorizing_number" => $value["authorizing_number"],
+                        "authorizing_name" => strtoupper($dataR["nombre"]),
+                        "authorizing_number" => $dataR["numEmpleado"],
                         "responsible_name" => $value["responsible_name"],
                         "responsible_number" => $value["responsible_number"],
                         "created_at" => $value["created_at"],
@@ -290,8 +307,8 @@ class terceros extends Model
                         "email" => $value["email"],
                         "authorizing_name" => $value["authorizing_name"],
                         "authorizing_number" => $value["authorizing_number"],
-                        "responsible_name" => $value["responsible_name"],
-                        "responsible_number" => $value["responsible_number"],
+                        "responsible_name" => strtoupper($dataR["nombre"]),
+                        "responsible_number" => $dataR["numEmpleado"],
                         "created_at" => $value["created_at"],
                         "status" => $value["status"],
                         "tcs_fus_ext_hist" => $tcs_fus_ext_hist,
@@ -340,8 +357,8 @@ class terceros extends Model
                         "low_date" => $value["low_date"],
                         "badge_number" => $value["badge_number"],
                         "email" => $value["email"],
-                        "authorizing_name" => $value["authorizing_name"],
-                        "authorizing_number" => $value["authorizing_number"],
+                        "authorizing_name" => strtoupper($dataR["nombre"]),
+                        "authorizing_number" => $dataR["numEmpleado"],
                         "responsible_name" => $value["responsible_name"],
                         "responsible_number" => $value["responsible_number"],
                         "created_at" => $value["created_at"],
@@ -394,8 +411,8 @@ class terceros extends Model
                         "email" => $value["email"],
                         "authorizing_name" => $value["authorizing_name"],
                         "authorizing_number" => $value["authorizing_number"],
-                        "responsible_name" => $value["responsible_name"],
-                        "responsible_number" => $value["responsible_number"],
+                        "responsible_name" => strtoupper($dataR["nombre"]),
+                        "responsible_number" => $dataR["numEmpleado"],
                         "created_at" => $value["created_at"],
                         "status" => $value["status"],
                         "tcs_fus_ext_hist" => $tcs_fus_ext_hist,
@@ -423,7 +440,6 @@ class terceros extends Model
                 }
                 break;
         }
-        
         return false;
     }
 

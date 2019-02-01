@@ -29,8 +29,8 @@ class Proveedores extends Model
             "alias",
             "description",
             DB::raw("UPPER(status) as status"),
-            "high_date",
-            "low_date"
+            DB::raw("DATE_FORMAT(high_date, '%d-%m-%Y %H:%i:%s') AS high_date"),
+            DB::raw("DATE_FORMAT(low_date, '%d-%m-%Y %H:%i:%s') AS low_date")
         )
         ->get()->toArray();
 

@@ -36,9 +36,8 @@ class tercerosHistorico extends Model
 
     public $timestamps = false;
 
-    public function trazabilidad($union = null) {
-
-        $reporteTerceros = new ReportesTerceros;
+    public function trazabilidad(/*$union = null*/) {
+        // $reporteTerceros = new ReportesTerceros;
 
         return $trazabilidad = tercerosHistorico::join(
             'tcs_request_fus', 'tcs_request_fus.id', '=', 'tcs_external_employees_hist.tcs_fus_ext_hist'
@@ -53,19 +52,19 @@ class tercerosHistorico extends Model
             'tcs_external_employees_hist.name',
             'tcs_external_employees_hist.lastname1',
             'tcs_external_employees_hist.lastname2',
-            'tcs_external_employees_hist.initial_date',
-            'tcs_external_employees_hist.low_date',
+            DB::raw("DATE_FORMAT(tcs_external_employees_hist.initial_date, '%d-%m-%Y') AS initial_date"),
+            DB::raw("DATE_FORMAT(tcs_external_employees_hist.low_date, '%d-%m-%Y') AS low_date"),
             'tcs_external_employees_hist.authorizing_name',
             'tcs_external_employees_hist.authorizing_number',
             'tcs_external_employees_hist.status AS tcs_status',
             'tcs_type_low.type AS typelow',
-            'tcs_request_fus.created_at AS low_date_fus',
+            DB::raw("DATE_FORMAT(tcs_request_fus.created_at, '%d-%m-%Y %H:%i:%s') AS low_date_fus"),
             DB::raw('UPPER(tcs_request_fus.description) as description'),
-            'tcs_request_fus.real_low_date',
+            DB::raw("DATE_FORMAT(tcs_request_fus.real_low_date, '%d-%m-%Y %H:%i:%s') AS real_low_date"),
             DB::raw('CONCAT(tcs_external_employees_hist.authorizing_name, " | ", tcs_external_employees_hist.authorizing_number) AS autorizador'),
             DB::raw('CONCAT(tcs_external_employees_hist.responsible_name, " | ", tcs_external_employees_hist.responsible_number) AS responsable')
         )
-        ->union($union)
+        // ->union($union)
         ->get()
         ->toArray();
     }
