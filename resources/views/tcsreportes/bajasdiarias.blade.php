@@ -21,7 +21,6 @@
                                     <th>Número del Empleado</th>
                                     <th># Gafete del Tercero</th>
                                     <th>Nombre del Tercero</th>
-                                    <th>Nombre del Empleado</th>
                                     <th>Autorizador #</th>
                                     <th>Fecha de Baja</th>
                                     <th>Tipo de Baja</th>
@@ -58,7 +57,6 @@
             columns: [
                 { data: 'id_external',      name: 'id_external' },
                 { data: 'badge_number',     name: 'badge_number' },
-                { data: 'datos_tercero',    name: 'datos_tercero' },
                 { data: 'datos_tercero',    name: 'datos_tercero' },
                 { data: 'autorizador',      name: 'autorizador' },
                 { data: 'low_date_fus',     name: 'low_date_fus' },

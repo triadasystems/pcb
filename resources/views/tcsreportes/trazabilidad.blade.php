@@ -18,6 +18,7 @@
                         <table class="table table-bordered" id="bajasdiarias-table">
                             <thead>
                                 <tr>
+                                    <th>Número del Empleado</th>
                                     <th># Gafete del Tercero</th>
                                     <th>Usuario del Tercero</th>
                                     <th>Fecha de Alta</th>
@@ -58,6 +59,7 @@
             
             ajax: '{!! route("trazabilidad.data") !!}',
             columns: [
+                { data: 'id_external', name: 'id_external' },
                 { data: 'badge_number', name: 'badge_number' },
                 { data: 'email', name: 'email' },
                 { data: 'initial_date', name: 'initial_date' },

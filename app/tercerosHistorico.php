@@ -47,6 +47,7 @@ class tercerosHistorico extends Model
             'tcs_type_low', 'tcs_type_low.id', '=', 'tcs_request_fus.tcs_type_low_id'
         )
         ->select(
+            'tcs_external_employees_hist.id_external',
             'tcs_external_employees_hist.badge_number', 
             'tcs_external_employees_hist.email',
             'tcs_external_employees_hist.name',

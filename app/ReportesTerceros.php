@@ -101,6 +101,7 @@ class ReportesTerceros extends Model
             'tcs_external_employees.id'
         )
         ->select(
+            'tcs_external_employees.id_external', 
             'tcs_external_employees.badge_number', 
             'tcs_external_employees.email',
             'tcs_external_employees.name',
