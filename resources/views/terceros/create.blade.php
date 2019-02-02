@@ -23,7 +23,7 @@
                     <div class="form-group row">
                         <div class="col-md-6">
                             <label for="fus" class="col-md-8 col-form-label text-md-rigth">No. de FUS/RFC</label>
-                            <input type="text" id="fus" name="fus" class="form-control{{ $errors->has('fus') ? ' is-invalid' : '' }}" value="{{ old('fus') }}">
+                            <input type="text" id="fus" name="fus" class="form-control{{ $errors->has('fus') ? ' is-invalid' : '' }}" value="{{ old('fus') }}" onKeyPress="return soloNumeros(event)">
                             @if ($errors->has('fus'))
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $errors->first('fus') }}</strong>
@@ -123,7 +123,7 @@
                     <div class="form-group row">
                         <div class="col-md-6">
                             <label for="gafete" class="col-md-12 col-form-label text-md-rigth">No. de Gafete</label>
-                            <input type="text" id="gafete" name="gafete" value="{{ old('gafete') }}" class="form-control{{ $errors->has('gafete') ? ' is-invalid' : '' }}">
+                            <input type="text" id="gafete" name="gafete" value="{{ old('gafete') }}" class="form-control{{ $errors->has('gafete') ? ' is-invalid' : '' }}" onKeyPress="return soloNumeros(event)">
                             @if ($errors->has('gafete'))
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $errors->first('gafete') }}</strong>

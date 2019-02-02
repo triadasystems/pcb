@@ -172,7 +172,7 @@ class tercerosController extends Controller
         $this->requestProp = $request->post();
         $f=$request->post("fecha_fin");
         $request->validate([
-            "fus"       => "numeric|min:1|max:2147483647|digits_between:1,10",
+            //"fus"       => "numeric|min:1|max:2147483647|digits_between:0,10",
             "gafete"    => "numeric|min:1|max:2147483647|digits_between:1,10",
             "mesa"      => "required",
             "name"      => "required|max:100|regex:/^[A-Za-z0-9[:space:]\s\S]+$/", 
