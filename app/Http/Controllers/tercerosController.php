@@ -109,7 +109,7 @@ class tercerosController extends Controller
 
         $data = array();
         foreach ($consultas as $val) {
-            $data[]= array('numero'=>$val->employee_number, 'nombre'=>$val->name);
+            $data[]= array('numero'=>$val->employee_number, 'nombre'=> str_replace("/", " ",$val->name));
         }
         if (count($data)) {
             return $data;
