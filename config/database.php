@@ -39,23 +39,23 @@ return [
             'prefix' => '',
         ],
 
-        // 'mysql' => [
-        //     'driver' => 'mysql',
-        //     'host' => '10.7.15.205',
-        //     'port' => '3329',
-        //     'database' => 'inxdix_pes', // inxdix_pes
-        //     'username' => 'template', // triada template
-        //     'password' => 'eyJpdiI6ImViWkxqTTJmTFNLRVdHSmEzTmdxekE9PSIsInZhbHVlIjoiaXhUcFlcL09yTEd1WlVmdExFdTdkUVE9PSIsIm1hYyI6IjZiMTk0N2JlMTIzMzc2YjljNzQyNjNhOTM1MGU4MWQ2MWQzNTFjMGY1NzdhYWJmODBlMmIzNjg0ZTY4MGRiMjIifQ==', // Syst3m18 Pa$$w0rd01
-        //     'charset' => 'latin1',
-        //     'collation' => 'latin1_bin',
-        //     'unix_socket' => env('DB_SOCKET', ''),
-        //     // 'charset' => 'utf8mb4',
-        //     // 'collation' => 'utf8mb4_unicode_ci',
-        //     'prefix' => '',
-        //     'strict' => true,
-        //     'engine' => null,
-        //     'encriptado' => true,
-        // ],
+        'mysql' => [
+            'driver' => 'mysql',
+            'host' => '10.7.15.205',
+            'port' => '3329',
+            'database' => 'inxdix_pes', // inxdix_pes
+            'username' => 'template', // triada template
+            'password' => 'eyJpdiI6Ind1OStXS0JaMUE5emRmV0o4aVpySnc9PSIsInZhbHVlIjoiS2kzSXVxckZmYlltVzlpT2c3Vmw4aHJvMDZ4RU9KdTZVQzFxTDhTYjlBWT0iLCJtYWMiOiIwMzJkMDVkM2E2MDAxYTcyMDVjM2E1NTk4NzQ2Zjg5YzAwZTVhOTFiZTUwZDdkNWM0YTUyYjgwZTE1ODc0NmM1In0=', // Syst3m18 Pa$$w0rd01
+            'charset' => 'latin1',
+            'collation' => 'latin1_bin',
+            'unix_socket' => env('DB_SOCKET', ''),
+            // 'charset' => 'utf8mb4',
+            // 'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => true,
+            'engine' => null,
+            'encriptado' => true,
+        ],
 
         // 'mysql' => [
         //     'driver' => 'mysql',
