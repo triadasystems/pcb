@@ -21,7 +21,10 @@ class requestFus extends Model
         'tcs_number_responsable_authorizer',
         'real_low_date',
         'users_id',
-        'fus_physical'
+        'fus_physical',
+        'initial_date',
+        'low_date',
+        'status_fus'
     ];
 
     protected $hidden = [];

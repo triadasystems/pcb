@@ -11,7 +11,8 @@ class ApplicationsEmployee extends Model
     protected $fillable = [
         'id',
         'tcs_external_employees_id',
-        'applications_id'
+        'applications_id',
+        'tcs_request_fus_id'
     ];
 
     protected $hidden = [];
