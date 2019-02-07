@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\LogBookMovements;
 use App\terceros;
+use App\AutorizadorResponsable;
+use App\Comparelaboraconcilia;
 use App\ReporteResponsable;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Auth;
@@ -54,16 +56,19 @@ class SustitucionresponsablesController extends Controller
         $request->validate([
             "nombre"  => "required|max:255|regex:/^[A-Za-z0-9[:space:]\s\S]+$/",
             "numEmpleado"  => ["required", "min:1", "max:2147483647", "digits_between:1,10", "numeric", function($attribute, $value, $fail){
-                $interfaceLabora = new InterfaceLabora;
-                $resutl = $interfaceLabora->employeeByNumber($value);
                 
-                if(count($resutl) == 0) {
+                $result = Comparelaboraconcilia::where("employee_number", "=", $value)
+                ->where("origen_id", "<>", 999)
+                ->get()
+                ->toArray();
+                
+                if(count($result) == 0) {
                     $fail("El número de empleado no existe");
                 }
             }]
         ]);
         
-        $sustitucion = new terceros;
+        $sustitucion = new AutorizadorResponsable;
         
         if($sustitucion->sustitucion($request->post()) === true) {
             $data = array(
