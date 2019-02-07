@@ -29,8 +29,6 @@
                                         <th>Id</th>
                                         <th>Nombre | Gafete</th>
                                         <th>E-mail</th>
-                                        <th>Autorizador #</th>
-                                        <th>Responsable #</th>
                                         <th>Empresa</th>
                                         <th></th>
                                     </tr>
@@ -148,8 +146,6 @@
                 { data: 'id', name: 'id' },
                 { data: 'datos_tercero', name: 'datos_tercero' },
                 { data: 'correo', name: 'correo' },
-                { data: 'autorizador', name: 'autorizador' },
-                { data: 'responsable', name: 'responsable' },
                 { data: 'empresa', name: 'empresa' },
                 {
                     render: function (data, type, row) {
@@ -173,7 +169,6 @@
             var nomResp = $(this).attr("data-nom-resp");
             var numAuto = $(this).attr("data-num-auto");
             var numResp = $(this).attr("data-num-resp");
-
             var idTercero = $(this).attr("data-id");
 
             formEditar(idTercero, nomAuto, numAuto, nomResp, numResp);

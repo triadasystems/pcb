@@ -53,12 +53,6 @@ class terceros extends Model
             'tcs_external_employees.low_date AS f_fin',
             'tcs_external_employees.badge_number AS gafete',
             'tcs_external_employees.email AS correo',
-            'tcs_external_employees.authorizing_name AS nom_autorizador',
-            'tcs_external_employees.authorizing_number AS num_autorizador',
-            DB::raw('CONCAT(tcs_external_employees.authorizing_name, " | ", tcs_external_employees.authorizing_number) AS autorizador'),
-            'tcs_external_employees.responsible_name AS nom_responsable',
-            'tcs_external_employees.responsible_number AS num_responsable',
-            DB::raw('CONCAT(tcs_external_employees.responsible_name, " | ", tcs_external_employees.responsible_number) AS responsable'),
             'tcs_external_employees.status AS estatus',
             'tcs_cat_suppliers.name AS empresa',
             'tcs_cat_suppliers.description AS des_empresa'
@@ -70,8 +64,6 @@ class terceros extends Model
             }
         })     
         ->get()->toArray();
-        //  echo "<pre>";print_r($consultas);echo "</pre>";
-        // die();
         return $consultas;
     }
 
@@ -124,30 +116,15 @@ class terceros extends Model
     }
     public static function new_row($data)
     {
-        DB::table('tcs_external_employees')->insert($data);
+        if ($n= terceros::create($data))
+        {
+            return $n->id;
+        }
+        return false;
     }
     public static function new_row_app($data)
     {
         DB::table('tcs_applications_employee')->insert($data);
-    }
-    
-    public static function new_row_fus($fus, $data, $apps)
-    {
-        $listApps = "";
-        
-        foreach ($apps as $value) {
-            $listApps .= $value.",";
-        }
-
-        $listApps = substr($listApps, 0, -1);
-        $data["created_at"] = date("Y-m-d H:i:s");
-        $data["status"] = 1;
-        $data["tcs_applications_ids"] = $listApps;
-
-        $fus = requestFus::create($fus);
-
-        $historico = new tercerosHistorico;
-        $historico->sustitucionHistorico($data, $fus->id);
     }
     
     public function recuperar_idTercero()
@@ -446,16 +423,6 @@ class terceros extends Model
             );
         }
         $this->term = $term;
-
-        // $consultas = InterfaceLabora::where("consecutive", function($query){
-        //     $query->selectRaw('max(consecutive)')->from('interface_labora')->where("origen_id", "<>", 999);
-        // })
-        // ->where(function ($query) {
-        //     $query->where("employee_number", "LIKE", $this->term."%")
-        //           ->where("origen_id", "<>", 999)
-        //           ->orWhere("name", "LIKE", "%".$this->term."%");
-        // })->limit(5)->get();
-
         $consultas = Comparelaboraconcilia::where(function ($query) {
             $query->where("employee_number", "LIKE", $this->term."%")
                   ->where("origen_id", "<>", 999)
