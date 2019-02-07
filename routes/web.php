@@ -197,3 +197,10 @@ Route::group(['prefix'=>'aplicacion','middleware'=> 'userProfileInactivo'], func
     Route::get('/alta','applicationController@alta')->name('altaAplicaciones')->middleware('writing');
     Route::post('/nuevo','applicationController@create')->name('appCreate');
 });
+// fuses
+Route::group(['prefix'=>'fus', 'middleware'=>'userProfileInactivo'], function()
+{
+    Route::get('/lista/{id}','FusController@index')->name('fuslista')->middleware('reading');
+    //Route::get('/edit/{id}','ProfilesController@edit')->name('editar')->middleware('upgrade');
+    Route::get('/anyData/{id}','FusController@anyData')->name('fus.data');
+});
