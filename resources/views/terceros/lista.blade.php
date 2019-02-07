@@ -134,7 +134,7 @@
             var url = '{!!route('terceros.alta')!!}';
             $( location).attr("href",url);
         });
-        
+               
         var table = $('#terceros-table').DataTable({
             language: {
                 url: "{{ asset('json/Spanish.json') }}"
@@ -154,7 +154,8 @@
                                     '<div class="col-lg-5 text-center">'+
                                         '<button class="btn btn-primary" id="sustituir" data-nom-auto="'+row.nom_autorizador+'" data-num-auto="'+row.num_autorizador+'" data-nom-resp="'+row.nom_responsable+'" data-num-resp="'+row.num_responsable+'" data-id="'+row.ident+'">'+
                                             'Cambio de Auto./Resp. <i class="fas fa-user-friends"></i>'+
-                                        '</button>'+
+                                        '</button>'+  
+                                        '<a class="btn btn-primary" href="../fus/lista/'+row.ident+'">Ver FUS.</a><i class="fas fa-user-friends"></i>'+
                                     '</div>'+
                                 '</div>';
 
