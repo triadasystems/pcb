@@ -3,7 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Profileusers;
 use App\LogBookMovements;
-use App\autorizador_responsable;
+use App\AutorizadorResponsable;
 use Illuminate\Support\Facades\Response;
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\Auth;
@@ -37,7 +37,7 @@ class FusController extends Controller
     }
     public function anyData($id)
     {
-        $querys = new autorizador_responsable;
+        $querys = new AutorizadorResponsable;
         
         return Datatables::of($querys->listar($id))->make(true);
     }

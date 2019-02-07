@@ -155,7 +155,7 @@
                                         '<button class="btn btn-primary" id="sustituir" data-nom-auto="'+row.nom_autorizador+'" data-num-auto="'+row.num_autorizador+'" data-nom-resp="'+row.nom_responsable+'" data-num-resp="'+row.num_responsable+'" data-id="'+row.ident+'">'+
                                             'Cambio de Auto./Resp. <i class="fas fa-user-friends"></i>'+
                                         '</button>'+  
-                                        '<a class="btn btn-primary" href="../fus/lista/'+row.ident+'">Ver FUS.</a><i class="fas fa-user-friends"></i>'+
+                                        '<a class="btn btn-primary" href="../fus/lista/'+row.ident+'">Ver FUS. <i class="fas fa-user-friends"></i></a>'+
                                     '</div>'+
                                 '</div>';
 
