@@ -252,6 +252,11 @@ class tercerosController extends Controller
         $data["email"]                  = ($request->post("email") !='') ? strtoupper($request->post("email")) : NULL;
         $data["tcs_subfijo_id"]         = $subfijo;
         $data["tcs_externo_proveedor"]  = ($request->post("empresa") !='') ? strtoupper($request->post("empresa")) : NULL;
+
+        $data["authorizing_name"]  = ($request->post("nom_auto") !='') ? strtoupper($request->post("nom_auto")) : NULL;
+        $data["authorizing_number"]  = ($request->post("num_auto") !='') ? strtoupper($request->post("num_auto")) : NULL;
+        $data["responsible_name"]  = ($request->post("nom_res") !='') ? strtoupper($request->post("nom_res")) : NULL;
+        $data["responsible_number"]  = ($request->post("num_res") !='') ? strtoupper($request->post("num_res")) : NULL;
         
         $fus = array();
         
@@ -265,9 +270,9 @@ class tercerosController extends Controller
         $fus["initial_date"]                        = ($request->post("fecha_ini") !='') ? date('Y-m-d',strtotime($request->post("fecha_ini"))) : NULL;
         $fus["low_date"]                            = ($request->post("fecha_fin") !='') ? date('Y-m-d',strtotime($request->post("fecha_fin"))) : NULL;
         try {
-            $result= $querys->new_row($data);           
+            $result = $querys->new_row($data);           
             $fus["tcs_external_employees_id"] = $result;
-            $a= new requestFus;
+            $a = new requestFus;
             $id_fus = $a->create_fus($fus);
             
             foreach ($destino as $value)

@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use App\AutorizadorResponsable;
 // use App\ReportesTerceros;
 
 class tercerosHistorico extends Model
@@ -23,7 +24,11 @@ class tercerosHistorico extends Model
         'created_at',
         'status',
         'tcs_fus_ext_hist',
-        'tcs_applications_ids'
+        'tcs_applications_ids',
+        'authorizing_name',
+        'authorizing_number',
+        'responsible_name',
+        'responsible_number'
     ];
     
     protected $hidden = [
@@ -36,7 +41,8 @@ class tercerosHistorico extends Model
         // $reporteTerceros = new ReportesTerceros;
 
         return $trazabilidad = tercerosHistorico::join(
-            'tcs_request_fus', 'tcs_request_fus.id', '=', 'tcs_external_employees_hist.tcs_fus_ext_hist'
+            'tcs_request_fus', 
+            'tcs_request_fus.id', '=', 'tcs_external_employees_hist.tcs_fus_ext_hist'
         )
         ->leftJoin(
             'tcs_type_low', 'tcs_type_low.id', '=', 'tcs_request_fus.tcs_type_low_id'
@@ -81,6 +87,11 @@ class tercerosHistorico extends Model
         $historicoTerceros->tcs_applications_ids = $data["tcs_applications_ids"];
         $historicoTerceros->tcs_subfijo_id = $data["tcs_subfijo_id"];
         $historicoTerceros->tcs_externo_proveedor = $data["tcs_externo_proveedor"];
+
+        $historicoTerceros->authorizing_name = $data["authorizing_name"];
+        $historicoTerceros->authorizing_number = $data["authorizing_number"];
+        $historicoTerceros->responsible_name = $data["responsible_name"];
+        $historicoTerceros->responsible_number = $data["responsible_number"];
         
         $historicoTerceros->save();
     }
