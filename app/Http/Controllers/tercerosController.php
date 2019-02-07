@@ -10,7 +10,11 @@ use App\Profileusers;
 use App\LogBookMovements;
 
 use App\subfijo;
+use App\requestFus;
 use App\InterfaceLabora;
+use App\Comparelaboraconcilia;
+use App\tercerosHistorico;
+use App\AutorizadorResponsable;
 use Illuminate\Support\Facades\Response;
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\Auth;
@@ -207,7 +211,7 @@ class tercerosController extends Controller
                 if($value == $this->requestProp["num_res"]) {
                     $fail("El número de empleado del autorizador no debe coincider con el del responsable");
                 }
-                $interfaceLabora = new InterfaceLabora;
+                $interfaceLabora = new Comparelaboraconcilia;
                 $resutl = $interfaceLabora->employeeByNumber($value);
                 
                 if(count($resutl) == 0) {
@@ -218,7 +222,7 @@ class tercerosController extends Controller
                 if($value == $this->requestProp["num_auto"]) {
                     $fail("El número de empleado del responsable no debe coincider con el del autorizador");
                 }
-                $interfaceLabora = new InterfaceLabora;
+                $interfaceLabora = new Comparelaboraconcilia;
                 $resutl = $interfaceLabora->employeeByNumber($value);
                 
                 if(count($resutl) == 0) {
@@ -246,10 +250,6 @@ class tercerosController extends Controller
         $data["low_date"]               = ($request->post("fecha_fin") !='') ? date('Y-m-d',strtotime($request->post("fecha_fin"))) : NULL;
         $data["badge_number"]           = ($request->post("gafete") !='') ? strtoupper($request->post("gafete")) : NULL;
         $data["email"]                  = ($request->post("email") !='') ? strtoupper($request->post("email")) : NULL;
-        $data["authorizing_name"]       = ($request->post("nom_auto") !='') ? strtoupper($request->post("nom_auto")) : NULL;
-        $data["authorizing_number"]     = ($request->post("num_auto") !='') ? strtoupper($request->post("num_auto")) : NULL;
-        $data["responsible_name"]       = ($request->post("nom_res") !='') ? strtoupper($request->post("nom_res")) : NULL;
-        $data["responsible_number"]     = ($request->post("num_res") !='') ? strtoupper($request->post("num_res")) : NULL;
         $data["tcs_subfijo_id"]         = $subfijo;
         $data["tcs_externo_proveedor"]  = ($request->post("empresa") !='') ? strtoupper($request->post("empresa")) : NULL;
         
@@ -262,21 +262,46 @@ class tercerosController extends Controller
         $fus["tcs_number_responsable_authorizer"]   = ($request->post("num_auto") !='') ? strtoupper($request->post("num_auto")) : NULL;
         $fus["users_id"]                            = Auth::user()->id;
         $fus["fus_physical"]                        = ($request->post("fus") !='') ? strtoupper($request->post("fus")) : NULL;
-        
+        $fus["initial_date"]                        = ($request->post("fecha_ini") !='') ? date('Y-m-d',strtotime($request->post("fecha_ini"))) : NULL;
+        $fus["low_date"]                            = ($request->post("fecha_fin") !='') ? date('Y-m-d',strtotime($request->post("fecha_fin"))) : NULL;
         try {
-            $querys->new_row($data);
-            $dat = $consecutivo[0]->id;
-            $result = $querys->listar_terceros($dat);            
+            $result= $querys->new_row($data);           
+            $fus["tcs_external_employees_id"] = $result;
+            $a= new requestFus;
+            $id_fus = $a->create_fus($fus);
             
-            foreach ($destino as $value) {
-                $apps["tcs_external_employees_id"] = $result[0]["ident"];
+            foreach ($destino as $value)
+            {
+                $apps["tcs_external_employees_id"] = $result;
                 $apps["applications_id"] = $value;
+                $apps["tcs_request_fus_id"] = $id_fus;
                 terceros::new_row_app($apps);     
             }
+            $auto_save = new AutorizadorResponsable;
+            $auto_save->name                =   ($request->post("nom_auto") !='') ? strtoupper($request->post("nom_auto")) : NULL;
+            $auto_save->number              =   ($request->post("num_auto") !='') ? strtoupper($request->post("num_auto")) : NULL;
+            $auto_save->type                =   1;
+            $auto_save->tcs_request_fus_id  =   $id_fus;
+            $auto_save->save();
 
-            $fus["tcs_external_employees_id"] = $result[0]["ident"];
-            terceros::new_row_fus($fus, $data, $destino);
+            $resp_save = new AutorizadorResponsable;
+            $resp_save->name                =   ($request->post("nom_res") !='') ? strtoupper($request->post("nom_res")) : NULL;
+            $resp_save->number              =   ($request->post("num_res") !='') ? strtoupper($request->post("num_res")) : NULL;
+            $resp_save->type                =   2;
+            $resp_save->tcs_request_fus_id  =   $id_fus;
+            $resp_save->save();
 
+            $listApps = "";
+            foreach ($destino as $value) {
+                $listApps .= $value.",";
+            }
+            $listApps = substr($listApps, 0, -1);
+            $data["created_at"] = date("Y-m-d H:i:s");
+            $data["status"] = 1;
+            $data["tcs_applications_ids"] = $listApps;
+            $historico = new tercerosHistorico;
+            $historico->sustitucionHistorico($data, $id_fus);
+            
             $bit = array(
                 'ip_address' => $this->ip_address_client, 
                 'description' => 'Se ha realizado la alta del tercero con ID: '.$data["id_external"],
@@ -314,8 +339,6 @@ class tercerosController extends Controller
         {
             $act_seq = $terceros->actualizar_sequence($subfijo);
             $id_external = $terceros->nextval($seq);
-            //$id_externo_cons_n = $id_external[0]->id;//consecutivo del id del externo
-            //$id_external = $id_externo_cons_n;
             return $id_external;
         } 
         elseif($id_externo_cons == $id_external_max)//cuando llega al numero maximo del consecutivo

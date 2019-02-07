@@ -50,4 +50,13 @@ class requestFus extends Model
 
         return false;
     }
+    public function create_fus($fus)
+    {
+       if ($a = requestFus::create($fus))
+       {
+           return $a->id;
+       }
+       return false;
+
+    }
 }

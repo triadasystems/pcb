@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Comparelaboraconcilia extends Model
 {
@@ -20,4 +21,14 @@ class Comparelaboraconcilia extends Model
         'consecutive',
         'operation'
     ];
+    public function employeeByNumber($number)
+    {
+        return Comparelaboraconcilia::where("employee_number", "=", $number)
+        ->where("consecutive", "=", function($subquery){
+            $subquery->select(DB::raw("max(consecutive)"))
+            ->from(with(new Comparelaboraconcilia)->getTable())->where("origen_id", "<>", 999);
+        })
+        ->get()
+        ->toArray();
+    }
 }

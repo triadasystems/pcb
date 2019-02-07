@@ -27,7 +27,8 @@ class InterfaceLabora extends Model
 
     public $timestamps = false;
 
-    public function employeeByNumber($number) {
+    public function employeeByNumber($number)
+    {
         return InterfaceLabora::where("employee_number", "=", $number)
         ->where("consecutive", "=", function($subquery){
             $subquery->select(DB::raw("max(consecutive)"))

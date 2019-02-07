@@ -75,10 +75,6 @@ class tercerosHistorico extends Model
         $historicoTerceros->low_date = $data["low_date"];
         $historicoTerceros->badge_number = $data["badge_number"];
         $historicoTerceros->email = $data["email"];
-        $historicoTerceros->authorizing_name = $data["authorizing_name"];
-        $historicoTerceros->authorizing_number = $data["authorizing_number"];
-        $historicoTerceros->responsible_name = $data["responsible_name"];
-        $historicoTerceros->responsible_number = $data["responsible_number"];
         $historicoTerceros->created_at = $data["created_at"];
         $historicoTerceros->status = $data["status"];
         $historicoTerceros->tcs_fus_ext_hist = $idFus;
