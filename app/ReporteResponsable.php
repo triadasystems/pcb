@@ -21,16 +21,11 @@ class ReporteResponsable extends Model
 
     public function reporteResponsables() {
         return $responsables = ReporteResponsable::select(
-            DB::raw("UPPER(nombre) as nombre"), 
-            'numero', 
-            DB::raw('
-                case 
-                    when SUM(tipo) = 1 then "AUTORIZADOR"
-                    when SUM(tipo) = 2 then "RESPONSABLE"
-                    when SUM(tipo) = 3 then "AUTORIZADOR/RESPONSABLE"
-                end AS tipo
-            ')
+            'nombre', 
+            'numero',
+            'tipo'
         )
-        ->groupBy('nombre', 'numero')->get()->toArray();
+        ->get()
+        ->toArray();
     }
 }
