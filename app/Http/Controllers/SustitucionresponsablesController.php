@@ -87,6 +87,41 @@ class SustitucionresponsablesController extends Controller
         return Response::json(false);
     }
 
+    public function updateindividual(Request $request) {
+        $request->validate([
+            "nombre"  => "required|max:255|regex:/^[A-Za-z0-9[:space:]\s\S]+$/",
+            "numEmpleado"  => ["required", "min:1", "max:2147483647", "digits_between:1,10", "numeric", function($attribute, $value, $fail){
+                
+                $result = Comparelaboraconcilia::where("employee_number", "=", $value)
+                ->where("origen_id", "<>", 999)
+                ->get()
+                ->toArray();
+                
+                if(count($result) == 0) {
+                    $fail("El número de empleado no existe");
+                }
+            }]
+        ]);
+        
+        $sustitucion = new AutorizadorResponsable;
+        
+        if($sustitucion->sustitucionIndividual($request->post()) === true) {
+            $data = array(
+                'ip_address' => $this->ip_address_client, 
+                'description' => 'Se ha realizado sustitución de un Autorizador/Responsable',
+                'tipo' => 'modificacion',
+                'id_user' => Auth::user()->id
+            );
+            
+            $bitacora = new LogBookMovements;
+            $bitacora->guardarBitacora($data);
+
+            return Response::json(true);
+        }
+
+        return Response::json(false);
+    }
+
     public function permisosSustitucion() {}        
     public function cambioStatus() {}
 }

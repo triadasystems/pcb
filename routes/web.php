@@ -183,6 +183,7 @@ Route::group(['prefix' =>'responsables', 'middleware' => 'userProfileInactivo'],
     Route::get('/listadata','SustitucionresponsablesController@responsablesData')->name('sustitucionrespauth.data');
 
     Route::put('/update', 'SustitucionresponsablesController@update')->name('sustitucion');
+    Route::put('/updateindividual', 'SustitucionresponsablesController@updateindividual')->name('sustitucionindividual');
 
     Route::get('/permisossustitucion','SustitucionresponsablesController@permisosSustitucion')->name('permisossustitucion');
     Route::put('/cambiostatussustitucion','SustitucionresponsablesController@cambioStatus')->name('editarstatussustitucion');

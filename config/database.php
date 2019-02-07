@@ -43,7 +43,7 @@ return [
             'driver' => 'mysql',
             'host' => '10.7.15.205',
             'port' => '3329',
-            'database' => 'inxdix_pes', // inxdix_pes
+            'database' => 'portal_pcb', // inxdix_pes
             'username' => 'template', // triada template
             'password' => 'eyJpdiI6Ind1OStXS0JaMUE5emRmV0o4aVpySnc9PSIsInZhbHVlIjoiS2kzSXVxckZmYlltVzlpT2c3Vmw4aHJvMDZ4RU9KdTZVQzFxTDhTYjlBWT0iLCJtYWMiOiIwMzJkMDVkM2E2MDAxYTcyMDVjM2E1NTk4NzQ2Zjg5YzAwZTVhOTFiZTUwZDdkNWM0YTUyYjgwZTE1ODc0NmM1In0=', // Syst3m18 Pa$$w0rd01
             'charset' => 'latin1',
@@ -74,23 +74,23 @@ return [
         //     'engine' => null,
         // ],
         
-        'mysql' => [
-            'driver' => 'mysql',
-            'host' => '10.7.6.177',
-            'port' => '3306',
-            'database' => 'pes2018_prod',
-            'username' => 'triada', // triada
-            'password' => 'eyJpdiI6Imx3YkNoWFAyMFpHUnNaNzdHbWcrOHc9PSIsInZhbHVlIjoiWVhhalwvaGxMbmVzcE5LWXRnY0xuY1E9PSIsIm1hYyI6IjcxNTUzN2M5ZTc5ZDJiNTdmODRmOGUxODIwNWVkN2ZkZDZlZDRmOGQzYzc0NzZhM2Q4Y2I2M2E0ZTUwNzM5YmIifQ==',
-            'charset' => 'latin1',
-            'collation' => 'latin1_bin',
-            'unix_socket' => env('DB_SOCKET', ''),
-            // 'charset' => 'utf8mb4',
-            // 'collation' => 'utf8mb4_unicode_ci',
-            'prefix' => '',
-            'strict' => true,
-            'engine' => null,
-            'encriptado' => true,
-        ],
+        // 'mysql' => [
+        //     'driver' => 'mysql',
+        //     'host' => '10.7.6.177',
+        //     'port' => '3306',
+        //     'database' => 'pes2018_prod',
+        //     'username' => 'triada', // triada
+        //     'password' => 'eyJpdiI6Imx3YkNoWFAyMFpHUnNaNzdHbWcrOHc9PSIsInZhbHVlIjoiWVhhalwvaGxMbmVzcE5LWXRnY0xuY1E9PSIsIm1hYyI6IjcxNTUzN2M5ZTc5ZDJiNTdmODRmOGUxODIwNWVkN2ZkZDZlZDRmOGQzYzc0NzZhM2Q4Y2I2M2E0ZTUwNzM5YmIifQ==',
+        //     'charset' => 'latin1',
+        //     'collation' => 'latin1_bin',
+        //     'unix_socket' => env('DB_SOCKET', ''),
+        //     // 'charset' => 'utf8mb4',
+        //     // 'collation' => 'utf8mb4_unicode_ci',
+        //     'prefix' => '',
+        //     'strict' => true,
+        //     'engine' => null,
+        //     'encriptado' => true,
+        // ],
 
         // 'mysql' => [
         //     'driver' => 'mysql',

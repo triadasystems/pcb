@@ -13,6 +13,7 @@ class FusController extends Controller
 {
     public $ip_address_client;
     protected $requestProp;
+    
     public function __construct()
     {
         $this->ip_address_client = getIpAddress();

@@ -122,19 +122,119 @@ class AutorizadorResponsable extends Model
         }
     }
 
+    public function sustitucionIndividual($dataR) {
+        $sustitucion = AutorizadorResponsable::where('id', '=', $dataR["idRespActual"]);
+        $fields = array(
+            "status" => 2
+        );
+        
+        try {
+            $aCambiar = $sustitucion->first()->toArray();
+            
+            $nuevo = new AutorizadorResponsable;
+            $nuevo->name = $dataR["nombre"];
+            $nuevo->number = $dataR["numEmpleado"];
+            $nuevo->type = $dataR["tipo"];
+            $nuevo->tcs_request_fus_id = $dataR["idfus"];
+            
+            $applicationsEmployee = new ApplicationsEmployee;
+            $aplicacionesDelTercero = "";
+            
+            $fus = requestFus::find($dataR["idfus"]);
+
+            $aplicaciones = $applicationsEmployee->applicationEmployeeById($fus->tcs_external_employees_id);
+            
+            foreach($aplicaciones as $row) {
+                $aplicacionesDelTercero .= $row["applications_id"].",";
+            }
+
+            $aplicacionesDelTercero = substr($aplicacionesDelTercero, 0, -1);
+
+            switch ($dataR["tipo"]) {
+                case 1:
+                    $contrarioaldelaPosicion = AutorizadorResponsable::where("type", "=", 2)
+                    ->where("status", "=", 1)
+                    ->where("tcs_request_fus_id", "=", $dataR["idfus"])
+                    ->get()
+                    ->toArray();
+                    
+                    $authorizing_name = $dataR["nombre"];
+                    $authorizing_number = $dataR["numEmpleado"];
+                    $responsible_name = $contrarioaldelaPosicion[0]["name"];
+                    $responsible_number = $contrarioaldelaPosicion[0]["number"];
+                    break;
+                
+                case 2:
+                    $contrarioaldelaPosicion = AutorizadorResponsable::where("type", "=", 1)
+                    ->where("status", "=", 1)
+                    ->where("tcs_request_fus_id", "=", $dataR["idfus"])
+                    ->get()
+                    ->toArray();
+                    
+                    $authorizing_name = $contrarioaldelaPosicion[0]["name"];
+                    $authorizing_number = $contrarioaldelaPosicion[0]["number"];
+                    $responsible_name = $dataR["nombre"];
+                    $responsible_number = $dataR["numEmpleado"];
+                    break;
+            }
+            
+            $tercero = terceros::find($fus->tcs_external_employees_id);
+                
+            $dataHistorico = array(
+                "id_external" => $tercero->id_external,
+                "name" => $tercero->name,
+                "lastname1" => $tercero->lastname1,
+                "lastname2" => $tercero->lastname2,
+                "initial_date" => $tercero->initial_date,
+                "low_date" => $tercero->low_date,
+                "badge_number" => $tercero->badge_number,
+                "email" => $tercero->email,
+                "created_at" => $tercero->created_at,
+                "status" => $tercero->status,
+                "tcs_fus_ext_hist" => $dataR["idfus"],
+                "tcs_applications_ids" => $aplicacionesDelTercero,
+                "tcs_subfijo_id" => $tercero->tcs_subfijo_id,
+                "tcs_externo_proveedor" => $tercero->tcs_externo_proveedor,
+
+                "authorizing_name" => $authorizing_name,
+                "authorizing_number" => $authorizing_number,
+                "responsible_name" => $responsible_name,
+                "responsible_number" => $responsible_number
+            );
+
+            if($nuevo->save()) {
+                unset($nuevo);
+                
+                $sustitucion->update($fields);
+
+                $historicoTercero = new tercerosHistorico;
+                $historicoTercero->sustitucionHistorico($dataHistorico, $dataR["idfus"]);
+            }
+
+            return true;
+        } catch(Exception $e) {
+            return false;
+        }
+    }
+
     public function listar($id)
     {
-        $consultas = autorizador_responsable::select(
+        $consultas = AutorizadorResponsable::select(
+            'tcs_request_fus.id AS idfus',
             'tcs_request_fus.id_generate_fus AS fus',
-            'tcs_autorizador_responsable.name AS nombre ',
-            'tcs_autorizador_responsable.number as numero',
+            'tcs_autorizador_responsable.id AS idRespActual',
+            'tcs_autorizador_responsable.name AS nombre',
+            'tcs_autorizador_responsable.number AS numero',
+            'tcs_autorizador_responsable.type AS tipoNum',
             DB::raw('CONCAT(tcs_autorizador_responsable.name," | ",tcs_autorizador_responsable.number) AS datos_fus'),
             DB::raw('if(tcs_autorizador_responsable.type=1, "Autorizador", "Responsable") AS tipo'),
             'tcs_request_fus.description AS descripcion')
         ->join('tcs_request_fus','tcs_autorizador_responsable.tcs_request_fus_id','=','tcs_request_fus.id')
         ->where('tcs_autorizador_responsable.status','=','1')
         ->where('tcs_request_fus.tcs_external_employees_id','=',$id)
-        ->get()->toArray(); 
-        return $consultas; 
+        ->get()
+        ->toArray(); 
+        
+        return $consultas;
     }
 }
