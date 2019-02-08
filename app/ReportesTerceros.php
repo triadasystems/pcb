@@ -76,21 +76,33 @@ class ReportesTerceros extends Model
             ->where("tcs_external_employees_id", "=", $value["id"])
             ->where("tcs_request_fus.type", "=", 1)
             ->where("tcs_autorizador_responsable.status", "=", 1)
+            ->distinct()
             ->get()
             ->toArray();
             
             foreach($auto_resp as $ind => $val) {
                 switch ($val["tipo"]) {
                     case 1:
-                        $value["autorizador"] = $val["name"]." | ".$val["number"];
+                        if(!isset($value["autorizador"])) {
+                            $value["autorizador"] = $val["name"]." | ".$val["number"].",";
+                        } else {
+                            $value["autorizador"] .= $val["name"]." | ".$val["number"].",";
+                        }
                     
                         break;    
                     case 2:
-                        $value["responsable"] = $val["name"]." | ".$val["number"];
+                        if(!isset($value["responsable"])) {
+                            $value["responsable"] = $val["name"]." | ".$val["number"].",";
+                        } else {
+                            $value["responsable"] .= $val["name"]." | ".$val["number"].",";
+                        }
                         
                         break;
                 }
             }
+            
+            $value["autorizador"] = substr($value["autorizador"], 0, -1);
+            $value["responsable"] = substr($value["responsable"], 0, -1);
             
             $response[] = $value;
         }
@@ -101,6 +113,7 @@ class ReportesTerceros extends Model
     public function activos() {
         $activos = ReportesTerceros::join('tcs_request_fus', 'tcs_request_fus.tcs_external_employees_id', '=', 'tcs_external_employees.id')
         ->select(
+            'tcs_external_employees.id',
             'tcs_request_fus.id_generate_fus',
             'tcs_external_employees.badge_number', 
             'tcs_external_employees.email',
@@ -121,7 +134,7 @@ class ReportesTerceros extends Model
 
         foreach($activos as $key => $value) {
             $auto_resp = requestFus::select(
-                'wwname',
+                'name',
                 'number',
                 'tcs_autorizador_responsable.type AS tipo'
             )
@@ -134,27 +147,34 @@ class ReportesTerceros extends Model
             ->where("tcs_external_employees_id", "=", $value["id"])
             ->where("tcs_request_fus.type", "=", 1)
             ->where("tcs_autorizador_responsable.status", "=", 1)
+            ->distinct()
             ->get()
             ->toArray();
             
-            $autorizador = '';
-            $responsable = '';
-
             foreach($auto_resp as $ind => $val) {
                 switch ($val["tipo"]) {
                     case 1:
-                        $autorizador .= $val["name"]." | ".$val["number"].",";
+                        if(!isset($value["autorizador"])) {
+                            $value["autorizador"] = $val["name"]." | ".$val["number"].",";
+                        } else {
+                            $value["autorizador"] .= $val["name"]." | ".$val["number"].",";
+                        }
                     
                         break;    
                     case 2:
-                        $responsable .= $val["name"]." | ".$val["number"].",";
+                        if(!isset($value["responsable"])) {
+                            $value["responsable"] = $val["name"]." | ".$val["number"].",";
+                        } else {
+                            $value["responsable"] .= $val["name"]." | ".$val["number"].",";
+                        }
                         
                         break;
                 }
             }
-            $value["autorizador"] = substr($autorizador, 0, -1);
-            $value["responsable"] = substr($responsable, 0, -1);
-
+            
+            $value["autorizador"] = substr($value["autorizador"], 0, -1);
+            $value["responsable"] = substr($value["responsable"], 0, -1);
+            
             $response[] = $value;
         }
 

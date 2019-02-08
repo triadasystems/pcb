@@ -58,6 +58,7 @@ class terceros extends Model
             'tcs_cat_suppliers.description AS des_empresa'
         )
         ->join('tcs_cat_suppliers', 'tcs_external_employees.tcs_externo_proveedor', '=', 'tcs_cat_suppliers.id')
+        ->where('tcs_external_employees.status', '=', 1)
         ->where(function ($query) {
             if ($this->datt != 0) {
                 $query->where('tcs_external_employees.id_external', '=', $this->datt);

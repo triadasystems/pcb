@@ -152,43 +152,41 @@
         });   
     }
 
+    @if (session('confirmacion'))
+        swal(
+            'FUS registrado',
+            'La operación se ha realizado con éxito.',
+            'success'
+        )
+    @endif
+    
     var table = $('#fus-table').DataTable({
-    $(document).ready(function() {
-        @if (session('confirmacion'))
-            swal(
-                'FUS registrado',
-                'La operación se ha realizado con éxito.',
-                'success'
-            )
-        @endif
-        
-        var table = $('#fus-table').DataTable({
-            language: {
-                url: "{{ asset('json/Spanish.json') }}"
-            },
-            processing: true,
-            serverSide: true,
-            ajax: '{!! route("fus.data", $id) !!}',
-            columns: [
-                {data: 'fus', name: 'fus'},
-                {data: 'datos_fus', name: 'datos_fus'},
-                {data: 'tipo', name: 'tipo'},
-                {data: 'descripcion', name: 'descripcion'},
-                {
-                    render: function (data, type, row) {
-                        var html = '';
-                        html = '<div class="row">'+
-                                    '<div class="col-lg-12 text-center">'+
-                                        '<button class="btn btn-primary" id="sustituir" data-nom="'+row.nombre+'" data-num="'+row.numero+'" data-tipo="'+row.tipoNum+'" data-id-fus="'+row.idfus+'" data-id-responsable="'+row.idRespActual+'">'+
-                                            'Cambio de Auto./Resp. <i class="fas fa-user-friends"></i>'+
-                                        '</button>'+
-                                    '</div>'+
-                                '</div>';
+        language: {
+            url: "{{ asset('json/Spanish.json') }}"
+        },
+        processing: true,
+        serverSide: true,
+        ajax: '{!! route("fus.data", $id) !!}',
+        columns: [
+            {data: 'fus', name: 'fus'},
+            {data: 'datos_fus', name: 'datos_fus'},
+            {data: 'tipo', name: 'tipo'},
+            {data: 'descripcion', name: 'descripcion'},
+            {
+                render: function (data, type, row) {
+                    var html = '';
+                    html = '<div class="row">'+
+                                '<div class="col-lg-12 text-center">'+
+                                    '<button class="btn btn-primary" id="sustituir" data-nom="'+row.nombre+'" data-num="'+row.numero+'" data-tipo="'+row.tipoNum+'" data-id-fus="'+row.idfus+'" data-id-responsable="'+row.idRespActual+'">'+
+                                        'Cambio de Auto./Resp. <i class="fas fa-user-friends"></i>'+
+                                    '</button>'+
+                                '</div>'+
+                            '</div>';
 
-                        return html;
-                    }
-                },
-            ]
+                    return html;
+                }
+            },
+        ]
     });
 
     var validaRequired = 0;
