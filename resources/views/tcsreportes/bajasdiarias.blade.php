@@ -18,6 +18,7 @@
                         <table class="table table-bordered" id="bajasdiarias-table">
                             <thead>
                                 <tr>
+                                    <th>Quién Realizo</th>
                                     <th>Número del Empleado</th>
                                     <th># Gafete del Tercero</th>
                                     <th>Nombre del Tercero</th>
@@ -56,6 +57,7 @@
             
             ajax: '{!! route("bajasdiarias.data") !!}',
             columns: [
+                { data: 'quien_realizo',      name: 'quien_realizo' },
                 { data: 'id_external',      name: 'id_external' },
                 { data: 'badge_number',     name: 'badge_number' },
                 { data: 'datos_tercero',    name: 'datos_tercero' },

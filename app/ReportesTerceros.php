@@ -38,7 +38,9 @@ class ReportesTerceros extends Model
     public function bajasDiarias() {
         $bajasDiarias = ReportesTerceros::join('tcs_request_fus', 'tcs_request_fus.tcs_external_employees_id', '=', 'tcs_external_employees.id')
         ->join('tcs_type_low', 'tcs_type_low.id', '=', 'tcs_request_fus.tcs_type_low_id')
+        ->join('tcs_users_sessions', 'tcs_users_sessions.id', '=', 'tcs_request_fus.users_id')
         ->select(
+            DB::raw('CONCAT(tcs_users_sessions.name, " | ", tcs_users_sessions.noEmployee) AS quien_realizo'),
             'tcs_external_employees.id',
             'tcs_external_employees.id_external',
             'tcs_external_employees.badge_number', 
