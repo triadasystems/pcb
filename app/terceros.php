@@ -67,6 +67,12 @@ class terceros extends Model
         ->get()->toArray();
         return $consultas;
     }
+    public function fecha_fin($id)
+    {
+        $query= terceros::select('low_date AS f_fin')
+        ->where('id','=',$id)->get()->toArray();
+        return $query;
+    }
 
     public static function empresas() {
         $sql="SELECT id, `name` FROM tcs_cat_suppliers WHERE `status`='Activo'";
@@ -447,4 +453,15 @@ class terceros extends Model
             );
         }
     }
+
+
+
+
+
+
+
+
+
+
+    
 }

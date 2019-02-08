@@ -9,6 +9,7 @@ use App\AutorizadorResponsable;
 
 use App\terceros;
 use App\Comparelaboraconcilia;
+use App\tercerosHistorico;
 use App\requestFus;
 
 use Illuminate\Support\Facades\Response;
@@ -126,10 +127,18 @@ class FusController extends Controller
         $fus["initial_date"]                        = ($request->post("fecha_ini") !='') ? date('Y-m-d',strtotime($request->post("fecha_ini"))) : NULL;
         $fus["low_date"]                            = ($request->post("fecha_fin") !='') ? date('Y-m-d',strtotime($request->post("fecha_fin"))) : NULL;
         $fus["tcs_external_employees_id"]           = ($request->post("tercero") !='') ? strtoupper($request->post("tercero")) : NULL;
+        $id_t=$request->post("tercero");
+        $b = new terceros;
+        $c=$b->fecha_fin($id_t);
+        $ff_t= $c[0]['f_fin'];
+        $ff_f= date('Y-m-d',strtotime($request->post("fecha_fin")));    
         
         try {
             $a = new requestFus;
+            
             $id_fus = $a->create_fus($fus);
+            
+
 
             foreach ($destino as $value)
             {
@@ -151,6 +160,44 @@ class FusController extends Controller
             $resp_save->type                =   2;
             $resp_save->tcs_request_fus_id  =   $id_fus;
             $resp_save->save();
+            if (strtotime($ff_f) > strtotime($ff_t))
+            {    
+                $val=terceros::find($request->post("tercero"));       
+                $val->low_date  =   $ff_f;
+                $val->save();
+            }
+
+            $listApps = "";
+            foreach ($destino as $value) {
+                $listApps .= $value.",";
+            }
+            $listApps = substr($listApps, 0, -1);
+            
+            $tercero = terceros::find($request->post("tercero"));
+            $data = array(
+                "id_external" => $tercero->id_external,
+                "name" => $tercero->name,
+                "lastname1" => $tercero->lastname1,
+                "lastname2" => $tercero->lastname2,
+                "initial_date" => $tercero->initial_date,
+                "low_date" => $tercero->low_date,
+                "badge_number" => $tercero->badge_number,
+                "email" => $tercero->email,
+                "created_at" => $tercero->created_at,
+                "status" => $tercero->status,
+                "tcs_fus_ext_hist" => $id_fus,
+                "tcs_applications_ids" => $listApps,
+                "tcs_subfijo_id" => $tercero->tcs_subfijo_id,
+                "tcs_externo_proveedor" => $tercero->tcs_externo_proveedor,
+
+                "authorizing_name" => strtoupper($request->post("nom_auto")),
+                "authorizing_number" => $request->post("num_auto"),
+                "responsible_name" => strtoupper($request->post("nom_res")),
+                "responsible_number" => $request->post("num_res")
+            );
+
+            $historico = new tercerosHistorico;
+            $historico->sustitucionHistorico($data, $id_fus);
 
             $bit = array(
                 'ip_address' => $this->ip_address_client, 
@@ -161,7 +208,7 @@ class FusController extends Controller
             
             $bitacora = new LogBookMovements;
             $bitacora->guardarBitacora($bit);
-            return redirect()->route('fuslista',$id_fus)->with('confirmacion','1');
+            return redirect()->route('fuslista',$request->post("tercero"))->with('confirmacion','1');
 
         } 
         catch (Exception $e) 
