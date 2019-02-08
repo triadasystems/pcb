@@ -31,6 +31,7 @@
                                         <th>E-mail</th>
                                         <th>Empresa</th>
                                         <th></th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                             </table>  
@@ -159,6 +160,17 @@
                                     '</div>'+
                                 '</div>';
 
+                        return html;
+                    }
+                },
+                {
+                    render: function (data, type, row) {
+                        var html = '';
+                        html = '<div class="row">'+
+                            '<div class="col-lg-5 text-center">'+
+                                '<a class="btn btn-primary" href="../fus/agregar/'+row.ident+'">Alta de FUS. <i class="glyphicon glyphicon-plus"></i></a>'+
+                            '</div>'+
+                        '</div>';
                         return html;
                     }
                 },

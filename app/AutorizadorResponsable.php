@@ -124,7 +124,7 @@ class AutorizadorResponsable extends Model
 
     public function listar($id)
     {
-        $consultas = autorizador_responsable::select(
+        $consultas = AutorizadorResponsable::select(
             'tcs_request_fus.id_generate_fus AS fus',
             'tcs_autorizador_responsable.name AS nombre ',
             'tcs_autorizador_responsable.number as numero',

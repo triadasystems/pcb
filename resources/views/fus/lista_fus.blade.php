@@ -37,7 +37,15 @@
 @endsection
 @push('scripts')
 <script>
-    var table=$('#fus-table').DataTable({
+$(document).ready(function() {
+    @if (session('confirmacion'))
+            swal(
+                'FUS registrado',
+                'La operación se ha realizado con éxito.',
+                'success'
+            )
+        @endif
+        var table=$('#fus-table').DataTable({
         language: {
                 url: "{{ asset('json/Spanish.json') }}"
             },
@@ -51,5 +59,6 @@
                 {data: 'descripcion', name: 'descripcion'}
             ]
     });
+});
 </script>
 @endpush

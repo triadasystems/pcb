@@ -201,6 +201,7 @@ Route::group(['prefix'=>'aplicacion','middleware'=> 'userProfileInactivo'], func
 Route::group(['prefix'=>'fus', 'middleware'=>'userProfileInactivo'], function()
 {
     Route::get('/lista/{id}','FusController@index')->name('fuslista')->middleware('reading');
-    //Route::get('/edit/{id}','ProfilesController@edit')->name('editar')->middleware('upgrade');
     Route::get('/anyData/{id}','FusController@anyData')->name('fus.data');
+    Route::get('/agregar/{id}','FusController@agregar')->name('fus.nuevo')->middleware('upgrade');
+    Route::post('/insertar', 'FusController@insertar')->name('newfus');
 });
