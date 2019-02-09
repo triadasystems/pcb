@@ -42,7 +42,7 @@ class Proveedores extends Model
         $proveedor->name = mb_strtoupper($data["name"]);
         $proveedor->alias = mb_strtoupper($data["alias"]);
         $proveedor->description = mb_strtoupper($data["description"]);
-        $proveedor->high_date = date("Y-m-d H:m:i");
+        //$proveedor->high_date = date("Y-m-d H:m:i");
 
         if($proveedor->save()) {
             return true;

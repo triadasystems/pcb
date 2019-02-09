@@ -75,7 +75,7 @@ class terceros extends Model
     }
 
     public static function empresas() {
-        $sql="SELECT id, `name` FROM tcs_cat_suppliers WHERE `status`='Activo'";
+        $sql="SELECT id, concat(`alias`,' | ',`name`) as `name` FROM tcs_cat_suppliers WHERE `status`='Activo'";
         $consultas = DB::select(DB::raw($sql));
         return $consultas;
     }
@@ -87,7 +87,7 @@ class terceros extends Model
     }
     public static function mesa()
     {
-        $sql="SELECT id, `name` FROM tcs_cat_helpdesk WHERE `status`='Activo' ORDER BY `name` ASC";
+        $sql="SELECT id, concat(`alias`,' | ',`name`) as `name` FROM tcs_cat_helpdesk WHERE `status`='Activo' ORDER BY `name` ASC";
         $consultas = DB::select(DB::raw($sql));
         return $consultas;
     }
