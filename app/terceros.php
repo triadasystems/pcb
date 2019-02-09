@@ -452,16 +452,5 @@ class terceros extends Model
                 'response' => 'No se encontró el registro'
             );
         }
-    }
-
-
-
-
-
-
-
-
-
-
-    
+    } 
 }

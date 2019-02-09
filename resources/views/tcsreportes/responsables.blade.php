@@ -18,8 +18,8 @@
                         <table class="table table-bordered" id="responsables-table">
                             <thead>
                                 <tr>
-                                    <th># de Empleado</th>
-                                    <th>Nombre del Autorizador/Responsable</th>
+                                    <th>#&nbsp;de&nbsp;Empleado</th>
+                                    <th>Nombre&nbsp;del&nbsp;Autorizador/Responsable</th>
                                     <th>Tipo</th>
                                 </tr>
                             </thead>

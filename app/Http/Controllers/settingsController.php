@@ -55,13 +55,13 @@ class settingsController extends Controller
         $tipo = $request->post("tipo");
         $bitacora = new LogBookMovements;
 
-        if ($tipo==1) {
+        if ($tipo == 1) {
             $request->validate([
-                "subfijo_nuevo"  => "required|digits_between:1,2|numeric|gte:old_sub"
+                "subfijo"  => "required|digits_between:1,2|numeric|gte:old_sub|unique:tcs_subfijo"
             ]);
 
             $old = $request->post("old_sub");
-            $new = $request->post("subfijo_nuevo");
+            $new = $request->post("subfijo");
             if ($old < $new) {
                 try {
                     $sub['subfijo'] = $new;

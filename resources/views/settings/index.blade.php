@@ -26,10 +26,10 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form">Sufijo nuevo</label>
-                                    <input type ="text" class="form-control{{ $errors->has('subfijo_nuevo') ? ' is-invalid' : '' }}" value="{{ old('subfijo_nuevo') }}" name="subfijo_nuevo" id="subfijo_nuevo"/>
-                                    @if ($errors->has('subfijo_nuevo'))
+                                    <input type ="text" class="form-control{{ $errors->has('subfijo') ? ' is-invalid' : '' }}" value="{{ old('subfijo') }}" name="subfijo" id="subfijo"/>
+                                    @if ($errors->has('subfijo'))
                                         <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('subfijo_nuevo') }}</strong>
+                                            <strong>{{ $errors->first('subfijo') }}</strong>
                                         </span>
                                     @endif
                                 </div>

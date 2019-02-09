@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-lg-12">
             <div class="card">
@@ -18,12 +18,13 @@
                         <table class="table table-bordered" id="tcsactivos-table">
                             <thead>
                                 <tr>
-                                    <th># Gafete del Tercero</th>
-                                    <th>Nombre del Empleado</th>
-                                    <th>Fecha Inicial</th>
-                                    <th>Fecha de Baja</th>
-                                    <th>Autorizador #</th>
-                                    <th>Responsable #</th>
+                                    <th>#&nbsp;Gafete&nbsp;del&nbsp;Tercero</th>
+                                    <th>Número&nbsp;del&nbsp;Empleado</th>
+                                    <th>Nombre&nbsp;del&nbsp;Empleado</th>
+                                    <th>Fecha&nbsp;Inicial</th>
+                                    <th>Fecha&nbsp;de&nbsp;Baja</th>
+                                    <th>Autorizador&nbsp;#</th>
+                                    <th>Responsable&nbsp;#</th>
                                 </tr>
                             </thead>
                         </table>  
@@ -56,6 +57,7 @@
             ajax: '{!! route("tercerosactivos.data") !!}',
             columns: [
                 { data: 'badge_number', name: 'badge_number' },
+                { data: 'id_external', name: 'id_external' },
                 { data: 'datos_tercero', name: 'datos_tercero' },                
                 { data: 'initial_date', name: 'initial_date' },
                 { data: 'low_date', name: 'low_date' },

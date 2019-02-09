@@ -18,16 +18,16 @@
                         <table class="table table-bordered" id="bajasdiarias-table">
                             <thead>
                                 <tr>
-                                    <th>Número del Empleado</th>
-                                    <th># Gafete del Tercero</th>
-                                    <th>Usuario del Tercero</th>
-                                    <th>Fecha de Alta</th>
-                                    <th>Tipo de Movimiento</th>
-                                    <th>Autorizador #</th>
-                                    <th>Responsable #</th>
-                                    <th>Fecha Captura de Baja</th>
-                                    <th>Motivo Baja</th>
-                                    <th>Fecha Efectiva de Baja</th>
+                                    <th>Número&nbsp;del&nbsp;Empleado</th>
+                                    <th>#&nbsp;Gafete&nbsp;del&nbsp;Tercero</th>
+                                    <th>Usuario&nbsp;del&nbsp;Tercero</th>
+                                    <th>Fecha&nbsp;de&nbsp;Alta</th>
+                                    <th>Tipo&nbsp;de&nbsp;Movimiento</th>
+                                    <th>Autorizador&nbsp;#</th>
+                                    <th>Responsable&nbsp;#</th>
+                                    <th>Fecha&nbsp;Captura&nbsp;de&nbsp;Baja</th>
+                                    <th>Motivo&nbsp;Baja</th>
+                                    <th>Fecha&nbsp;Efectiva&nbsp;de&nbsp;Baja</th>
                                 </tr>
                             </thead>
                         </table>  

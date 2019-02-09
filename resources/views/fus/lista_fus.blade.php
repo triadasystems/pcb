@@ -26,6 +26,7 @@
                                 <thead>
                                     <tr>
                                         <th>No. FUS</th>
+                                        <th>FUS Físico</th>
                                         <th>Nombre / #</th>
                                         <th>Cargo</th>
                                         <th>Tipo</th>
@@ -169,6 +170,7 @@
         ajax: '{!! route("fus.data", $id) !!}',
         columns: [
             {data: 'fus', name: 'fus'},
+            {data: 'fus_fisico', name: 'fus_fisico'},
             {data: 'datos_fus', name: 'datos_fus'},
             {data: 'tipo', name: 'tipo'},
             {data: 'descripcion', name: 'descripcion'},

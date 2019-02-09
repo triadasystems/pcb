@@ -19,7 +19,7 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">Motivos de Proveedores</div>
+                <div class="card-header">Proveedores</div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -42,8 +42,8 @@
                                         <th scope="col">Nombre</th>
                                         <th scope="col">Descripción</th>
                                         <th scope="col">Estado</th>
-                                        <th scope="col">Fecha de Alta</th>
-                                        <th scope="col">Fecha de Baja</th>
+                                        <th scope="col">Fecha&nbsp;de&nbsp;Alta</th>
+                                        <th scope="col">Fecha&nbsp;de&nbsp;Baja</th>
                                         <th scope="col">Edición</th>
                                         <th scope="col">Modificación de Estado</th>
                                     </tr>
@@ -190,7 +190,7 @@
                             '<input type="hidden" name="id" id="idProveedor" value="'+id+'">'+
                             '<div class="form-group row">'+
                                 '<div class="col-md-6">'+
-                                    '<label for="name" class="col-lg-12 col-form-label text-left txt-bold">Nombre</label>'+
+                                    '<label for="name" class="col-lg-12 col-form-label text-left txt-bold">Nombre<span style="color: red;">*</span></label>'+
                                     '<input id="name" type="text" class="form-control" name="name" required autofocus value="'+name+'">'+
 
                                     '<span id="errmsj_name" class="error-msj" role="alert">'+
@@ -198,7 +198,7 @@
                                     '</span>'+
                                 '</div>'+
                                 '<div class="col-md-6">'+
-                                    '<label for="alias" class="col-lg-12 col-form-label text-left txt-bold">Alias</label>'+
+                                    '<label for="alias" class="col-lg-12 col-form-label text-left txt-bold">Alias<span style="color: red;">*</span></label>'+
                                     '<input id="alias" type="text" class="form-control" name="alias" required autofocus value="'+alias+'">'+
 
                                     '<span id="errmsj_alias" class="error-msj" role="alert">'+
@@ -208,7 +208,7 @@
                             '</div>'+
                             '<div class="form-group row">'+
                                 '<div class="col-md-12">'+
-                                    '<label for="description" class="col-lg-12 col-form-label text-left txt-bold">Descripción</label>'+
+                                    '<label for="description" class="col-lg-12 col-form-label text-left txt-bold">Descripción<span style="color: red;">*</span></label>'+
                                     '<input id="description" type="text" class="form-control" name="description" required autofocus value="'+description+'">'+
 
                                     '<span id="errmsj_descripcion" class="error-msj" role="alert">'+

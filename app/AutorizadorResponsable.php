@@ -111,8 +111,13 @@ class AutorizadorResponsable extends Model
                     $cambioStatus->status = 2;
                     $cambioStatus->save();
 
-                    $historicoTercero = new tercerosHistorico;
-                    $historicoTercero->sustitucionHistorico($dataHistorico, $cambioStatus->tcs_request_fus_id);
+                    $fus = new requestFus;
+                    $id = $fus->altaFus(2, "Cambio de autorizador y/o responsable", $data);
+            
+                    if($id !== false) {
+                        $historicoTercero = new tercerosHistorico;
+                        $historicoTercero->sustitucionHistorico($dataHistorico, $id);
+                    }
                 }
             }
 
@@ -206,9 +211,14 @@ class AutorizadorResponsable extends Model
                 unset($nuevo);
                 
                 $sustitucion->update($fields);
-
-                $historicoTercero = new tercerosHistorico;
-                $historicoTercero->sustitucionHistorico($dataHistorico, $dataR["idfus"]);
+                $dataR["id"] = $fus->tcs_external_employees_id;
+                $fus = new requestFus;
+                $id = $fus->altaFus(2, "Cambio de autorizador y/o responsable", $dataR);
+        
+                if($id !== false) {
+                    $historicoTercero = new tercerosHistorico;
+                    $historicoTercero->sustitucionHistorico($dataHistorico, $id);
+                }
             }
 
             return true;
@@ -221,6 +231,7 @@ class AutorizadorResponsable extends Model
     {
         $consultas = AutorizadorResponsable::select(
             'tcs_request_fus.id AS idfus',
+            'tcs_request_fus.fus_physical AS fus_fisico',
             'tcs_request_fus.id_generate_fus AS fus',
             'tcs_autorizador_responsable.id AS idRespActual',
             'tcs_autorizador_responsable.name AS nombre',

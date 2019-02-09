@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-lg-12">
             <div class="card">
@@ -18,14 +18,14 @@
                         <table class="table table-bordered" id="bajasdiarias-table">
                             <thead>
                                 <tr>
-                                    <th>Quién Realizo</th>
-                                    <th>Número del Empleado</th>
-                                    <th># Gafete del Tercero</th>
-                                    <th>Nombre del Tercero</th>
-                                    <th>Autorizador #</th>
-                                    <th>Responsable #</th>
-                                    <th>Fecha de Baja</th>
-                                    <th>Tipo de Baja</th>
+                                    <th>Quién&nbsp;Realizo</th>
+                                    <th>Número&nbsp;del&nbsp;Empleado</th>
+                                    <th>#&nbsp;Gafete&nbsp;del&nbsp;Tercero</th>
+                                    <th>Nombre&nbsp;del&nbsp;Tercero</th>
+                                    <th>Autorizador&nbsp;#</th>
+                                    <th>Responsable&nbsp;#</th>
+                                    <th>Fecha&nbsp;de&nbsp;Baja</th>
+                                    <th>Tipo&nbsp;de&nbsp;Baja</th>
                                 </tr>
                             </thead>
                         </table>  

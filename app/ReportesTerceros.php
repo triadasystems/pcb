@@ -113,22 +113,20 @@ class ReportesTerceros extends Model
     }
 
     public function activos() {
-        $activos = ReportesTerceros::join('tcs_request_fus', 'tcs_request_fus.tcs_external_employees_id', '=', 'tcs_external_employees.id')
-        ->select(
+        $activos = ReportesTerceros::select(
             'tcs_external_employees.id',
-            'tcs_request_fus.id_generate_fus',
+            'tcs_external_employees.id_external',
             'tcs_external_employees.badge_number', 
             'tcs_external_employees.email',
             'tcs_external_employees.name',
             'tcs_external_employees.lastname1',
             'tcs_external_employees.lastname2',
-            DB::raw("DATE_FORMAT(tcs_external_employees.initial_date, '%d-%m-%Y %H:%i:%s') AS initial_date"),
-            DB::raw("DATE_FORMAT(tcs_external_employees.low_date, '%d-%m-%Y %H:%i:%s') AS low_date"),
+            DB::raw("DATE_FORMAT(tcs_external_employees.initial_date, '%d-%m-%Y') AS initial_date"),
+            DB::raw("DATE_FORMAT(tcs_external_employees.low_date, '%d-%m-%Y') AS low_date"),
             'tcs_external_employees.status AS tcs_status',
             DB::raw('CONCAT(tcs_external_employees.name, " ", tcs_external_employees.lastname1, " ", tcs_external_employees.lastname2) AS datos_tercero')
         )
         ->where("tcs_external_employees.status", "=", 1)
-        ->where("tcs_request_fus.type", "=", 1)
         ->get()
         ->toArray();
 
