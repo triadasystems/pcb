@@ -100,6 +100,18 @@ class SustitucionresponsablesController extends Controller
                 if(count($result) == 0) {
                     $fail("El número de empleado no existe");
                 }
+            }],
+            "nombreR"  => "required|max:255|regex:/^[A-Za-z0-9[:space:]\s\S]+$/",
+            "numEmpleadoR"  => ["required", "min:1", "max:2147483647", "digits_between:1,10", "numeric", function($attribute, $value, $fail){
+                
+                $result = Comparelaboraconcilia::where("employee_number", "=", $value)
+                ->where("origen_id", "<>", 999)
+                ->get()
+                ->toArray();
+                
+                if(count($result) == 0) {
+                    $fail("El número de empleado no existe");
+                }
             }]
         ]);
         

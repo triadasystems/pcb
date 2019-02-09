@@ -57,24 +57,24 @@ class AutorizadorResponsable extends Model
                         $contrarioaldelaPosicion = AutorizadorResponsable::where("type", "=", 2)
                         ->where("status", "=", 1)
                         ->where("tcs_request_fus_id", "=", $cambioStatus->tcs_request_fus_id)
-                        ->get()
+                        ->first()
                         ->toArray();
                         
                         $authorizing_name = $dataR["nombre"];
                         $authorizing_number = $dataR["numEmpleado"];
-                        $responsible_name = $contrarioaldelaPosicion[0]["name"];
-                        $responsible_number = $contrarioaldelaPosicion[0]["number"];
+                        $responsible_name = $contrarioaldelaPosicion["name"];
+                        $responsible_number = $contrarioaldelaPosicion["number"];
                         break;
                     
                     case 2:
                         $contrarioaldelaPosicion = AutorizadorResponsable::where("type", "=", 1)
                         ->where("status", "=", 1)
                         ->where("tcs_request_fus_id", "=", $cambioStatus->tcs_request_fus_id)
-                        ->get()
+                        ->first()
                         ->toArray();
                         
-                        $authorizing_name = $contrarioaldelaPosicion[0]["name"];
-                        $authorizing_number = $contrarioaldelaPosicion[0]["number"];
+                        $authorizing_name = $contrarioaldelaPosicion["name"];
+                        $authorizing_number = $contrarioaldelaPosicion["number"];
                         $responsible_name = $dataR["nombre"];
                         $responsible_number = $dataR["numEmpleado"];
                         break;
@@ -111,8 +111,10 @@ class AutorizadorResponsable extends Model
                     $cambioStatus->status = 2;
                     $cambioStatus->save();
 
+                    $dataR["id"] = $fus->tcs_external_employees_id;
+
                     $fus = new requestFus;
-                    $id = $fus->altaFus(2, "Cambio de autorizador y/o responsable", $data);
+                    $id = $fus->altaFus(2, "Cambio de autorizador y/o responsable", $dataR);
             
                     if($id !== false) {
                         $historicoTercero = new tercerosHistorico;
@@ -128,19 +130,29 @@ class AutorizadorResponsable extends Model
     }
 
     public function sustitucionIndividual($dataR) {
-        $sustitucion = AutorizadorResponsable::where('id', '=', $dataR["idRespActual"]);
+        $autoA = explode(" - ", $dataR["autoA"]);
+        $respA = explode(" - ", $dataR["respA"]);        
+        
+        $sustitucion = AutorizadorResponsable::where('number', '=', $autoA[1])->where('tcs_request_fus_id', '=', $dataR["idfus"])->where('status', '=', 1)->where('type', '=', 1)->first();
+        $sustitucionR = AutorizadorResponsable::where('number', '=', $respA[1])->where('tcs_request_fus_id', '=', $dataR["idfus"])->where('status', '=', 1)->where('type', '=', 2)->first();
+
         $fields = array(
             "status" => 2
         );
         
         try {
-            $aCambiar = $sustitucion->first()->toArray();
-            
+            // $aCambiar = $sustitucion->first()->toArray();
             $nuevo = new AutorizadorResponsable;
             $nuevo->name = $dataR["nombre"];
             $nuevo->number = $dataR["numEmpleado"];
-            $nuevo->type = $dataR["tipo"];
+            $nuevo->type = 1;
             $nuevo->tcs_request_fus_id = $dataR["idfus"];
+
+            $nuevo2 = new AutorizadorResponsable;
+            $nuevo2->name = $dataR["nombreR"];
+            $nuevo2->number = $dataR["numEmpleadoR"];
+            $nuevo2->type = 2;
+            $nuevo2->tcs_request_fus_id = $dataR["idfus"];
             
             $applicationsEmployee = new ApplicationsEmployee;
             $aplicacionesDelTercero = "";
@@ -154,34 +166,6 @@ class AutorizadorResponsable extends Model
             }
 
             $aplicacionesDelTercero = substr($aplicacionesDelTercero, 0, -1);
-
-            switch ($dataR["tipo"]) {
-                case 1:
-                    $contrarioaldelaPosicion = AutorizadorResponsable::where("type", "=", 2)
-                    ->where("status", "=", 1)
-                    ->where("tcs_request_fus_id", "=", $dataR["idfus"])
-                    ->get()
-                    ->toArray();
-                    
-                    $authorizing_name = $dataR["nombre"];
-                    $authorizing_number = $dataR["numEmpleado"];
-                    $responsible_name = $contrarioaldelaPosicion[0]["name"];
-                    $responsible_number = $contrarioaldelaPosicion[0]["number"];
-                    break;
-                
-                case 2:
-                    $contrarioaldelaPosicion = AutorizadorResponsable::where("type", "=", 1)
-                    ->where("status", "=", 1)
-                    ->where("tcs_request_fus_id", "=", $dataR["idfus"])
-                    ->get()
-                    ->toArray();
-                    
-                    $authorizing_name = $contrarioaldelaPosicion[0]["name"];
-                    $authorizing_number = $contrarioaldelaPosicion[0]["number"];
-                    $responsible_name = $dataR["nombre"];
-                    $responsible_number = $dataR["numEmpleado"];
-                    break;
-            }
             
             $tercero = terceros::find($fus->tcs_external_employees_id);
                 
@@ -201,16 +185,19 @@ class AutorizadorResponsable extends Model
                 "tcs_subfijo_id" => $tercero->tcs_subfijo_id,
                 "tcs_externo_proveedor" => $tercero->tcs_externo_proveedor,
 
-                "authorizing_name" => $authorizing_name,
-                "authorizing_number" => $authorizing_number,
-                "responsible_name" => $responsible_name,
-                "responsible_number" => $responsible_number
+                "authorizing_name" => $dataR["nombre"],
+                "authorizing_number" => $dataR["numEmpleado"],
+                "responsible_name" => $dataR["nombreR"],
+                "responsible_number" => $dataR["numEmpleadoR"]
             );
 
-            if($nuevo->save()) {
+            if($nuevo->save() && $nuevo2->save()) {
                 unset($nuevo);
+                unset($nuevo2);
                 
-                $sustitucion->update($fields);
+                $sustitucion->update($fields);                
+                $sustitucionR->update($fields);
+
                 $dataR["id"] = $fus->tcs_external_employees_id;
                 $fus = new requestFus;
                 $id = $fus->altaFus(2, "Cambio de autorizador y/o responsable", $dataR);
@@ -229,22 +216,62 @@ class AutorizadorResponsable extends Model
 
     public function listar($id)
     {
-        $consultas = AutorizadorResponsable::select(
-            'tcs_request_fus.id AS idfus',
-            'tcs_request_fus.fus_physical AS fus_fisico',
-            'tcs_request_fus.id_generate_fus AS fus',
-            'tcs_autorizador_responsable.id AS idRespActual',
-            'tcs_autorizador_responsable.name AS nombre',
-            'tcs_autorizador_responsable.number AS numero',
-            'tcs_autorizador_responsable.type AS tipoNum',
-            DB::raw('CONCAT(tcs_autorizador_responsable.name," | ",tcs_autorizador_responsable.number) AS datos_fus'),
-            DB::raw('if(tcs_autorizador_responsable.type=1, "Autorizador", "Responsable") AS tipo'),
-            'tcs_request_fus.description AS descripcion')
-        ->join('tcs_request_fus','tcs_autorizador_responsable.tcs_request_fus_id','=','tcs_request_fus.id')
-        ->where('tcs_autorizador_responsable.status','=','1')
+        $consultas = requestFus::select(
+            'tcs_request_fus.id as idfus',
+            'tcs_request_fus.fus_physical as fus_fisico',
+            'tcs_request_fus.id_generate_fus as fus',
+            'tcs_request_fus.description as descripcion',
+            DB::raw('
+                (
+                    SELECT
+                        CONCAT(name, " - ", number)
+                    FROM
+                        tcs_autorizador_responsable
+                    WHERE
+                        type = 1
+                    AND
+                        status = 1
+                    AND
+                        tcs_request_fus_id = tcs_request_fus.id
+                ) as autorizador
+            '),
+            DB::raw(
+                '(
+                    SELECT
+                        CONCAT(name, " - ", number)
+                    FROM
+                        tcs_autorizador_responsable
+                    WHERE
+                        type = 2
+                    AND
+                        status = 1
+                    AND
+                        tcs_request_fus_id = tcs_request_fus.id
+                ) as responsable'
+            )
+        )
         ->where('tcs_request_fus.tcs_external_employees_id','=',$id)
+        ->where('tcs_request_fus.tcs_external_employees_id','=',$id)
+        ->where('tcs_request_fus.type','=',1)
         ->get()
         ->toArray(); 
+
+        // $consultas = AutorizadorResponsable::select(
+        //     'tcs_request_fus.id AS idfus',
+        //     'tcs_request_fus.fus_physical AS fus_fisico',
+        //     'tcs_request_fus.id_generate_fus AS fus',
+        //     'tcs_autorizador_responsable.id AS idRespActual',
+        //     'tcs_autorizador_responsable.name AS nombre',
+        //     'tcs_autorizador_responsable.number AS numero',
+        //     'tcs_autorizador_responsable.type AS tipoNum',
+        //     DB::raw('CONCAT(tcs_autorizador_responsable.name," | ",tcs_autorizador_responsable.number) AS datos_fus'),
+        //     DB::raw('if(tcs_autorizador_responsable.type=1, "Autorizador", "Responsable") AS tipo'),
+        //     'tcs_request_fus.description AS descripcion')
+        // ->join('tcs_request_fus','tcs_autorizador_responsable.tcs_request_fus_id','=','tcs_request_fus.id')
+        // ->where('tcs_autorizador_responsable.status','=','1')
+        // ->where('tcs_request_fus.tcs_external_employees_id','=',$id)
+        // ->get()
+        // ->toArray(); 
         
         return $consultas;
     }
