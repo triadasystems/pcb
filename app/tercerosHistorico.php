@@ -60,6 +60,7 @@ class tercerosHistorico extends Model
             'tcs_external_employees_hist.authorizing_number',
             'tcs_external_employees_hist.status AS tcs_status',
             'tcs_type_low.type AS typelow',
+            'tcs_request_fus.fus_physical',
             DB::raw("DATE_FORMAT(tcs_request_fus.created_at, '%d-%m-%Y %H:%i:%s') AS low_date_fus"),
             DB::raw('UPPER(tcs_request_fus.description) as description'),
             DB::raw("DATE_FORMAT(tcs_request_fus.real_low_date, '%d-%m-%Y %H:%i:%s') AS real_low_date"),

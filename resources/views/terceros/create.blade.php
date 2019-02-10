@@ -131,7 +131,7 @@
                             @endif
                         </div>
                         <div class="col-md-6">
-                            <label for="email" class="col-md-12 col-form-label text-md-rigth">Usuario de Red/E-mail<span style="color: red;">*</span></label>
+                            <label for="email" class="col-md-12 col-form-label text-md-rigth">Correo Electronico<span style="color: red;">*</span></label>
                             <input type="text" id="email" name="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" value="{{ old('email') }}">
                             @if ($errors->has('email'))
                                 <span class="invalid-feedback" role="alert">

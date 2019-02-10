@@ -22,6 +22,7 @@
                                     <th>#&nbsp;Gafete&nbsp;del&nbsp;Tercero</th>
                                     <th>Usuario&nbsp;del&nbsp;Tercero</th>
                                     <th>Fecha&nbsp;de&nbsp;Alta</th>
+                                    <th>FUS Fisico</th>
                                     <th>Tipo&nbsp;de&nbsp;Movimiento</th>
                                     <th>Autorizador&nbsp;#</th>
                                     <th>Responsable&nbsp;#</th>
@@ -63,6 +64,7 @@
                 { data: 'badge_number', name: 'badge_number' },
                 { data: 'email', name: 'email' },
                 { data: 'initial_date', name: 'initial_date' },
+                { data: 'fus_physical', name: 'fus_physical' },
                 { data: 'description', name: 'description' },
                 { data: 'autorizador', name: 'autorizador' },
                 { data: 'responsable', name: 'responsable' },

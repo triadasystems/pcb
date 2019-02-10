@@ -119,7 +119,7 @@ class applicationController extends Controller
     {
         $request->validate([
             "nombre"    =>  "required|max:45|regex:/^[A-Za-z0-9[:space:]\s\S]+$/",
-            "alias"     =>  "required|max:45|regex:/^[A-Za-z0-9[:space:]\s\S]+$/"
+            "alias"     =>  "required|max:45|regex:/^[A-Za-z0-9[:space:]\s\S]+$/|unique:applications"
         ]);
         $nom=$request->post("nombre");
         $alias=$request->post("alias");
