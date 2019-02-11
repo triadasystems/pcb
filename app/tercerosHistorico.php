@@ -52,6 +52,7 @@ class tercerosHistorico extends Model
             'tcs_external_employees_hist.name',
             'tcs_external_employees_hist.lastname1',
             'tcs_external_employees_hist.lastname2',
+            DB::raw('CONCAT(tcs_external_employees_hist.name, " ", tcs_external_employees_hist.lastname1, " ", tcs_external_employees_hist.lastname2) AS nombre_completo'),
             DB::raw("DATE_FORMAT(tcs_external_employees_hist.initial_date, '%d-%m-%Y') AS initial_date"),
             DB::raw("DATE_FORMAT(tcs_external_employees_hist.low_date, '%d-%m-%Y') AS low_date"),
             'tcs_external_employees_hist.authorizing_name',

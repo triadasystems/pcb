@@ -20,7 +20,7 @@
                                 <tr>
                                     <th>Número&nbsp;del&nbsp;Empleado</th>
                                     <th>#&nbsp;Gafete&nbsp;del&nbsp;Tercero</th>
-                                    <th>Usuario&nbsp;del&nbsp;Tercero</th>
+                                    <th>Nombre&nbsp;del&nbsp;Tercero</th>
                                     <th>Fecha&nbsp;de&nbsp;Alta</th>
                                     <th>FUS Fisico</th>
                                     <th>Tipo&nbsp;de&nbsp;Movimiento</th>
@@ -62,7 +62,7 @@
             columns: [
                 { data: 'id_external', name: 'id_external' },
                 { data: 'badge_number', name: 'badge_number' },
-                { data: 'email', name: 'email' },
+                { data: 'nombre_completo', name: 'nombre_completo' },
                 { data: 'initial_date', name: 'initial_date' },
                 { data: 'fus_physical', name: 'fus_physical' },
                 { data: 'description', name: 'description' },

@@ -22,8 +22,8 @@
                                     <th>Número&nbsp;del&nbsp;Empleado</th>
                                     <th>#&nbsp;Gafete&nbsp;del&nbsp;Tercero</th>
                                     <th>Nombre&nbsp;del&nbsp;Tercero</th>
-                                    <th>Autorizador&nbsp;#</th>
-                                    <th>Responsable&nbsp;#</th>
+                                    <!-- <th>Autorizador&nbsp;#</th>
+                                    <th>Responsable&nbsp;#</th> -->
                                     <th>Fecha&nbsp;de&nbsp;Baja</th>
                                     <th>Tipo&nbsp;de&nbsp;Baja</th>
                                 </tr>
@@ -61,8 +61,8 @@
                 { data: 'id_external',      name: 'id_external' },
                 { data: 'badge_number',     name: 'badge_number' },
                 { data: 'datos_tercero',    name: 'datos_tercero' },
-                { data: 'autorizador',      name: 'autorizador' },
-                { data: 'responsable',      name: 'responsable' },
+                // { data: 'autorizador',      name: 'autorizador' },
+                // { data: 'responsable',      name: 'responsable' },
                 { data: 'low_date_fus',     name: 'low_date_fus' },
                 { data: 'typelow', name: 'typelow' }
             ],
