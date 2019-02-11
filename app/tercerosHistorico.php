@@ -38,8 +38,6 @@ class tercerosHistorico extends Model
     public $timestamps = false;
 
     public function trazabilidad(/*$union = null*/) {
-        // $reporteTerceros = new ReportesTerceros;
-
         return $trazabilidad = tercerosHistorico::join(
             'tcs_request_fus', 
             'tcs_request_fus.id', '=', 'tcs_external_employees_hist.tcs_fus_ext_hist'
@@ -64,8 +62,8 @@ class tercerosHistorico extends Model
             DB::raw("DATE_FORMAT(tcs_request_fus.created_at, '%d-%m-%Y %H:%i:%s') AS low_date_fus"),
             DB::raw('UPPER(tcs_request_fus.description) as description'),
             DB::raw("DATE_FORMAT(tcs_request_fus.real_low_date, '%d-%m-%Y %H:%i:%s') AS real_low_date"),
-            DB::raw('CONCAT(tcs_external_employees_hist.authorizing_name, " | ", tcs_external_employees_hist.authorizing_number) AS autorizador'),
-            DB::raw('CONCAT(tcs_external_employees_hist.responsible_name, " | ", tcs_external_employees_hist.responsible_number) AS responsable')
+            DB::raw('IF(tcs_external_employees_hist.authorizing_number != "" , CONCAT(tcs_external_employees_hist.authorizing_name, " | ", tcs_external_employees_hist.authorizing_number), tcs_external_employees_hist.authorizing_name) AS autorizador'),
+            DB::raw('IF(tcs_external_employees_hist.responsible_number != "", CONCAT(tcs_external_employees_hist.responsible_name, " | ", tcs_external_employees_hist.responsible_number), tcs_external_employees_hist.responsible_name) AS responsable')
         )
         // ->union($union)
         ->get()

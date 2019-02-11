@@ -176,9 +176,11 @@
         
             function formAltaEditar(tipo = "alta", id = "", name = "", alias = "", description = "") {
                 var idBotonGuardar = "guardarProveedor"
-
+                var readonly = '';
+                
                 if(tipo == "editar") {
-                    idBotonGuardar = "guardarEditarProveedor"
+                    idBotonGuardar = "guardarEditarProveedor";
+                    readonly = 'readonly="readonly"';
                 }
 
                 Swal({
@@ -199,7 +201,7 @@
                                 '</div>'+
                                 '<div class="col-md-6">'+
                                     '<label for="alias" class="col-lg-12 col-form-label text-left txt-bold">Alias<span style="color: red;">*</span></label>'+
-                                    '<input id="alias" type="text" readonly="readonly" class="form-control" name="alias" required autofocus value="'+alias+'">'+
+                                    '<input id="alias" type="text" '+readonly+' class="form-control" name="alias" required autofocus value="'+alias+'">'+
 
                                     '<span id="errmsj_alias" class="error-msj" role="alert">'+
                                         '<strong>El campo Alias es obligatorio</strong>'+

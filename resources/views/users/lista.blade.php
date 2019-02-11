@@ -261,7 +261,7 @@ $(document).ready(function(){
                 '<form method="post" action="">'+
                     '<input type="hidden" name="id" id="idUsuario" value="'+id+'">'+
                     '<div class="form-group row">'+
-                        '<div class="col-md-4">'+
+                        '<div class="col-md-12">'+
                             '<label for="nombre" class="col-lg-12 col-form-label text-left txt-bold">Nombre<span style="color: red;">*</span></label>'+
                             '<input id="nombre" type="text" class="form-control" name="nombre" required autofocus value="'+nombre+'">'+
 
@@ -269,7 +269,7 @@ $(document).ready(function(){
                                 '<strong>El campo es obligatorio</strong>'+
                             '</span>'+
                         '</div>'+
-                        '<div class="col-md-4">'+
+                        '<div class="col-md-12">'+
                             '<label for="apellidos" class="col-lg-12 col-form-label text-left txt-bold">Apellidos<span style="color: red;">*</span></label>'+
                             '<input id="apellidos" type="text" class="form-control" name="apellidos" required autofocus value="'+apellidos+'">'+
 
@@ -277,7 +277,7 @@ $(document).ready(function(){
                                 '<strong>El campo es obligatorio</strong>'+
                             '</span>'+
                         '</div>'+
-                        '<div class="col-md-4">'+
+                        '<div class="col-md-12">'+
                             '<label for="numEmpleado" class="col-lg-12 col-form-label text-left txt-bold"># Empleado<span style="color: red;">*</span></label>'+
                             '<input id="numEmpleado" type="number" class="form-control" name="numEmpleado" required autofocus value="'+numEmpleado+'" min="1" step="1">'+
 

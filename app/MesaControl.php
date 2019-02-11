@@ -38,7 +38,7 @@ class MesaControl extends Model
         $mesacontrol = new MesaControl;
         $mesacontrol->name = mb_strtoupper($data["name"]);
         $mesacontrol->alias = mb_strtoupper($data["alias"]);
-        $mesacontrol->description = $data["description"];
+        $mesacontrol->description = mb_strtoupper($data["description"]);
 
         if($mesacontrol->save()) {
             return true;
@@ -51,7 +51,7 @@ class MesaControl extends Model
         $mesacontrol = MesaControl::find($data["id"]);
         $mesacontrol->name = mb_strtoupper($data["name"]);
         $mesacontrol->alias = mb_strtoupper($data["alias"]);
-        $mesacontrol->description = $data["description"];
+        $mesacontrol->description = mb_strtoupper($data["description"]);
         $mesacontrol->updated_at = date("Y-m-d H:m:i");
         
         if($mesacontrol->save()) {

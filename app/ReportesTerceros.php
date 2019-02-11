@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use App\tercerosHistorico;
 use App\requestFus;
+use App\User;
+use App\UserTerceros;
 
 class ReportesTerceros extends Model
 {
@@ -38,9 +40,9 @@ class ReportesTerceros extends Model
     public function bajasDiarias() {
         $bajasDiarias = ReportesTerceros::join('tcs_request_fus', 'tcs_request_fus.tcs_external_employees_id', '=', 'tcs_external_employees.id')
         ->join('tcs_type_low', 'tcs_type_low.id', '=', 'tcs_request_fus.tcs_type_low_id')
-        ->join('tcs_users_sessions', 'tcs_users_sessions.id', '=', 'tcs_request_fus.users_id')
+        // ->join('tcs_users_sessions', 'tcs_users_sessions.id', '=', 'tcs_request_fus.users_id')
         ->select(
-            DB::raw('CONCAT(tcs_users_sessions.name, " | ", tcs_users_sessions.noEmployee) AS quien_realizo'),
+           // DB::raw('CONCAT(tcs_users_sessions.name, " | ", tcs_users_sessions.noEmployee) AS quien_realizo'),
             'tcs_external_employees.id',
             'tcs_external_employees.id_external',
             'tcs_external_employees.badge_number', 
@@ -52,18 +54,37 @@ class ReportesTerceros extends Model
             'tcs_external_employees.low_date',
             'tcs_external_employees.status AS tcs_status',
             'tcs_type_low.type AS typelow',
+            'tcs_request_fus.type AS tipoFus',
+            'tcs_request_fus.users_id',
             DB::raw("DATE_FORMAT(tcs_request_fus.created_at, '%d-%m-%Y %H:%i:%s') AS low_date_fus"),
             DB::raw("DATE_FORMAT(tcs_request_fus.real_low_date, '%d-%m-%Y %H:%i:%s') AS real_low_date"),
             DB::raw('CONCAT(tcs_external_employees.name, " ", tcs_external_employees.lastname1, " ", tcs_external_employees.lastname2) AS datos_tercero')
         )
         ->where("tcs_external_employees.status", "=", 2)
-        ->where("tcs_request_fus.type", "=", 3)
+        ->whereIn("tcs_request_fus.type", [4, 3])
         ->get()
         ->toArray();
 
         $response = array();
 
         foreach($bajasDiarias as $key => $value) {
+            
+            switch($value["tipoFus"]) {
+                case 3:
+                    $quien = UserTerceros::select(
+                        DB::raw('CONCAT(tcs_users_sessions.name, " | ", tcs_users_sessions.noEmployee) AS quien_realizo')
+                    )
+                    ->where("id", "=", $value["users_id"])
+                    ->first()
+                    ->toArray();
+                    break;
+                case 4:
+                    $quien = User::select('name AS quien_realizo')->where("id", "=", $value["users_id"])
+                    ->first()
+                    ->toArray();
+                    break;
+            }
+
             $auto_resp = requestFus::select(
                 'name',
                 'number',
@@ -105,7 +126,7 @@ class ReportesTerceros extends Model
             
             $value["autorizador"] = substr($value["autorizador"], 0, -1);
             $value["responsable"] = substr($value["responsable"], 0, -1);
-            
+            $value["quien_realizo"] = $quien["quien_realizo"];
             $response[] = $value;
         }
 
