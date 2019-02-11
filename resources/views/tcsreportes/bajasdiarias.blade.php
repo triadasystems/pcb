@@ -18,7 +18,7 @@
                         <table class="table table-bordered" id="bajasdiarias-table">
                             <thead>
                                 <tr>
-                                    <th>Quién&nbsp;Realizo</th>
+                                    <th>Solicitante</th>
                                     <th>Número&nbsp;del&nbsp;Empleado</th>
                                     <th>#&nbsp;Gafete&nbsp;del&nbsp;Tercero</th>
                                     <th>Nombre&nbsp;del&nbsp;Tercero</th>
