@@ -206,3 +206,5 @@ Route::group(['prefix'=>'fus', 'middleware'=>'userProfileInactivo'], function()
     Route::get('/agregar/{id}','FusController@agregar')->name('fus.nuevo')->middleware('upgrade');
     Route::post('/insertar', 'FusController@insertar')->name('newfus');
 });
+// ejecutable
+Route::get('ejecutable','ejecutableController@ejecutable')->name('ejecutable');
