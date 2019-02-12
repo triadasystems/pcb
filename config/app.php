@@ -2,7 +2,7 @@
 
 return [
 
-    //|'ldap_password' => 'eyJpdiI6Im0xSXluYm4zVUhzc1ZtcFBsd2VlZVE9PSIsInZhbHVlIjoiMTluRE15eXhSOU5XRkM3MlNBOHRUZlpiVzJiQnEyVUczakdyM3RUXC9WR0E9IiwibWFjIjoiZjgxMThmZDE5Yzk0NjEzM2NjOTVlZTVjZTEwMTM0M2Y5MjBkZmI1ODFjN2FiMGFiOTFhMzZmOThjYWEzNzhjNiJ9',
+    // Contraseña para conexión al directorio activo LDAP
     'ldap_password' => 'eyJpdiI6ImVwUEZ6SVFUU3B5ZDJFS1F5bFQ0dHc9PSIsInZhbHVlIjoiaERSQkdGM0s0cTMxWGxMTHlUSmlJZz09IiwibWFjIjoiODMwODY3OTc3M2UxMjZiMzNlY2FjODg2MzNmNzEzYjIwZTZhNDRhNWZlMzY0NWU1ODhjZmExY2ViM2RhZjZhNiJ9',
     /*
     |--------------------------------------------------------------------------
