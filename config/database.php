@@ -43,7 +43,7 @@ return [
             'driver' => 'mysql',
             'host' => '10.7.15.205',
             'port' => '3329',
-            'database' => 'portal_pcb', // inxdix_pes
+            'database' => 'portal_pcb_prod', // inxdix_pes
             'username' => 'template', // triada template
             'password' => 'eyJpdiI6Ind1OStXS0JaMUE5emRmV0o4aVpySnc9PSIsInZhbHVlIjoiS2kzSXVxckZmYlltVzlpT2c3Vmw4aHJvMDZ4RU9KdTZVQzFxTDhTYjlBWT0iLCJtYWMiOiIwMzJkMDVkM2E2MDAxYTcyMDVjM2E1NTk4NzQ2Zjg5YzAwZTVhOTFiZTUwZDdkNWM0YTUyYjgwZTE1ODc0NmM1In0=', // Syst3m18 Pa$$w0rd01
             'charset' => 'latin1',

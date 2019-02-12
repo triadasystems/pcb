@@ -47,7 +47,7 @@ class MesacontrolController extends Controller
         $request->validate([
             //"name" => "required|string|min:3|max:100|regex:/^[A-Za-z0-9[:space:]\s\S]+$/|unique:tcs_cat_suppliers",
             "name" => "required|string|min:3|max:100|regex:/^[A-Za-z0-9[:space:]\s\S]+$/",
-            "alias" => "required|string|min:2|max:45|regex:/^[A-Za-z0-9[:space:]\s\S]+$/|unique:tcs_cat_suppliers",
+            "alias" => "required|string|min:2|max:45|regex:/^[A-Za-z0-9[:space:]\s\S]+$/|unique:tcs_cat_helpdesk",
             "description" => "required|string|min:5|max:255|regex:/^[A-Za-z0-9[:space:]\s\S]+$/"
         ]);
         

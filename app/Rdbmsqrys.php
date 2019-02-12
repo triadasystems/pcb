@@ -22,10 +22,10 @@ class Rdbmsqrys extends Model
         switch($tipo)
         {
             case 1:
-                $sql = "SELECT rq.*, r.rdbms_type, r.name FROM rdbms_qrys rq INNER JOIN rdbms r ON r.id = rq.rdbms_id WHERE rq.select_in in (1,4,".$dato.") AND rq.status='Activo' AND r.status='Activo' limit ".$cant.", 1";
+                $sql = "SELECT rq.*, r.rdbms_type, r.name FROM rdbms_qrys rq INNER JOIN rdbms r ON r.id = rq.rdbms_id WHERE rq.select_in in (1,4,".$dato.") AND rq.status='Activo' AND r.status='Activo' ORDER BY rq.id ASC limit ".$cant.", 1";
                 break;
             case 2:
-                $sql = "SELECT rq.*, r.rdbms_type, r.name FROM rdbms_qrys rq INNER JOIN rdbms r ON r.id = rq.rdbms_id WHERE rq.select_in in (1,4,".$dato.") AND rq.status='Activo' AND r.status='Activo'";
+                $sql = "SELECT rq.*, r.rdbms_type, r.name FROM rdbms_qrys rq INNER JOIN rdbms r ON r.id = rq.rdbms_id WHERE rq.select_in in (1,4,".$dato.") AND rq.status='Activo' AND r.status='Activo' ORDER BY rq.id ASC";
                 break;
         }
 
