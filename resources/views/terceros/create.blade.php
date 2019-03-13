@@ -11,6 +11,7 @@
         margin-top:3px;
     }
 </style>
+
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
@@ -32,7 +33,7 @@
                         </div>
                         <div class="col-md-6">
                             <label for="mesa" class="col-md-8 col-form-label text-md-rigth">Mesa de control<span style="color: red;">*</span></label>
-                            <select id="mesa" name ="mesa" class="form-control{{ $errors->has('mesa') ? ' is-invalid' : '' }}" value="{{ old('mesa') }}" required>
+                            <select id="mesa" name ="mesa" class="form-control{{ $errors->has('mesa') ? ' is-invalid' : '' }}" required>
                                 <option value="">Seleccione...</option>
                                 @foreach ($data['mesa'] as $val)
                                     @if(old('mesa'))
@@ -106,10 +107,10 @@
                             <select id="empresa" name="empresa" class="form-control{{ $errors->has('empresa') ? ' is-invalid' : '' }}" value="{{ old('empresa') }}" required>
                                 <option value="">Selecciona la empresa</option>
                                 @foreach ($data['empresa'] as $val)
-                                    @if(old('empresa'))
-                                        <option selected value="{{ $val->id}}">{{ $val->name}}</option>
+                                    @if(old('empresa') == $val->id)
+                                        <option selected value="{{ $val->id }}">{{ $val->name }}</option>
                                     @else
-                                        <option value="{{ $val->id}}">{{ $val->name}}</option>
+                                        <option value="{{ $val->id }}">{{ $val->name }}</option>
                                     @endif
                                 @endforeach
                             </select>
